@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.1.143/viewpoint?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+  #jackson:
+    #default-property-inclusion: non_null
+    #time-zone: GMT+8
+    #date-format: yyyy-MM-dd HH:mm:ss
+    #joda-date-time-format: yyyy-MM-dd HH:mm:ss
+  freemarker:
+    template-loader-path: classpath:/templates
+    cache: false
+    charset: utf-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .html
+  resources:
+    static-locations: classpath:/static/
+server:
+  port: 8080
+  servlet:
+      context-path: /viewpoint
+ftp:
+  port: 21
+  hostname: 192.168.1.145
+  userName: ftp_test
+  password: 123456
+  basePath: /home/ftp_test
+  fileUploadPath: http://192.168.1.145
