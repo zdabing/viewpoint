@@ -9,8 +9,8 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="${resRoot}/layui/css/layui.css" media="all" />
-	<link rel="stylesheet" href="${resRoot}/css/public.css" media="all" />
+	<link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="/css/public.css" media="all" />
 </head>
 <body class="childrenBody">
 <form class="layui-form layui-row layui-col-space10">
@@ -42,7 +42,7 @@
 		<div class="layui-form-item magb0">
 			<label class="layui-form-label">活动内容</label>
 			<div class="layui-input-block" id="activityContent">
-				${(activity.activityContent)!''}
+				<p>${(activity.activityContent)!''}</p>
 			</div>
 		</div>
 	</div>
@@ -50,10 +50,10 @@
 		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 活动标签</blockquote>
 		<div class="border category">
 			<div class="">
-				<p><input type="checkbox" name="activityTag" title="新闻" <#if activity.activityTag?contains('.xml')>xxxxx</#if> lay-skin="primary" value="新闻" /></p>
-				<p><input type="checkbox" name="activityTag" title="商品" lay-skin="primary" value="商品" /></p>
-				<p><input type="checkbox" name="activityTag" title="公告" lay-skin="primary" value="公告" /></p>
-				<p><input type="checkbox" name="activityTag" title="图片" lay-skin="primary" value="图片" /></p>
+				<p><input type="checkbox" name="activityTag" title="新闻" lay-skin="primary" value="新闻" <#if ((activity.activityTag)!'')?contains('新闻')>checked="checked"</#if> /></p>
+				<p><input type="checkbox" name="activityTag" title="商品" lay-skin="primary" value="商品" <#if ((activity.activityTag)!'')?contains('商品')>checked="checked"</#if> /></p>
+				<p><input type="checkbox" name="activityTag" title="公告" lay-skin="primary" value="公告" <#if ((activity.activityTag)!'')?contains('公告')>checked="checked"</#if> /></p>
+				<p><input type="checkbox" name="activityTag" title="图片" lay-skin="primary" value="图片" <#if ((activity.activityTag)!'')?contains('图片')>checked="checked"</#if> /></p>
 			</div>
 		</div>
 		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
@@ -78,8 +78,8 @@
 		</div>
 	</div>
 </form>
-<script type="text/javascript" src="${resRoot}/layui/layui.js"></script>
-<script src="${resRoot}/js/wangEditor.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script src="/js/wangEditor.js"></script>
 <script type="text/javascript">
     layui.use(['form','layer','layedit','laydate','upload'],function(){
         var form = layui.form
@@ -93,7 +93,7 @@
         //上传缩略图
         upload.render({
             elem: '.thumbBox',
-            url: '${base}/upload/image',
+            url: '/upload/image',
             method : "post",
             done: function(res, index, upload){
                 //var num = parseInt(4*Math.random());  //生成0-4的随机数，随机显示一个头像信息
@@ -129,7 +129,7 @@
             //弹出loading
             var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
             $.ajax({
-                url : '${base}/activity/save',
+                url : '/activity/save',
                 data : {
                     activityName : $("#activityName").val(),  //文章标题
                     activityId : $("#activityId").val(),
@@ -176,7 +176,7 @@
     var E = window.wangEditor
     var editor = new E('#activityContent')
     // 配置服务器端地址
-    editor.customConfig.uploadImgServer = '${base}/upload/wangEditor'
+    editor.customConfig.uploadImgServer = '/upload/wangEditor'
     editor.create()
 </script>
 </body>
