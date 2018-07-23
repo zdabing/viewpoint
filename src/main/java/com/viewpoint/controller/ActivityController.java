@@ -70,4 +70,10 @@ public class ActivityController {
         }
         return ResultVOUtil.success();
     }
+
+    @PostMapping("/updateSale")
+    public ResultVO updateSale(String activityId,Integer enabled){
+        Activity activity = activityService.updateSale(activityId,enabled);
+        return ResultVOUtil.success(activity);
+    }
 }

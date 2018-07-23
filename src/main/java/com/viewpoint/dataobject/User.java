@@ -11,7 +11,7 @@ import javax.persistence.Id;
 public class User {
 
     @Id
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -22,4 +22,6 @@ public class User {
     private String alias;
 
     private String icon;
+
+    private Integer role = 0;
 }

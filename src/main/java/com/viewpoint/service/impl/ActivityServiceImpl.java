@@ -46,18 +46,13 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public Activity onSale(String activityId) {
-        return null;
-    }
-
-    @Override
     @Transactional
-    public Activity offSale(String activityId) {
+    public Activity updateSale(String activityId,Integer enabled) {
         Activity activity = activityRepository.findById(activityId).orElse(null);
         if (activity == null){
             throw new ViewpointException(ResultEnum.ACTIVITY_NOT_EXIST);
         }
-        activity.setEnabled(StatusEnum.UP.getCode());
+        activity.setEnabled(enabled);
         return activityRepository.save(activity);
     }
 

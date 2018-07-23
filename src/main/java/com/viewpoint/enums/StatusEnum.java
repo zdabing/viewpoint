@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum StatusEnum {
     UP(1,"已发布"),
-    DOWN(0,"未发布")
+    DOWN(0,"未发布"),
+    ADMIN(2,"管理员")
     ;
     private Integer code;
 

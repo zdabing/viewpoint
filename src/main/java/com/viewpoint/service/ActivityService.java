@@ -20,11 +20,8 @@ public interface ActivityService {
     /** 添加活动 */
     Activity save(Activity activity);
 
-    /** 上架 */
-    Activity onSale(String activityId);
-
-    /** 上架 */
-    Activity offSale(String activityId);
+    /** 上下架 */
+    Activity updateSale(String activityId,Integer enabled);
 
     void delete(String activityId);
 }
