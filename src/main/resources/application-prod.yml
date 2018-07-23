@@ -32,3 +32,7 @@ ftp:
   password: 123456
   basePath: /home/ftpuser
   fileUploadPath: http://192.168.1.143
+imooc:
+  security:
+    browser:
+      loginType:  REDIRECT
