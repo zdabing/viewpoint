@@ -10,8 +10,6 @@ public interface ArticleService {
     Article addArticle(Article article);
     /**删除文章*/
     void deleteArticle(String articleId);
-    /**修改文章*/
-    ResultVO updateArticle(Article article);
     /**通过ID查看文章*/
     Article findArticleById(String articleId);
     /**查询所有文章*/

@@ -47,7 +47,7 @@ public class ArticleController {
         Page<Article> articlePage = (Page<Article>)resultVO.getData();
         return ResultVOUtil.success(articlePage.getContent(),articlePage.getTotalElements());
     }
-//============================
+
     @GetMapping("/add")
     public String add(@RequestParam(value = "articleId",required = false)Integer articleId,Model model){
         if(!StringUtils.isEmpty(articleId)){

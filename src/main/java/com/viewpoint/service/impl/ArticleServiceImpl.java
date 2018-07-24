@@ -22,8 +22,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleReponsitory articleReponsitory;
-    @Autowired
-    private ArticleNodesRepository articleNodesRepository;
+
 
     /**添加一篇文章*/
     @Override

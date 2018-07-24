@@ -1,6 +1,5 @@
 package com.viewpoint.form;
 
-import com.viewpoint.enums.StatusEnum;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
