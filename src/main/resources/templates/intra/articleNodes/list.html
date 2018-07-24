@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>活动管理</title>
+		<title>节点管理</title>
 		<meta name="Description" content="基于layUI数据表格操作"/>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -32,9 +32,9 @@
 		<div class="weadmin-nav">
 			<span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">活动管理</a>
+        <a href="">文章节点管理</a>
         <a>
-          <cite>活动列表</cite></a>
+          <cite>文章节点列表</cite></a>
       </span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
@@ -42,7 +42,15 @@
 		<div class="weadmin-body">
 			<div class="layui-row">
 				<form class="layui-form layui-col-md12 we-search">
-					活动搜索：
+					节点搜索：
+					<!--<div class="layui-input-inline">
+						<select name="cateid">
+							<option>请选择分类</option>
+							<option>文章</option>
+							<option>会员</option>
+							<option>权限</option>
+						</select>
+					</div>-->
 					<div class="layui-inline">
 						<input type="text" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
 					</div>
@@ -50,24 +58,23 @@
 				</form>
 			</div>
 			<div class="weadmin-block demoTable">
-				<button class="layui-btn" onclick="WeAdminShow('添加活动','/activity/add')"><i class="layui-icon">&#xe61f;</i>添加</button>
+				<button class="layui-btn" onclick="WeAdminShow('添加节点','/articleNodes/add')"><i class="layui-icon">&#xe61f;</i>添加节点</button>
 			</div>
-			<table class="layui-hide" id="articleList">
-
-			</table>
+			<table class="layui-hide" id="articleNodesList"></table>
 
 			<script type="text/html" id="enabledTpl">
-			  <input type="checkbox" name="{{d.activityId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
+
+			  <input type="checkbox" name="{{d.nodeId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
 			</script>
 
 			<script type="text/html" id="operateTpl">
-				<a   title="编辑" onclick="WeAdminEdit('编辑','/activity/add?activityId={{d.activityId}}')" href="javascript:;">
+				<a   title="编辑" onclick="WeAdminEdit('编辑','/articleNodes/add?nodeId={{d.nodeId}}')" href="javascript:;">
 					<i class="layui-icon">&#xe642;</i>
 				</a>
-				<a title="查看" onclick="WeAdminShow('查看文章','/activity/add?activityId={{d.activityId}}',600,400)" href="javascript:;">
+				<a title="查看" onclick="WeAdminShow('查看文章','./show.html',600,400)" href="javascript:;">
 					<i class="layui-icon">&#xe63c;</i>
 				</a>
-				<a title="删除" id="delete" onclick="onDelete('{{d.activityId}}');" >
+				<a title="删除" id="delete" onclick="onDelete('{{d.nodeId}}');">
 					<i class="layui-icon">&#xe640;</i>
 				</a>
 			</script>
@@ -78,32 +85,25 @@
         layui.extend({
             admin: '/js/admin'
         });
-        layui.use(['table', 'jquery','form', 'admin', "element",'layer'], function() {
+        layui.use(['table', 'jquery','form', 'admin'], function() {
             var table = layui.table,
-            	layer = layui.layer,
                 $ = layui.jquery,
                 form = layui.form,
                 admin = layui.admin;
 
-            var tableIns = table.render({
-                elem: '#articleList',
-                url: '/activity/list',
-                cellMinWidth: 80,
+           var tableIns = table.render({
+                elem: '#articleNodesList',
+                url: '/articleNodes/list',
+                cellMinWidth: 50,
                 cols: [
                     [{
                         type: 'checkbox'
-                    }, {
-                        field: 'activityId',title: 'ID',sort: true
-                    }, {
-                        field: 'activityName',title: '标题'
-                    }, {
-                        field: 'activityDesc',title: '活动描述'
-                    }, {
-                        field: 'startTime',title: '活动开始时间',sort: true
-                    }, {
-                        field: 'endTime',title: '活动结束时间',sort: true
-                    }, {
-                        field: 'buyLimit',title: '限制人数'
+                    },  {
+                        field: 'nodeName',title: '节点名'
+                    },{
+                        field: 'hasChildren',title: '是否有子节点'
+                    },{
+                        field: 'updateTime',title: '修改时间',sort: true
                     }, {
                         field: 'enable',title: '发布',templet: '#enabledTpl',align: 'center'
                     }, {
@@ -116,16 +116,18 @@
 				limit: 10 //默认采用10
             });
 
+
             $(function(){
                 form.render();
             });
 
-            window.onDelete = function(activityId) {
+            //删除操作
+            window.onDelete = function(nodeId) {
                 var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
                 $.ajax({
-                    url : '/activity/delete',
+                    url : '/articleNodes/delete',
                     data : {
-                        activityId : activityId,
+                        nodeId : nodeId,
                     },
                     type: "post",
                     dataType: "json",
@@ -149,13 +151,13 @@
                 var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
                 if(this.value == 1){
                     var enable =0;
-				}else{
+                }else{
                     var enable =1;
-				}
+                }
                 $.ajax({
-                    url : '/activity/updateSale',
+                    url : '/articleNodes/updateSale',
                     data : {
-                        activityId : this.name,
+                        nodeId : this.name,
                         enabled : enable
                     },
                     type: "post",
@@ -174,6 +176,8 @@
                     }
                 });
             });
+
         });
 	</script>
 </html>
+

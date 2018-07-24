@@ -1,6 +1,7 @@
 package com.viewpoint.controller;
 
 import com.viewpoint.dataobject.Activity;
+import com.viewpoint.enums.ResultEnum;
 import com.viewpoint.exception.ViewpointException;
 import com.viewpoint.form.ActivityForm;
 import com.viewpoint.service.ActivityService;
@@ -78,6 +79,17 @@ public class ActivityController {
             activityService.updateSale(activityId,enabled);
         } catch (ViewpointException e){
             return ResultVOUtil.error(1,e.getMessage());
+        }
+        return ResultVOUtil.success();
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ResultVO delete(String activityId){
+        try{
+            activityService.delete(activityId);
+        }catch (ViewpointException e){
+            return ResultVOUtil.error(ResultEnum.ERROR.getCode(),e.getMessage());
         }
         return ResultVOUtil.success();
     }

@@ -7,6 +7,8 @@ public enum ResultEnum {
 
     SUCCESS(0, "成功"),
 
+    ERROR(1, "失败"),
+
     ACTIVITY_NOT_EXIST(13,"活动不存在"),
 
     ARTICLE_NOT_EXIST(23,"文章不存在"),
