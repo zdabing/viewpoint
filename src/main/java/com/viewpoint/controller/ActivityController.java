@@ -81,4 +81,15 @@ public class ActivityController {
         }
         return ResultVOUtil.success();
     }
+
+    @PostMapping("/del")
+    @ResponseBody
+    public ResultVO del(String activityId){
+        try {
+            activityService.delete(activityId);
+        } catch (ViewpointException e){
+            return ResultVOUtil.error(1,e.getMessage());
+        }
+        return ResultVOUtil.success();
+    }
 }

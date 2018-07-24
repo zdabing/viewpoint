@@ -49,4 +49,5 @@ public class Activity {
 
     /** 发布 */
     private Integer enabled = 0;
+
 }
