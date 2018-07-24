@@ -10,6 +10,8 @@ public enum ResultEnum {
     ACTIVITY_NOT_EXIST(13,"活动不存在"),
 
     ARTICLE_NOT_EXIST(23,"文章不存在"),
+
+    USER_NOT_EXIST(33,"用户不存在"),
     ;
 
     private Integer code;

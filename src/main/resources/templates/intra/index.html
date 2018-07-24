@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta charset="UTF-8">
 		<title>后台管理-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
@@ -41,7 +41,7 @@
 			</ul>
 			<ul class="layui-nav right" lay-filter="">
 				<li class="layui-nav-item">
-					<a href="javascript:;">Admin</a>
+					<a href="javascript:;" th:text="${session.user.name}"></a>
 					<dl class="layui-nav-child">
 						<!-- 二级菜单 -->
 						<dd>
@@ -111,7 +111,7 @@
 						</a>
 						<ul class="sub-menu">
 							<li>
-								<a _href="./pages/admin/list.html">
+								<a _href="/user/index">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>管理员列表</cite>
 								</a>

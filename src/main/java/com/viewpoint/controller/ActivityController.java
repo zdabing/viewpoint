@@ -27,7 +27,7 @@ public class ActivityController {
     private ActivityService activityService;
 
     @GetMapping("/index")
-    public String list(){
+    public String index(){
         return "intra/activity/list";
     }
 
