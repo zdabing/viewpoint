@@ -53,7 +53,8 @@ public class ActivityServiceImpl implements ActivityService {
             throw new ViewpointException(ResultEnum.ACTIVITY_NOT_EXIST);
         }
         activity.setEnabled(enabled);
-        return activityRepository.save(activity);
+        activity= activityRepository.save(activity);
+        return activity;
     }
 
     @Override

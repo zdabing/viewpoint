@@ -72,8 +72,13 @@ public class ActivityController {
     }
 
     @PostMapping("/updateSale")
+    @ResponseBody
     public ResultVO updateSale(String activityId,Integer enabled){
-        Activity activity = activityService.updateSale(activityId,enabled);
-        return ResultVOUtil.success(activity);
+        try {
+            activityService.updateSale(activityId,enabled);
+        } catch (ViewpointException e){
+            return ResultVOUtil.error(1,e.getMessage());
+        }
+        return ResultVOUtil.success();
     }
 }

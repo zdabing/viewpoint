@@ -54,4 +54,10 @@ public class ActivityServiceImplTest {
     public void delete() {
         activityService.delete("1531475322888136736");
     }
+
+    @Test
+    public void updateSale() {
+        Activity activity = activityService.updateSale("1531907116453637601",0);
+        System.out.println(activity.getEnabled());
+    }
 }

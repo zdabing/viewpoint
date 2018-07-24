@@ -120,11 +120,16 @@
             //监听上下架操作
             form.on('checkbox(up)', function(obj){
                 var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+                if(this.value == 1){
+                    var enable =0;
+				}else{
+                    var enable =1;
+				}
                 $.ajax({
                     url : '/activity/updateSale',
                     data : {
                         activityId : this.name,
-                        enabled : this.value
+                        enabled : enable
                     },
                     type: "post",
                     dataType: "json",
@@ -138,7 +143,7 @@
                         tableIns.reload();
                     },
                     error : function() {
-                        layer.alert("系统繁忙!请重试");
+                        layer.msg("系统繁忙!请重试");
                     }
                 });
             });
