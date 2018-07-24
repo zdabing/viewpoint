@@ -30,7 +30,7 @@ public class ArticleNodes {
     private Integer enabled;
 
     /** 排序 */
-    private Integer orderSort;
+    private Integer sort;
 
     /** 修改时间 */
     private LocalDateTime updateTime;
