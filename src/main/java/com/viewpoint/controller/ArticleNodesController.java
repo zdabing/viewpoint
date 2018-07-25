@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/articleNodes")
@@ -46,9 +48,27 @@ public class ArticleNodesController {
     public String add(Model model,@RequestParam(required = false,value = "nodeId") Integer nodeId){
         if(!StringUtils.isEmpty(nodeId)){
             ArticleNodes articleNodes = articleNodesService.findByNodeId(nodeId);
+            if(articleNodes.getParentId() != 0){
+                articleNodes.setNodeId(articleNodes.getParentId());
+            }
             model.addAttribute("articleNodes",articleNodes);
         }
         List<ArticleNodes> articleNodesList = articleNodesService.findAllByFatherId();
+        Iterator<ArticleNodes> iterator = articleNodesList.iterator();
+        if(!StringUtils.isEmpty(nodeId)){
+            ArticleNodes articleNodes = articleNodesService.findByNodeId(nodeId);
+            if(articleNodes.getParentId() != 0 ){
+                while(iterator.hasNext()){
+                    ArticleNodes articleNodes1 = iterator.next();
+                    if(articleNodes1.getHasChildren() == 0){
+                        iterator.remove();
+                    }
+                }
+                model.addAttribute("articleNodesList",articleNodesList);
+                return "intra/articleNodes/newsAdd";
+            }
+        }
+
         model.addAttribute("articleNodesList",articleNodesList);
         return "intra/articleNodes/newsAdd";
     }
@@ -79,8 +99,19 @@ public class ArticleNodesController {
     @ResponseBody
     public ResultVO updateSale(Integer nodeId,Integer enabled){
         try{
-            articleNodesService.updateSale(nodeId,enabled);
-        }catch (Exception e){
+            ArticleNodes articleNodes = articleNodesService.findByNodeId(nodeId);
+            if(articleNodes.getParentId() != 0){
+                Integer nodeId1 = articleNodes.getParentId();
+                ArticleNodes articleNodes1 = articleNodesService.findByNodeId(nodeId1);
+                if(articleNodes1.getEnabled() == 0 && enabled == 1){
+                    return ResultVOUtil.error(ResultEnum.ERROR.getCode(),"请先上架父节点");
+                }else{
+                    articleNodesService.updateSale(nodeId,enabled);
+                }
+            }else {
+                articleNodesService.updateSale(nodeId,enabled);
+            }
+        }catch (ViewpointException e){
             return ResultVOUtil.error(ResultEnum.ERROR.getCode(),e.getMessage());
         }
         return ResultVOUtil.success();

@@ -1,4 +1,4 @@
-package com.viewpoint.controller;
+package com.viewpoint.controller.controller;
 
 import com.viewpoint.properties.SecurityConstants;
 import com.viewpoint.properties.SecurityProperties;

@@ -1,4 +1,4 @@
-package com.viewpoint.controller;
+package com.viewpoint.controller.controller;
 
 import com.viewpoint.dataobject.Article;
 import com.viewpoint.dataobject.ArticleNodes;

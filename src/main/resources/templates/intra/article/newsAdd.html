@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8">
 	<title>添加文章</title>
@@ -19,17 +19,17 @@
 			<div class="layui-col-md9 layui-col-xs7">
 				<div class="layui-form-item magt3">
 					<div class="layui-hide">
-						<input type="text" class="layui-input" id="articleId" >
+						<input type="text" class="layui-input" id="articleId" th:value="${article?.articleId}">
 					</div>
 					<label class="layui-form-label">文章标题</label>
 					<div class="layui-input-block">
-						<input type="text" class="layui-input" id="title" name="title" placeholder="请输入文章标题" value="${(article.title)!''}">
+						<input type="text" class="layui-input" id="title" name="title" placeholder="请输入文章标题" th:value="${article?.title}" value="">
 					</div>
 				</div>
 			</div>
 			<div class="layui-col-md3 layui-col-xs5">
 				<div class="layui-upload-list thumbBox mag0 magt3">
-					<img class="layui-upload-img thumbImg" id="articleLogo" src="${(article.articleLogo)!''}">
+					<img class="layui-upload-img thumbImg" id="articleLogo" th:src="${article?.articleLogo}" src="">
 				</div>
 			</div>
 		</div>
@@ -37,7 +37,7 @@
 		<div class="layui-form-item magb0">
 			<label class="layui-form-label">文章内容</label>
 			<div class="layui-input-block" id="content" >
-				<p>${(article.content)!''}</p>
+				<p th:utext="${article?.content}"></p>
 			</div>
 		</div>
 
@@ -50,10 +50,8 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">标签</label>
 					<div class="layui-input-inline">
-						<select name="quiz1">
-							<#list nodes as node>
-								<option value="${node.nodeId}" name="nodeId" <#if (article.nodeId)?? && (node.nodeId??) && article.nodeId== node.nodeId> selected="selected" </#if> >${node.nodeName}</option>
-							</#list>
+						<select name="quiz1" id="nodeName">
+							<option value="" name="nodeId" th:each="node:${nodes}" th:value="${node.nodeId}" th:utext="${node.nodeName}" th:disabled="${node?.hasChildren == 1}" th:selected="${article?.nodeId} eq ${node.nodeId}"></option>
 						</select>
 					</div>
 				</div>
@@ -114,7 +112,7 @@
                     articleId : $("#articleId").val(),
                     articleLogo : $("#articleLogo").attr("src"),
                     content : articleContent,
-                    nodeId : 1
+                    nodeId : $("#nodeName").val()
                 },
                 type: "post",
                 dataType: "json",

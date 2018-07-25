@@ -44,25 +44,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
-    /**修改文章*/
-    @Override
-    public ResultVO updateArticle(Article article) {
-        boolean articleIsNullOrNotnull = false;
-        //判断article的值是否为空
-        try {
-            articleIsNullOrNotnull = isAllFieldNull(article);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //article为null
-        if(articleIsNullOrNotnull){
-            return ResultVOUtil.error(ResultEnum.ARTICLE_NOT_EXIST.getCode(),"参数错误");
-        }
-        //article不为null
-        articleReponsitory.save(article);
-        return ResultVOUtil.success();
-    }
-
     /**通过ID查看文章*/
     @Override
     public Article findArticleById(String  articleId) {

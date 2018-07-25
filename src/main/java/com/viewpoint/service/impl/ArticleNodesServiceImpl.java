@@ -3,9 +3,11 @@ package com.viewpoint.service.impl;
 import com.viewpoint.converter.ArticleNode2NodeMaster;
 import com.viewpoint.dataobject.ArticleNodes;
 import com.viewpoint.dto.NodeMaster;
+import com.viewpoint.enums.ResultEnum;
 import com.viewpoint.enums.StatusEnum;
 import com.viewpoint.repository.ArticleNodesRepository;
 import com.viewpoint.service.ArticleNodesService;
+import com.viewpoint.utils.ResultVOUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +27,9 @@ public class ArticleNodesServiceImpl implements ArticleNodesService {
     @Override
     @Transactional
     public ArticleNodes save(ArticleNodes articleNodes) {
-        if(articleNodes.getHasChildren() == 0){
-            articleNodes.setParentId(0);
-            return articleNodesRepository.save(articleNodes);
-        }
-        articleNodes.setHasChildren(0);
-        return articleNodesRepository.save(articleNodes);
+
+
+
     }
 
 //    /** 查询节点下的子节点，若没有子节点返回article*/
@@ -106,6 +105,7 @@ public class ArticleNodesServiceImpl implements ArticleNodesService {
                 articleNodesRepository.save(articleNodes1);
             }
         }
+
         articleNodes.setEnabled(enabled);
         return articleNodesRepository.save(articleNodes);
     }

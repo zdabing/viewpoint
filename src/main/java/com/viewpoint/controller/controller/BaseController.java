@@ -1,4 +1,4 @@
-package com.viewpoint.controller;
+package com.viewpoint.controller.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;

@@ -63,7 +63,7 @@ public class ArticleController {
                 nodes.add(articleNodes);
                 List<ArticleNodes> articleChildrenNodesList = articleNodesService.findChildrenId(articleNodes.getNodeId());
                 for(ArticleNodes articleChildrenNodes : articleChildrenNodesList){
-                    articleChildrenNodes.setNodeName( "&nbsp;&nbsp;&nbsp;&nbsp;|__"+articleChildrenNodes.getNodeName());
+                    articleChildrenNodes.setNodeName( "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+articleChildrenNodes.getNodeName());
                     nodes.add(articleChildrenNodes);
                 }
             }
