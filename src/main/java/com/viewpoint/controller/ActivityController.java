@@ -1,7 +1,6 @@
-package com.viewpoint.controller.controller;
+﻿package com.viewpoint.controller;
 
 import com.viewpoint.dataobject.Activity;
-import com.viewpoint.enums.ResultEnum;
 import com.viewpoint.exception.ViewpointException;
 import com.viewpoint.form.ActivityForm;
 import com.viewpoint.service.ActivityService;
@@ -19,6 +18,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+<<<<<<<HEAD:src/main/java/com/viewpoint/controller/controller/ActivityController.java
+        package com.viewpoint.controller.controller;
 
 @Controller
 @RequestMapping("/activity")

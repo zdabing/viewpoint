@@ -11,6 +11,9 @@ public interface UserService {
      */
     List<User> findAdmin();
 
+    User findByName(String name);
+
     User save(User user);
 
+    User findById(Integer id);
 }
