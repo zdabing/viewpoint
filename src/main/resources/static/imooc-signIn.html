@@ -8,9 +8,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="./css/font.css">
-	<link rel="stylesheet" href="./css/weadmin.css">
-	<script src="./layui/layui.js" charset="utf-8"></script>
+	<link rel="stylesheet" href="/css/font.css">
+	<link rel="stylesheet" href="/css/weadmin.css">
 
 </head>
 <body class="login-bg">
@@ -27,30 +26,6 @@
 		<input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
 	</form>
 </div>
-
-<!--<script type="text/javascript">
-
-    layui.extend({
-        admin: './js/admin'
-    });
-    layui.use(['form','admin'], function(){
-        var form = layui.form
-            ,admin = layui.admin,
-        $ = layui.jquery;
-        //监听提交
-        form.on('submit(login)', function(data){
-            /*$.post("/viewpoint/authentication/require", { username: "123", password: "2pm" } );*/
-            $.ajax({
-                url : '/viewpoint/authentication/require',
-                data : {
-                    username: "123", password: "2pm"
-                },
-                type: "post",
-                dataType: "json"
-            });
-        });
-    });
-</script>-->
 <!-- 底部结束 -->
 </body>
 </html>

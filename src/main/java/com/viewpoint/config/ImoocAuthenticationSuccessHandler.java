@@ -5,6 +5,7 @@ import com.viewpoint.dataobject.User;
 import com.viewpoint.properties.LoginType;
 import com.viewpoint.properties.SecurityProperties;
 import com.viewpoint.service.UserService;
+import com.viewpoint.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -43,7 +44,7 @@ public class ImoocAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
         request.getSession().setAttribute("user", user);
         if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())){
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(authentication));
+            response.getWriter().write(objectMapper.writeValueAsString(ResultVOUtil.success(authentication)));
         }else  {
             super.onAuthenticationSuccess(request,response,authentication);
         }

@@ -1,6 +1,7 @@
 package com.viewpoint.service.impl;
 
 
+import com.viewpoint.exception.ValidateCodeException;
 import com.viewpoint.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
         com.viewpoint.dataobject.User user = userRepository.findByName(username);
         if (user == null){
             //抛出异常，会根据配置跳到登录失败页面
-            throw new UsernameNotFoundException("找不到该账户信息！");
+            throw new ValidateCodeException("账户不存在！");
         }
         //GrantedAuthority是security提供的权限类 可以放权限进去
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();

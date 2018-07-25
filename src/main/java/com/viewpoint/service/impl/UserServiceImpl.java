@@ -49,4 +49,15 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findById(id);
         return user.orElse(null);
     }
+
+    @Override
+    public List<User> findRegistered() {
+        return userRepository.findByRole(StatusEnum.REGISTERED.getCode());
+    }
+
+    @Override
+    @Transactional
+    public void delete(Integer id) {
+        userRepository.deleteById(id);
+    }
 }
