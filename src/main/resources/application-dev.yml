@@ -6,20 +6,15 @@ spring:
     url: jdbc:mysql://192.168.1.143/viewpoint?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
-  #jackson:
-    #default-property-inclusion: non_null
-    #time-zone: GMT+8
-    #date-format: yyyy-MM-dd HH:mm:ss
-    #joda-date-time-format: yyyy-MM-dd HH:mm:ss
-  freemarker:
-    template-loader-path: classpath:/templates
+  jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
     cache: false
-    charset: utf-8
-    check-template-location: true
-    content-type: text/html
-    expose-request-attributes: true
-    expose-session-attributes: true
-    request-context-attribute: request
+    check-template: true
+    enabled: true
+    encoding: utf-8
+    mode: HTML5
+    prefix: classpath:/templates/
     suffix: .html
   resources:
     static-locations: classpath:/static/

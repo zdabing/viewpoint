@@ -52,7 +52,7 @@
 			<div class="weadmin-block demoTable">
 				<button class="layui-btn" onclick="WeAdminShow('添加活动','/activity/add')"><i class="layui-icon">&#xe61f;</i>添加</button>
 			</div>
-			<table class="layui-hide" id="articleList">
+			<table class="layui-hide" id="articleList" lay-filter="activity">
 
 			</table>
 
@@ -64,10 +64,15 @@
 				<a   title="编辑" onclick="WeAdminEdit('编辑','/activity/add?activityId={{d.activityId}}')" href="javascript:;">
 					<i class="layui-icon">&#xe642;</i>
 				</a>
-				<a title="查看" onclick="WeAdminShow('查看文章','/activity/add?activityId={{d.activityId}}',600,400)" href="javascript:;">
+<!--				<a title="查看" onclick="WeAdminShow('查看文章','/activity/add?activityId={{d.activityId}}',600,400)" href="javascript:;">
 					<i class="layui-icon">&#xe63c;</i>
+<<<<<<< HEAD
 				</a>
 				<a title="删除" id="delete" onclick="onDelete('{{d.activityId}}');" >
+=======
+				</a>-->
+				<a title="删除" href="javascript:;" lay-event="del">
+>>>>>>> origin/master
 					<i class="layui-icon">&#xe640;</i>
 				</a>
 			</script>
@@ -173,6 +178,32 @@
                         layer.msg("系统繁忙!请重试");
                     }
                 });
+            });
+            table.on('tool(activity)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                if(obj.event === 'del'){ //删除
+                    layer.confirm('真的删除么', function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url : '/activity/del',
+                            data : {
+                                activityId : obj.data.activityId
+                            },
+                            type: "post",
+                            dataType: "json",
+                            success : function(data) {
+                                if(data.code == 0){
+                                    layer.msg(data.msg);
+                                }else {
+                                    layer.msg(data.msg);
+                                }
+                                tableIns.reload();
+                            },
+                            error : function() {
+                                layer.msg("系统繁忙!请重试");
+                            }
+                        });
+                    });
+                }
             });
         });
 	</script>

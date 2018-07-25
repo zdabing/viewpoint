@@ -58,6 +58,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    @Transactional
     public void delete(String activityId) {
         activityRepository.deleteById(activityId);
     }

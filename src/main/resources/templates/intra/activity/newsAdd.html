@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8">
 	<title>活动</title>
@@ -19,30 +19,30 @@
 			<div class="layui-col-md9 layui-col-xs7">
 				<div class="layui-form-item magt3">
 					<div class="layui-hide">
-						<input type="text" class="layui-input" id="activityId" value="${(activity.activityId)!''}">
+						<input type="text" class="layui-input" id="activityId" th:value="${activity?.activityId}" value="">
 					</div>
 					<label class="layui-form-label">活动标题</label>
 					<div class="layui-input-block">
-						<input type="text" class="layui-input" id="activityName" placeholder="请输入活动标题" value="${(activity.activityName)!''}" lay-verify="required" autocomplete="off">
+						<input type="text" class="layui-input" id="activityName" placeholder="请输入活动标题" th:value="${activity?.activityName}" value="" lay-verify="required" autocomplete="off">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">活动摘要</label>
 					<div class="layui-input-block">
-						<textarea placeholder="请输入活动摘要" class="layui-textarea" id="activityDesc" lay-verify="required" autocomplete="off">${(activity.activityDesc)!''}</textarea>
+						<textarea placeholder="请输入活动摘要" class="layui-textarea" id="activityDesc" lay-verify="required" autocomplete="off" th:text="${activity?.activityDesc}"></textarea>
 					</div>
 				</div>
 			</div>
 			<div class="layui-col-md3 layui-col-xs5">
 				<div class="layui-upload-list thumbBox mag0 magt3">
-					<img class="layui-upload-img thumbImg" id="activityLogo" src="${(activity.activityLogo)!''}">
+					<img class="layui-upload-img thumbImg" id="activityLogo" th:src="${activity?.activityLogo}" src="">
 				</div>
 			</div>
 		</div>
 		<div class="layui-form-item magb0">
 			<label class="layui-form-label">活动内容</label>
 			<div class="layui-input-block" id="activityContent">
-				<p>${(activity.activityContent)!''}</p>
+				<p th:utext="${activity?.activityContent}"></p>
 			</div>
 		</div>
 	</div>
@@ -50,10 +50,10 @@
 		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 活动标签</blockquote>
 		<div class="border category">
 			<div class="">
-				<p><input type="checkbox" name="activityTag" title="新闻" lay-skin="primary" value="新闻" <#if ((activity.activityTag)!'')?contains('新闻')>checked="checked"</#if> /></p>
-				<p><input type="checkbox" name="activityTag" title="商品" lay-skin="primary" value="商品" <#if ((activity.activityTag)!'')?contains('商品')>checked="checked"</#if> /></p>
-				<p><input type="checkbox" name="activityTag" title="公告" lay-skin="primary" value="公告" <#if ((activity.activityTag)!'')?contains('公告')>checked="checked"</#if> /></p>
-				<p><input type="checkbox" name="activityTag" title="图片" lay-skin="primary" value="图片" <#if ((activity.activityTag)!'')?contains('图片')>checked="checked"</#if> /></p>
+				<p><input type="checkbox" name="activityTag" title="新闻" lay-skin="primary" value="新闻" th:checked="${#strings.contains(activity?.activityTag?:'','新闻')}"   /></p>
+				<p><input type="checkbox" name="activityTag" title="商品" lay-skin="primary" value="商品" th:checked="${#strings.contains(activity?.activityTag?:'','商品')}"  /></p>
+				<p><input type="checkbox" name="activityTag" title="公告" lay-skin="primary" value="公告" th:checked="${#strings.contains(activity?.activityTag?:'','公告')}"  /></p>
+				<p><input type="checkbox" name="activityTag" title="图片" lay-skin="primary" value="图片" th:checked="${#strings.contains(activity?.activityTag?:'','图片')}"  /></p>
 			</div>
 		</div>
 		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
@@ -61,13 +61,13 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 开　始</label>
 				<div class="layui-input-block">
-					<input type="text" class="layui-input" id="startTime" placeholder="请选择日期和时间" value="${(activity.startTime?replace('T',' '))!''}"  readonly lay-verify="required" />
+					<input type="text" class="layui-input" id="startTime" placeholder="请选择日期和时间" th:value="${#temporals.format(activity?.startTime, 'yyyy-MM-dd HH:mm:ss')}" value=""  readonly lay-verify="required" />
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 结　束</label>
 				<div class="layui-input-block">
-					<input type="text" class="layui-input" id="endTime" placeholder="请选择日期和时间" value="${(activity.endTime?replace('T',' '))!''}" readonly lay-verify="required"/>
+					<input type="text" class="layui-input" id="endTime" placeholder="请选择日期和时间" th:value="${#temporals.format(activity?.endTime, 'yyyy-MM-dd HH:mm:ss')}" value="" readonly lay-verify="required"/>
 				</div>
 			</div>
 			<hr class="layui-bg-gray" />
@@ -122,10 +122,10 @@
                 activityTag += ',' + $(this).val();
             });
             var activityLogo = $("#activityLogo").attr("src")
-/*            var activityLogo = $("#activityLogo").val()
+            var activityLogo = $("#activityLogo").val()
             var activityDesc =$("#activityDesc").val()
             var   startTime = $("#startTime").val()
-            var  endTime = $("#endTime").val()*/
+            var  endTime = $("#endTime").val()
             //弹出loading
             var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
             $.ajax({
@@ -155,7 +155,7 @@
                         },1000);
                         return false;
                     }else {
-                        layer.alert("上传失败!请重试");
+                        layer.alert("添加失败!请重试");
                         return false;
                     }
                 },
