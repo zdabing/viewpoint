@@ -20,7 +20,9 @@
 				<div class="layui-form-item magt3">
 					<div class="layui-hide">
 						<input type="text" class="layui-input" id="articleNodeId" th:value="${articleNodes?.nodeId}" >
+						<input type="text" class="layui-input" id="childrenId" th:value="${articleNodes?.hasChildren}" >
 					</div>
+
 					<label class="layui-form-label">节点名称</label>
 					<div class="layui-input-block" style = "width:210px;">
 						<input type="text" class="layui-input" id="name" placeholder="请输入节点名称" th:value="${articleNodes?.nodeName}" value="">
@@ -40,7 +42,7 @@
 				<div class="layui-input-inline">
 					<select name="modules" lay-verify="required" lay-search="" id="parentId" th:disabled="${articleNodes?.parentId == 0}">
 
-						<option value=""name="nodeId" th:each="nodes:${articleNodesList}" th:value="${nodes.nodeId}" th:text="${nodes.nodeName}" th:selected="${articleNodes?.nodeId} == ${nodes.nodeId}"></option>
+						<option value=""name="parentId" th:each="nodes:${articleNodesList}" th:value="${nodes.nodeId}" th:text="${nodes.nodeName}" th:selected="${articleNodes?.nodeId} == ${nodes.nodeId}"></option>
 
 					</select>
 				</div>
@@ -81,9 +83,10 @@
             layer = layui.layer
             $ = layui.jquery;
 
-        $("#type0").hide();
+
 
         form.on('radio', function(data){
+            var parent = $("#articleParentId").val();
             if(data.value==1){
                 $("#type0").show();
             }else if (data.value==0) {
@@ -97,19 +100,17 @@
             ,format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
         });
 
-        $("#type0").show();
 
         form.on("submit(add)",function(data){
-            var hasChildren = data.field.sex;
 
             $.ajax({
                 url : '/articleNodes/save',
                 data : {
                     nodeId : $("#articleNodeId").val(),
 					nodeName : $("#name").val(),
-                    hasChildren : hasChildren,
+                    hasChildren :$("#childrenId").val(),
 					sort : $("#sort").val(),
-					parentId : $("#parentId").val()
+					parentId : $("#parentId").val()  //为下拉列表的nodeId
                 },
                 type: "post",
                 dataType: "json",

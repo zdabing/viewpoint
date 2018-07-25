@@ -67,6 +67,10 @@
 			</div>
 			<table class="layui-hide" id="articleList"></table>
 
+			<div class="layui-tab-item">
+				<div id="pageDemo"></div>
+			</div>
+
 			<script type="text/html" id="enabledTpl">
 			  <!-- 这里的 checked 的状态只是演示 -->
 			  <input type="checkbox" name="{{d.articleId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
@@ -90,11 +94,12 @@
         layui.extend({
             admin: '/js/admin'
         });
-        layui.use(['table', 'jquery','form', 'admin'], function() {
+        layui.use(['table','laypage', 'jquery','form', 'admin'], function() {
             var table = layui.table,
                 $ = layui.jquery,
                 form = layui.form,
-                admin = layui.admin;
+                admin = layui.admin,
+                laypage = layui.laypage;
 
             var tableIns = table.render({
                 elem: '#articleList',

@@ -9,7 +9,6 @@ public class ArticleForm {
     /**
      * 文章Id
      */
-
     private Integer articleId;
 
     @NotEmpty

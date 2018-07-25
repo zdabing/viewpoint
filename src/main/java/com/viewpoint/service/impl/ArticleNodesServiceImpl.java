@@ -27,9 +27,8 @@ public class ArticleNodesServiceImpl implements ArticleNodesService {
     @Override
     @Transactional
     public ArticleNodes save(ArticleNodes articleNodes) {
-
-
-
+        System.out.println(articleNodes);
+        return articleNodesRepository.save(articleNodes);
     }
 
 //    /** 查询节点下的子节点，若没有子节点返回article*/
@@ -118,6 +117,7 @@ public class ArticleNodesServiceImpl implements ArticleNodesService {
     public void delete(Integer nodeId) {
         articleNodesRepository.deleteById(nodeId);
     }
+
 
     @Override
     public ArticleNodes findByNodeId(Integer nodeId) {

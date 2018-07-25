@@ -43,8 +43,10 @@ public class ArticleController {
     public ResultVO list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                               @RequestParam(value = "limit", defaultValue = "10") Integer size,
                               Model model){
-        ResultVO resultVO =  articleService.findAllArticle(PageRequest.of(0,10));
-        Page<Article> articlePage = (Page<Article>)resultVO.getData();
+        Page<Article> articlePage =  articleService.findAllArticle(PageRequest.of(page - 1 ,size));
+        if(articlePage.getTotalPages() == 0){
+            return ResultVOUtil.error(ResultEnum.ERROR.getCode(),"没有文章，请上传");
+        }
         return ResultVOUtil.success(articlePage.getContent(),articlePage.getTotalElements());
     }
 
@@ -54,7 +56,7 @@ public class ArticleController {
             Article article = articleService.findArticleById(articleId.toString());
             model.addAttribute("article",article);
         }
-        List<ArticleNodes> nodes = new ArrayList<ArticleNodes>();
+        List<ArticleNodes> nodes = new ArrayList<>();
         List<ArticleNodes> articleNodesList = articleNodesService.findAllByFatherId();
         for (ArticleNodes articleNodes : articleNodesList) {
             if(articleNodes.getHasChildren() == 0){

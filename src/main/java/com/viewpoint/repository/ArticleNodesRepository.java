@@ -13,4 +13,6 @@ public interface ArticleNodesRepository extends JpaRepository<ArticleNodes,Integ
     List<ArticleNodes> findByEnabled(Integer enabled);
 
     ArticleNodes findByNodeName(String nodeName);
+
+    ArticleNodes findOneByParentId(Integer parentId);
 }

@@ -1,6 +1,7 @@
 package com.viewpoint.form;
 
 import lombok.Data;
+import lombok.NonNull;
 
 @Data
 public class ArticleNodesForm {

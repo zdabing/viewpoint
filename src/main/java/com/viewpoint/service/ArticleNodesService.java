@@ -45,4 +45,5 @@ public interface ArticleNodesService {
      * @param nodeId
      */
     void delete(Integer nodeId);
+
 }

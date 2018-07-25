@@ -3,7 +3,7 @@ package com.viewpoint.service.impl;
 import com.viewpoint.dataobject.Article;
 import com.viewpoint.enums.ResultEnum;
 import com.viewpoint.repository.ArticleNodesRepository;
-import com.viewpoint.repository.ArticleReponsitory;
+import com.viewpoint.repository.ArticleRepository;
 import com.viewpoint.service.ArticleService;
 import com.viewpoint.utils.ResultVOUtil;
 import com.viewpoint.vo.ResultVO;
@@ -21,7 +21,7 @@ import java.util.Optional;
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
-    private ArticleReponsitory articleReponsitory;
+    private ArticleRepository articleReponsitory;
 
 
     /**添加一篇文章*/
@@ -56,12 +56,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     /**查看所有文章*/
     @Override
-    public ResultVO findAllArticle(Pageable pageable) {
+    public Page findAllArticle(Pageable pageable) {
         Page<Article> articlePage = articleReponsitory.findAll(pageable);
-        if(articlePage.getContent() == null){
-            return ResultVOUtil.error(ResultEnum.ARTICLE_NOT_EXIST.getCode(),"没有文章,请添加！");
-        }
-        return ResultVOUtil.success(articlePage);
+
+        return articlePage;
     }
 
     /**

@@ -48,19 +48,17 @@ public class ArticleNodesController {
     public String add(Model model,@RequestParam(required = false,value = "nodeId") Integer nodeId){
         if(!StringUtils.isEmpty(nodeId)){
             ArticleNodes articleNodes = articleNodesService.findByNodeId(nodeId);
-            if(articleNodes.getParentId() != 0){
-                articleNodes.setNodeId(articleNodes.getParentId());
-            }
             model.addAttribute("articleNodes",articleNodes);
         }
+
         List<ArticleNodes> articleNodesList = articleNodesService.findAllByFatherId();
         Iterator<ArticleNodes> iterator = articleNodesList.iterator();
         if(!StringUtils.isEmpty(nodeId)){
             ArticleNodes articleNodes = articleNodesService.findByNodeId(nodeId);
             if(articleNodes.getParentId() != 0 ){
                 while(iterator.hasNext()){
-                    ArticleNodes articleNodes1 = iterator.next();
-                    if(articleNodes1.getHasChildren() == 0){
+                    ArticleNodes articleNodes3 = iterator.next();
+                    if(articleNodes3.getHasChildren() == 0){
                         iterator.remove();
                     }
                 }
@@ -81,14 +79,44 @@ public class ArticleNodesController {
         }
         ArticleNodes articleNodesInfo = new ArticleNodes();
         try {
-            //n如果nodeId, 说明是新增
+            //没有子类的父节点要添加节点
+            if(StringUtils.isEmpty(articleNodesForm.getNodeId()) && !StringUtils.isEmpty(articleNodesForm.getParentId())){
+                ArticleNodes articleNodes = articleNodesService.findByNodeId(articleNodesForm.getParentId());
+                articleNodes.setHasChildren(1);
+                articleNodesService.save(articleNodes);
+
+                BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
+                articleNodesInfo.setEnabled(0);
+                articleNodesInfo.setHasChildren(0);
+                articleNodesInfo.setUpdateTime(LocalDateTime.now());
+                articleNodesService.save(articleNodesInfo);
+                return ResultVOUtil.success();
+            }
+            //如果没有nodeId, 说明是更改节点信息
             if(!StringUtils.isEmpty(articleNodesForm.getNodeId())){
                 articleNodesInfo = articleNodesService.findByNodeId(articleNodesForm.getNodeId());
+                BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
+                if(articleNodesForm.getHasChildren() == 1){
+                    articleNodesInfo.setParentId(0);
+                }
+                articleNodesService.save(articleNodesInfo);
             }else {
-                articleNodesInfo.setUpdateTime(LocalDateTime.now());
+                Integer nodeId = articleNodesForm.getParentId();
+                ArticleNodes articleNodes = articleNodesService.findByNodeId(nodeId);
+                if(articleNodes.getParentId() == 0){
+                    articleNodesInfo.setEnabled(0);
+                    articleNodesInfo.setUpdateTime(LocalDateTime.now());
+                    BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
+                    if(articleNodesForm.getParentId() == 1){
+                        articleNodesInfo.setParentId(0);
+                    }
+                    articleNodesInfo.setHasChildren(0);
+                    articleNodesService.save(articleNodesInfo);
+                    return ResultVOUtil.success();
+                }
             }
-            BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
-            articleNodesService.save(articleNodesInfo);
+
+
         }  catch (ViewpointException e) {
             return ResultVOUtil.error(1,e.getMessage());
         }

@@ -2,6 +2,7 @@ package com.viewpoint.service;
 
 import com.viewpoint.dataobject.Article;
 import com.viewpoint.vo.ResultVO;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ArticleService {
@@ -13,7 +14,7 @@ public interface ArticleService {
     /**通过ID查看文章*/
     Article findArticleById(String articleId);
     /**查询所有文章*/
-    ResultVO findAllArticle(Pageable pageable);
+    Page findAllArticle(Pageable pageable);
 
     /**
      * 文章上下架
