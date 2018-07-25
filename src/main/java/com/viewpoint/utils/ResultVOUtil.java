@@ -21,6 +21,7 @@ public class ResultVOUtil {
 
     public static ResultVO success(Object object,Long count){
         ResultVO resultVO = success(object);
+        resultVO.setCount(count);
         return resultVO;
     }
 
