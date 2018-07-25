@@ -3,6 +3,7 @@ package com.viewpoint.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viewpoint.properties.LoginType;
 import com.viewpoint.properties.SecurityProperties;
+import com.viewpoint.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
@@ -33,7 +34,7 @@ public class ImoocAuthenticationFailHandler extends SimpleUrlAuthenticationFailu
         log.info("登录失败={}",e);
         if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())){
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(e.getMessage()));
+            response.getWriter().write(objectMapper.writeValueAsString(ResultVOUtil.error(1,e.getMessage())));
         }else {
             super.onAuthenticationFailure(request,response,e);
         }

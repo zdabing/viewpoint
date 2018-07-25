@@ -30,4 +30,5 @@ ftp:
 imooc:
   security:
     browser:
-      loginType:  REDIRECT
+      #loginType:  REDIRECT
+      loginPage:  /login.html

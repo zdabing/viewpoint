@@ -30,8 +30,15 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping("/list")
-    public ResultVO list(){
+    @RequestMapping("/admin/list")
+    public ResultVO admin(){
+        List<User> userList = userService.findAdmin();
+        return ResultVOUtil.success(userList,Long.valueOf(userList.size()));
+    }
+
+    @ResponseBody
+    @RequestMapping("/registered/list")
+    public ResultVO registered(){
         List<User> userList = userService.findAdmin();
         return ResultVOUtil.success(userList,Long.valueOf(userList.size()));
     }
