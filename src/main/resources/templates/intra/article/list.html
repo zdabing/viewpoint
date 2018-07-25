@@ -80,9 +80,6 @@
 				<a   title="编辑" onclick="WeAdminEdit('编辑','/article/add?articleId={{d.articleId}}')" href="javascript:;">
 					<i class="layui-icon">&#xe642;</i>
 				</a>
-				<a title="查看" onclick="WeAdminShow('查看文章','./show.html',600,400)" href="javascript:;">
-					<i class="layui-icon">&#xe63c;</i>
-				</a>
 				<a title="删除" id="delete" onclick="onDelete('{{d.articleId}}');">
 					<i class="layui-icon">&#xe640;</i>
 				</a>
@@ -98,8 +95,7 @@
             var table = layui.table,
                 $ = layui.jquery,
                 form = layui.form,
-                admin = layui.admin,
-                laypage = layui.laypage;
+                admin = layui.admin
 
             var tableIns = table.render({
                 elem: '#articleList',

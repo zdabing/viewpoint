@@ -1,5 +1,6 @@
 package com.viewpoint.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -35,6 +36,6 @@ public class ArticleNodes {
     /** 排序 */
     private Integer sort;
 
-    /** 修改时间 */
+    /** 修改时间 */@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 }
