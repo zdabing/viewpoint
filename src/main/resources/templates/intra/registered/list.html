@@ -34,7 +34,7 @@
         <a href="">首页</a>
         <a href="">会员管理</a>
         <a>
-          <cite>管理员列表</cite></a>
+          <cite>会员列表</cite></a>
       </span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
@@ -79,23 +79,23 @@
 
             var tableIns = table.render({
                 elem: '#userList',
-                url: '/user/list/2',
-                cellMinWidth: 80,
+                url: '/user/list/1',
+                cellMinWidth : 80,
                 cols: [
                     [{
                         type: 'checkbox'
                     }, {
-                        field: 'id',title: 'ID',sort: true
+                        field: 'id',title: 'ID',sort: true,width:80, align:"center"
                     }, {
-                        field: 'name',title: '登录名'
+                        field: 'name',title: '登录名', align:"center"
                     }, {
-                        field: 'openid',title: 'openid'
+                        field: 'openid',title: 'openid', align:"center"
                     }, {
-                        field: 'alias',title: '昵称'
+                        field: 'alias',title: '昵称', align:"center"
                     }, {
-                        field: 'icon',title: '头像',templet:function(d){
+                        field: 'icon',title: '头像',align:"center",templet:function(d){
                             return '<a href="'+d.icon+'" target="_blank"><img src="'+d.icon+'" height="26" /></a>';}
-					}, {
+                    }, {
                         field: 'operate',title: '操作',toolbar: '#operateTpl',align: 'center'
                     }]
                 ],

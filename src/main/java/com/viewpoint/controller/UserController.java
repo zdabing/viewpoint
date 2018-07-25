@@ -7,12 +7,12 @@ import com.viewpoint.utils.ResultVOUtil;
 import com.viewpoint.vo.ResultVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 用户controller
@@ -24,23 +24,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/index")
-    public String index(){
-        return "intra/user/list";
+    @GetMapping("/admin/index")
+    public String adminIndex(){
+        return "intra/admin/list";
+    }
+
+    @GetMapping("/registered/index")
+    public String registeredIndex(){
+        return "intra/registered/list";
     }
 
     @ResponseBody
-    @RequestMapping("/admin/list")
-    public ResultVO admin(){
-        List<User> userList = userService.findAdmin();
-        return ResultVOUtil.success(userList,Long.valueOf(userList.size()));
-    }
-
-    @ResponseBody
-    @RequestMapping("/registered/list")
-    public ResultVO registered(){
-        List<User> userList = userService.findAdmin();
-        return ResultVOUtil.success(userList,Long.valueOf(userList.size()));
+    @RequestMapping("/list/{role}")
+    public ResultVO adminList(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                              @RequestParam(value = "limit", defaultValue = "10") Integer size,@PathVariable Integer role){
+        Page<User> userList = userService.findByRole(role,PageRequest.of(page - 1 ,size));
+        return ResultVOUtil.success(userList.getContent(),userList.getTotalElements());
     }
 
     @RequestMapping("/add")
@@ -49,7 +48,7 @@ public class UserController {
             User user = userService.findById(id);
             model.addAttribute("user",user);
         }
-        return "intra/user/adminAdd";
+        return "intra/admin/adminAdd";
     }
 
     @PostMapping("/save")
