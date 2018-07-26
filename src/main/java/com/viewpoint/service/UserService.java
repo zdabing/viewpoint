@@ -1,13 +1,10 @@
 package com.viewpoint.service;
 
 import com.viewpoint.dataobject.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
-
-    /** 管理员 */
-    List<User> findAdmin();
 
     User findByName(String name);
 
@@ -15,8 +12,7 @@ public interface UserService {
 
     User findById(Integer id);
 
-    /** 已注册 */
-    List<User> findRegistered();
-
     void delete(Integer id);
+
+    Page<User> findByRole(Integer role, Pageable pageable);
 }

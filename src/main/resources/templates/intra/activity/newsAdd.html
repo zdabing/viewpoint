@@ -47,13 +47,13 @@
 		</div>
 	</div>
 	<div class="layui-col-md3 layui-col-xs12">
-		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 活动标签</blockquote>
+		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 活动类型</blockquote>
 		<div class="border category">
 			<div class="">
-				<p><input type="checkbox" name="activityTag" title="新闻" lay-skin="primary" value="新闻" th:checked="${#strings.contains(activity?.activityTag?:'','新闻')}"   /></p>
-				<p><input type="checkbox" name="activityTag" title="商品" lay-skin="primary" value="商品" th:checked="${#strings.contains(activity?.activityTag?:'','商品')}"  /></p>
-				<p><input type="checkbox" name="activityTag" title="公告" lay-skin="primary" value="公告" th:checked="${#strings.contains(activity?.activityTag?:'','公告')}"  /></p>
-				<p><input type="checkbox" name="activityTag" title="图片" lay-skin="primary" value="图片" th:checked="${#strings.contains(activity?.activityTag?:'','图片')}"  /></p>
+				<p><input type="checkbox" name="activityTag" title="普通" lay-skin="primary" value="普通" th:checked="${#strings.contains(activity?.activityTag?:'','普通')}"   /></p>
+				<p><input type="checkbox" name="activityTag" title="青少年" lay-skin="primary" value="青少年" th:checked="${#strings.contains(activity?.activityTag?:'','青少年')}"  /></p>
+				<!--<p><input type="checkbox" name="activityTag" title="公告" lay-skin="primary" value="公告" th:checked="${#strings.contains(activity?.activityTag?:'','公告')}"  /></p>
+				<p><input type="checkbox" name="activityTag" title="图片" lay-skin="primary" value="图片" th:checked="${#strings.contains(activity?.activityTag?:'','图片')}"  /></p>-->
 			</div>
 		</div>
 		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>

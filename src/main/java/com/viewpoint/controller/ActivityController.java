@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-
 @Controller
 @RequestMapping("/activity")
 public class ActivityController {
@@ -28,15 +27,14 @@ public class ActivityController {
     private ActivityService activityService;
 
     @GetMapping("/index")
-    public String list(){
+    public String index(){
         return "intra/activity/list";
     }
 
     @ResponseBody
     @RequestMapping("/list")
     public ResultVO list(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                         @RequestParam(value = "limit", defaultValue = "10") Integer size,
-                         Model model){
+                         @RequestParam(value = "limit", defaultValue = "10") Integer size,Model model){
         Page<Activity> activityPage = activityService.findAll(PageRequest.of(page - 1 ,size));
         return ResultVOUtil.success(activityPage.getContent(),activityPage.getTotalElements());
     }
