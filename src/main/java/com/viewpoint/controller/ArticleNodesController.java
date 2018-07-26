@@ -78,45 +78,57 @@ public class ArticleNodesController {
             return ResultVOUtil.error(1,bindingResult.getFieldError().getDefaultMessage());
         }
         ArticleNodes articleNodesInfo = new ArticleNodes();
-        try {
-            //没有子类的父节点要添加节点
-            if(StringUtils.isEmpty(articleNodesForm.getNodeId()) && !StringUtils.isEmpty(articleNodesForm.getParentId())){
-                ArticleNodes articleNodes = articleNodesService.findByNodeId(articleNodesForm.getParentId());
-                articleNodes.setHasChildren(1);
-                articleNodesService.save(articleNodes);
 
-                BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
-                articleNodesInfo.setEnabled(0);
-                articleNodesInfo.setHasChildren(0);
-                articleNodesInfo.setUpdateTime(LocalDateTime.now());
-                articleNodesService.save(articleNodesInfo);
-                return ResultVOUtil.success();
-            }
-            //如果没有nodeId, 说明是更改节点信息
-            if(!StringUtils.isEmpty(articleNodesForm.getNodeId())){
-                articleNodesInfo = articleNodesService.findByNodeId(articleNodesForm.getNodeId());
-                BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
-                if(articleNodesForm.getHasChildren() == 1){
-                    articleNodesInfo.setParentId(0);
-                }
-                articleNodesService.save(articleNodesInfo);
-            }else {
-                Integer nodeId = articleNodesForm.getParentId();
-                ArticleNodes articleNodes = articleNodesService.findByNodeId(nodeId);
-                if(articleNodes.getParentId() == 0){
+        try {
+            //说明是新增加的
+            if(StringUtils.isEmpty(articleNodesForm.getNodeId())){
+                //增加父节点
+                if(articleNodesForm.getHasChildren() == 0){
+                    BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
                     articleNodesInfo.setEnabled(0);
                     articleNodesInfo.setUpdateTime(LocalDateTime.now());
-                    BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
-                    if(articleNodesForm.getParentId() == 1){
-                        articleNodesInfo.setParentId(0);
-                    }
-                    articleNodesInfo.setHasChildren(0);
                     articleNodesService.save(articleNodesInfo);
-                    return ResultVOUtil.success();
+                }else{
+                    //增加子节点
+                    BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
+                    ArticleNodes articleNodes = articleNodesService.findByNodeId(articleNodesForm.getParentId());
+                    articleNodes.setHasChildren(1);
+                    articleNodesService.save(articleNodes);
+                    articleNodesInfo.setEnabled(0);
+                    articleNodesInfo.setUpdateTime(LocalDateTime.now());
+                    articleNodesService.save(articleNodesInfo);
                 }
+
+            }else{
+                //更改节点
+                //更改父节点
+                if(articleNodesForm.getParentId() == 0){
+                    List<ArticleNodes> articleNodesList = articleNodesService.findChildrenId(articleNodesForm.getNodeId());
+                    if(articleNodesList.isEmpty()){
+                        //如果父节点下面没有子节点,
+                        BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
+                        articleNodesInfo.setEnabled(0);
+                        articleNodesInfo.setUpdateTime(LocalDateTime.now());
+                        articleNodesService.save(articleNodesInfo);
+                    }else {
+                        //如果父节点下面有子节点,需要更改childrenId
+                        BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
+                        articleNodesInfo.setHasChildren(1);
+                        articleNodesInfo.setEnabled(0);
+                        articleNodesInfo.setUpdateTime(LocalDateTime.now());
+                        articleNodesService.save(articleNodesInfo);
+                    }
+
+                }else {
+                    //更改子节点
+                    BeanUtils.copyProperties(articleNodesForm, articleNodesInfo);
+                    articleNodesInfo.setHasChildren(0);
+                    articleNodesInfo.setEnabled(0);
+                    articleNodesInfo.setUpdateTime(LocalDateTime.now());
+                    articleNodesService.save(articleNodesInfo);
+                }
+
             }
-
-
         }  catch (ViewpointException e) {
             return ResultVOUtil.error(1,e.getMessage());
         }

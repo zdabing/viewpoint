@@ -20,7 +20,6 @@
 				<div class="layui-form-item magt3">
 					<div class="layui-hide">
 						<input type="text" class="layui-input" id="articleNodeId" th:value="${articleNodes?.nodeId}" >
-						<input type="text" class="layui-input" id="childrenId" th:value="${articleNodes?.hasChildren}" >
 					</div>
 
 					<label class="layui-form-label">节点名称</label>
@@ -31,9 +30,9 @@
 
 				<div class="layui-form-item" >
 					<label class="layui-form-label">显示位置</label>
-					<div class="layui-input-block">
+					<div class="layui-input-block" >
 						<input type="radio" name="sex" value="0" title="主节点" checked >
-						<input type="radio" name="sex" value="1" title="子节点" th:checked="${articleNodes?.parentId != 0}"  >
+						<input type="radio" name="sex" value="1"  title="子节点" th:checked="${articleNodes?.parentId != 0}"  >
 					</div>
 				</div>
 
@@ -102,15 +101,19 @@
 
 
         form.on("submit(add)",function(data){
-
+            var parentId = $("#parentId").val();
+            var hasChildren = data.field.sex;
+			if(hasChildren == 0){
+                parentId = 0;
+			}
             $.ajax({
                 url : '/articleNodes/save',
                 data : {
                     nodeId : $("#articleNodeId").val(),
 					nodeName : $("#name").val(),
-                    hasChildren :$("#childrenId").val(),
+                    hasChildren :hasChildren,
 					sort : $("#sort").val(),
-					parentId : $("#parentId").val()  //为下拉列表的nodeId
+					parentId : parentId  //为下拉列表的nodeId
                 },
                 type: "post",
                 dataType: "json",
