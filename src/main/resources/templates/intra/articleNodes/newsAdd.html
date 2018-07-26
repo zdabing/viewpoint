@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<title>活动</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10">
+	<div class="layui-col-md9 layui-col-xs12">
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md9 layui-col-xs7">
+				<div class="layui-form-item magt3">
+					<div class="layui-hide">
+						<input type="text" class="layui-input" id="articleNodeId" th:value="${articleNodes?.nodeId}" >
+					</div>
+
+					<label class="layui-form-label">节点名称</label>
+					<div class="layui-input-block" style = "width:210px;">
+						<input type="text" class="layui-input" id="name" placeholder="请输入节点名称" th:value="${articleNodes?.nodeName}" value="">
+					</div>
+				</div>
+
+				<div class="layui-form-item" >
+					<label class="layui-form-label">显示位置</label>
+					<div class="layui-input-block" >
+						<input type="radio" name="sex" value="0" title="主节点" checked >
+						<input type="radio" name="sex" value="1"  title="子节点" th:checked="${articleNodes?.parentId != 0}"  >
+					</div>
+				</div>
+
+			<div class="layui-inline" id="type0" >
+				<label class="layui-form-label">主节点名称</label>
+				<div class="layui-input-inline">
+					<select name="modules" lay-verify="required" lay-search="" id="parentId" th:disabled="${articleNodes?.parentId == 0}">
+
+						<option value=""name="parentId" th:each="nodes:${articleNodesList}" th:value="${nodes.nodeId}" th:text="${nodes.nodeName}" th:selected="${articleNodes?.nodeId} == ${nodes.nodeId}"></option>
+
+					</select>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+
+			<div class="layui-form-item" >
+				<div class="layui-form-item"  style = "width:322px;">
+					<label class="layui-form-label">排序</label>
+					<div class="layui-input-block">
+						<input type="text" class="layui-input" id="sort" placeholder="请输入序号" th:value="${articleNodes?.sort}" value="">
+					</div>
+				</div>
+
+				<hr class="layui-bg-gray" />
+				<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
+				<div class="layui-right" style="text-align:center">
+					<a class="layui-btn layui-btn-sm" lay-filter="add" lay-submit><i class="layui-icon">&#xe609;</i>发布</a>
+					<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script src="/js/wangEditor.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','layedit','laydate','upload'],function(){
+        var form = layui.form
+        layer = parent.layer === undefined ? layui.layer : top.layer,
+            laypage = layui.laypage,
+            upload = layui.upload,
+            layedit = layui.layedit,
+            laydate = layui.laydate,
+            layer = layui.layer
+            $ = layui.jquery;
+
+
+
+        form.on('radio', function(data){
+            var parent = $("#articleParentId").val();
+            if(data.value==1){
+                $("#type0").show();
+            }else if (data.value==0) {
+                $("#type0").hide();
+            }
+        });
+
+        laydate.render({
+            elem: '#endTime' //指定元素
+            ,type: 'datetime'
+            ,format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
+        });
+
+
+        form.on("submit(add)",function(data){
+            var parentId = $("#parentId").val();
+            var hasChildren = data.field.sex;
+			if(hasChildren == 0){
+                parentId = 0;
+			}
+            $.ajax({
+                url : '/articleNodes/save',
+                data : {
+                    nodeId : $("#articleNodeId").val(),
+					nodeName : $("#name").val(),
+                    hasChildren :hasChildren,
+					sort : $("#sort").val(),
+					parentId : parentId  //为下拉列表的nodeId
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    if(data.code == 0){
+                        //弹出loading
+                        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+                        setTimeout(function(){
+                            top.layer.close(index);
+                            top.layer.msg("活动添加成功！");
+                            layer.closeAll("iframe");
+                            //刷新父页面
+                            parent.location.reload();
+                        },1000);
+                        return false;
+                    }else {
+                        layer.alert("系统繁忙!请重试");
+                        return false;
+                    }
+                },
+                error : function() {
+                    layer.alert("系统繁忙!请重试");
+                }
+            });
+            return false;
+        })
+
+        //预览
+        form.on("submit(look)",function(){
+            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
+            return false;
+        })
+    })
+
+</script>
+</body>
+</html>

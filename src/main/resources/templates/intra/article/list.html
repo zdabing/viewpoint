@@ -34,7 +34,7 @@
         <a href="">首页</a>
         <a href="">活动管理</a>
         <a>
-          <cite>活动列表</cite></a>
+          <cite>文章列表</cite></a>
       </span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
@@ -42,7 +42,15 @@
 		<div class="weadmin-body">
 			<div class="layui-row">
 				<form class="layui-form layui-col-md12 we-search">
-					活动搜索：
+					文章搜索：
+					<!--<div class="layui-input-inline">
+						<select name="cateid">
+							<option>请选择分类</option>
+							<option>文章</option>
+							<option>会员</option>
+							<option>权限</option>
+						</select>
+					</div>-->
 					<div class="layui-inline">
 						<input type="text" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
 					</div>
@@ -50,21 +58,29 @@
 				</form>
 			</div>
 			<div class="weadmin-block demoTable">
-				<button class="layui-btn" onclick="WeAdminShow('添加活动','/activity/add')"><i class="layui-icon">&#xe61f;</i>添加</button>
+<!--			<button class="layui-btn layui-btn-danger" data-type="getCheckData"><i class="layui-icon">&#xe640;</i>批量删除</button>
+				<button class="layui-btn" data-type="Recommend"><i class="layui-icon">&#xe6c6;</i>推荐</button>
+				<button class="layui-btn" data-type="Top"><i class="layui-icon">&#xe619;</i>置顶</button>
+				<button class="layui-btn" data-type="Review"><i class="layui-icon">&#xe6b2;</i>审核</button>-->
+				<button class="layui-btn" onclick="WeAdminShow('添加文章','/article/add')"><i class="layui-icon">&#xe61f;</i>添加文章</button>
+				<!--<span class="fr" style="line-height:40px">共有数据：88 条</span>-->
 			</div>
-			<table class="layui-hide" id="articleList" lay-filter="activity">
+			<table class="layui-hide" id="articleList"></table>
 
-			</table>
+			<div class="layui-tab-item">
+				<div id="pageDemo"></div>
+			</div>
 
 			<script type="text/html" id="enabledTpl">
-			  <input type="checkbox" name="{{d.activityId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
+			  <!-- 这里的 checked 的状态只是演示 -->
+			  <input type="checkbox" name="{{d.articleId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
 			</script>
 
 			<script type="text/html" id="operateTpl">
-				<a   title="编辑" onclick="WeAdminEdit('编辑','/activity/add?activityId={{d.activityId}}')" href="javascript:;">
+				<a   title="编辑" onclick="WeAdminEdit('编辑','/article/add?articleId={{d.articleId}}')" href="javascript:;">
 					<i class="layui-icon">&#xe642;</i>
 				</a>
-				<a title="删除" href="javascript:;" lay-event="del">
+				<a title="删除" id="delete" onclick="onDelete('{{d.articleId}}');">
 					<i class="layui-icon">&#xe640;</i>
 				</a>
 			</script>
@@ -75,31 +91,27 @@
         layui.extend({
             admin: '/js/admin'
         });
-        layui.use(['table', 'jquery','form', 'admin', "element",'layer'], function() {
+        layui.use(['table','laypage', 'jquery','form', 'admin'], function() {
             var table = layui.table,
-            	layer = layui.layer,
                 $ = layui.jquery,
                 form = layui.form,
-                admin = layui.admin;
+                admin = layui.admin
+
             var tableIns = table.render({
                 elem: '#articleList',
-                url: '/activity/list',
-                cellMinWidth: 80,
+                url: '/article/list',
+                cellMinWidth: 50,
                 cols: [
                     [{
                         type: 'checkbox'
                     }, {
-                        field: 'activityId',title: 'ID',sort: true
+                        field: 'articleId',title: 'ID',sort: true
                     }, {
-                        field: 'activityName',title: '标题'
+                        field: 'title',title: '文章名'
                     }, {
-                        field: 'activityDesc',title: '活动描述'
+                        field: 'createTime',title: '创建时间',sort: true
                     }, {
-                        field: 'startTime',title: '活动开始时间',sort: true
-                    }, {
-                        field: 'endTime',title: '活动结束时间',sort: true
-                    }, {
-                        field: 'buyLimit',title: '限制人数'
+                        field: 'updateTime',title: '修改时间',sort: true
                     }, {
                         field: 'enable',title: '发布',templet: '#enabledTpl',align: 'center'
                     }, {
@@ -116,12 +128,12 @@
                 form.render();
             });
 
-            window.onDelete = function(activityId) {
+            window.onDelete = function(articleId) {
                 var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
                 $.ajax({
-                    url : '/activity/delete',
+                    url : '/article/delete',
                     data : {
-                        activityId : activityId,
+                        articleId : articleId,
                     },
                     type: "post",
                     dataType: "json",
@@ -140,18 +152,19 @@
                 });
             };
 
+
             //监听上下架操作
             form.on('checkbox(up)', function(obj){
                 var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
                 if(this.value == 1){
                     var enable =0;
-				}else{
+                }else{
                     var enable =1;
-				}
+                }
                 $.ajax({
-                    url : '/activity/updateSale',
+                    url : '/article/updateSale',
                     data : {
-                        activityId : this.name,
+                        articleId : this.name,
                         enabled : enable
                     },
                     type: "post",
@@ -170,32 +183,7 @@
                     }
                 });
             });
-            table.on('tool(activity)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                if(obj.event === 'del'){ //删除
-                    layer.confirm('真的删除么', function(index){
-                        layer.close(index);
-                        $.ajax({
-                            url : '/activity/del',
-                            data : {
-                                activityId : obj.data.activityId
-                            },
-                            type: "post",
-                            dataType: "json",
-                            success : function(data) {
-                                if(data.code == 0){
-                                    layer.msg(data.msg);
-                                }else {
-                                    layer.msg(data.msg);
-                                }
-                                tableIns.reload();
-                            },
-                            error : function() {
-                                layer.msg("系统繁忙!请重试");
-                            }
-                        });
-                    });
-                }
-            });
+
         });
 	</script>
 </html>

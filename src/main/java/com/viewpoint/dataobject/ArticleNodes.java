@@ -1,8 +1,11 @@
 package com.viewpoint.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
@@ -15,6 +18,7 @@ public class ArticleNodes {
 
     /** 节点ID */
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer nodeId;
 
     /** 父节点ID */
@@ -30,8 +34,8 @@ public class ArticleNodes {
     private Integer enabled;
 
     /** 排序 */
-    private Integer orderSort;
+    private Integer sort;
 
-    /** 修改时间 */
+    /** 修改时间 */@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 }

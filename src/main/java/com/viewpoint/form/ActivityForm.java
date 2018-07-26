@@ -34,7 +34,7 @@ public class ActivityForm {
     @NotNull(message = "开始时间不能为空")
     private LocalDateTime startTime;
 
-    /** 结束时间 */
+    /**结束时间 */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "结束时间不能为空")
     private LocalDateTime endTime;

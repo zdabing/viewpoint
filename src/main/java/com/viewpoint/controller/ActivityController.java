@@ -26,15 +26,15 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
-    @RequestMapping("/index")
-    public String index(){
+    @GetMapping("/index")
+    public String list(){
         return "intra/activity/list";
     }
 
     @ResponseBody
     @RequestMapping("/list")
     public ResultVO list(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                         @RequestParam(value = "limit", defaultValue = "10") Integer size){
+                         @RequestParam(value = "limit", defaultValue = "10") Integer size,Model model){
         Page<Activity> activityPage = activityService.findAll(PageRequest.of(page - 1 ,size));
         return ResultVOUtil.success(activityPage.getContent(),activityPage.getTotalElements());
     }

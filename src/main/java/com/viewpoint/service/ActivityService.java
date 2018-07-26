@@ -23,5 +23,9 @@ public interface ActivityService {
     /** 上下架 */
     Activity updateSale(String activityId,Integer enabled);
 
+    /**
+     * 删除文章
+     * @param activityId
+     */
     void delete(String activityId);
 }

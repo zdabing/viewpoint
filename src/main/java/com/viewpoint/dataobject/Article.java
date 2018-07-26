@@ -1,8 +1,11 @@
 package com.viewpoint.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
@@ -11,6 +14,7 @@ import java.time.LocalDateTime;
 public class Article {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String articleId;
 
     /** 文章标题 */
@@ -27,7 +31,9 @@ public class Article {
 
     private Integer sort;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 }
