@@ -1,6 +1,8 @@
 package com.viewpoint.dataobject;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Data
+@DynamicInsert
+@DynamicUpdate
 public class ExhibitsInfo {
 
     @Id
