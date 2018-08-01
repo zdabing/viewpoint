@@ -4,6 +4,7 @@ import com.viewpoint.dataobject.Areas;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 
 
 public interface AreasService {
@@ -16,7 +17,7 @@ public interface AreasService {
 
     /**
      * 查询所有的景点
-     * @return
+     * @return Page<Areas>
      */
     Page<Areas> findAll(Pageable pageable);
 
@@ -37,4 +38,10 @@ public interface AreasService {
      * @return
      */
     void deleteByAreasId(Integer areasId);
+
+    /**
+     * 查询所有的景点
+     * @return Page<Areas>
+     */
+    List<Areas> findAll();
 }

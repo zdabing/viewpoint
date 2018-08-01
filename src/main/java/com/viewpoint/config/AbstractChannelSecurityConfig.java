@@ -3,7 +3,6 @@
  */
 package com.viewpoint.config;
 
-import ch.qos.logback.core.pattern.color.BoldCyanCompositeConverter;
 import com.viewpoint.properties.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,5 +39,4 @@ public class AbstractChannelSecurityConfig extends WebSecurityConfigurerAdapter 
 			.failureHandler(imoocAuthenticationFailureHandler)
 		.and().headers().frameOptions().disable();
 	}
-	
 }

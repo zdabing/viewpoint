@@ -41,8 +41,7 @@ public class ArticleController {
     @RequestMapping("/list")
     @ResponseBody
     public ResultVO list(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                              @RequestParam(value = "limit", defaultValue = "10") Integer size,
-                              Model model){
+                              @RequestParam(value = "limit", defaultValue = "10") Integer size){
         Page<Article> articlePage =  articleService.findAllArticle(PageRequest.of(page - 1 ,size));
         if(articlePage.getTotalPages() == 0){
             return ResultVOUtil.error(ResultEnum.ERROR.getCode(),"没有文章，请上传");

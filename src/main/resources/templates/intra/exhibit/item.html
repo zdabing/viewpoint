@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta charset="UTF-8">
 		<title>展品列表</title>
@@ -33,54 +33,33 @@
 		<div class="weadmin-nav">
 			<span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">会员管理</a>
+        <a href="">展品管理</a>
         <a>
-          <cite>管理员列表</cite></a>
+          <cite>附属展品列表</cite></a>
       </span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
 		</div>
 		<div class="weadmin-body">
-			<div class="layui-row">
-				<!--<form class="layui-form layui-col-md12 we-search">
-					活动搜索：
-					<div class="layui-inline">
-						<input type="text" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
-					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-				</form>-->
-			</div>
 			<div class="weadmin-block demoTable">
-				<button class="layui-btn" onclick="WeAdminShow('添加展品','/exhibit/add')"><i class="layui-icon">&#xe61f;</i>添加</button>
+				<button class="layui-btn" th:onclick="|javascript:WeAdminShow('添加展品','/exhibit/add?parentId=${parentId}')|"><i class="layui-icon">&#xe61f;</i>添加</button>
 			</div>
-			<table class="layui-hide" id="userList" lay-filter="user">
+			<table class="layui-hide" id="exList" lay-filter="user">
 
 			</table>
 
 			<!--操作-->
 			<script type="text/html" id="newsListBar">
-				<a class="layui-btn layui-btn-normal layui-btn-xs" onclick="WeAdminShow('添加附属展品','/exhibit/item/{{d.exhibitsId}}')" lay-event="edit">附属展品</a>
-				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminShow('编辑展品','/exhibit/add?exhibitsId={{d.exhibitsId}}')">编辑</a>
+				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminShow('编辑附属展品','/exhibit/add?exhibitsId={{d.exhibitsId}}&parentId={{d.parentId}}')">编辑</a>
 				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
 				<a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="look">预览</a>
-			</script>
-
-			<script type="text/html" id="down">
-				<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{d.exhibitsLink}}" download="{{d.exhibitsName}}" lay-event="download">下载</a>
-				<a class="layui-btn layui-btn-xs layui-btn-primary" href="{{d.exhibitsLink}}">查看</a>
-				<a class="layui-btn layui-btn-xs layui-btn-primary" href="#" onClick="downLoad()">查看</a>
 			</script>
 			<script src="/layui/layui.js" charset="utf-8"></script>
 		</div>
 	</body>
-	<script>
+	<script th:inline="javascript">
 
-        function downLoad(){
-            var elemIF = document.createElement("iframe");
-            elemIF.src = "http://121.196.219.118/group1/M00/00/08/rBCKu1puu_aASpQuBaee18l3s9w627.MP4";
-            elemIF.style.display = "none";
-            document.body.appendChild(elemIF);
-        }
+        var parentId = [[${parentId}]];
 
         layui.extend({
             admin: '/js/admin'
@@ -92,23 +71,18 @@
                 admin = layui.admin;
 
             var tableIns = table.render({
-                elem: '#userList',
-                url: '/exhibit/list',
+                elem: '#exList',
+                url: '/exhibit/list?parentId='+parentId,
                 cellMinWidth: 80,
                 cols: [
                     [{
                         type: 'checkbox'
                     }, {
-                        field: 'areasId',title: '所属景点',align:"center"
-                    }
-                    , {
                         field: 'exhibitsName',title: '展品名称',align:"center"
                     }, {
                         field: 'exhibitsDescription',title: '展品简介',align:"center"
                     }, {
                         field: 'exhibitsIcon',title: '展品图',align:"center"
-                    }, {
-                        field: 'exhibitsLink',title: '二维码',align:"center",templet:'#down'
                     }, {
                         field: 'exhibitsStatus',title: '展品状态',align:"center",width:200, templet:function(d){
                             return '<input type="checkbox" name="newsTop" lay-filter="newsTop" lay-skin="switch" lay-text="是|否">'}
@@ -116,8 +90,6 @@
                         title: '操作',width:250, templet:'#newsListBar',fixed:"right",align:"center"
                     }]
                 ],
-                event: true,
-                page: true,
 				limits: [1, 5, 10, 20, 50],
 				limit: 10 //默认采用10
             });

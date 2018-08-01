@@ -3,19 +3,18 @@ package com.viewpoint.controller;
 import com.viewpoint.utils.FtpUtil;
 import com.viewpoint.utils.ResultVOUtil;
 import com.viewpoint.vo.ResultVO;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,10 +54,17 @@ public class UploadController {
         return ResultVOUtil.success(map);
     }
 
-    /*@GetMapping("/{id:\\d+}")
+    /**
+     * 文件下载
+     * @param id
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @GetMapping("/{id:\\d+}")
     public void downloader(@PathVariable String id, HttpServletRequest request , HttpServletResponse response) throws Exception{
         // JDK 1.7 新增的方法
-        try (InputStream inputStream = new FileInputStream(new File(path,id+".txt"));
+        try (InputStream inputStream = new FileInputStream(new File("",id+".txt"));
              OutputStream outputStream = response.getOutputStream();){
 
             response.setContentType("application/x-download");
@@ -67,7 +73,7 @@ public class UploadController {
             IOUtils.copy(inputStream, outputStream);
             outputStream.flush();
         }
-    }*/
+    }
 
     /**
      *

@@ -73,4 +73,10 @@ public class AreasServiceImpl implements AreasService {
     public void deleteByAreasId(Integer areasId) {
        areasRepository.deleteById(areasId);
     }
+
+    @Override
+    public List<Areas> findAll() {
+        List<Areas> areasList = areasRepository.findAll();
+        return areasList;
+    }
 }

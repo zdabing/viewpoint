@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ExhibitsService {
+
     /**
      * 找出所有主节点
      * @param pageable
@@ -16,4 +17,16 @@ public interface ExhibitsService {
     Page<ExhibitsDTO> findAllMaster(Pageable pageable);
 
     void savaBatch(List<ExhibitsInfo> exhibitsInfoList);
+
+    void save(ExhibitsInfo exhibitsInfo);
+
+    void delBatch(String exhibitsId);
+
+    void updateSale(String exhibitsId,Integer exhibitsStatus);
+
+    Page<ExhibitsInfo> findByParentId(String patentId, Pageable pageable);
+
+    List<ExhibitsInfo> findByParentId(String patentId);
+
+    ExhibitsInfo findOne(String exhibitsId);
 }

@@ -14,6 +14,8 @@ public enum ResultEnum {
     ARTICLE_NOT_EXIST(23,"文章不存在"),
 
     USER_NOT_EXIST(33,"用户不存在"),
+
+    EXHIBITS_NOT_EXIST(43,"展品不存在"),
     ;
 
     private Integer code;

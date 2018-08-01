@@ -29,14 +29,13 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
     protected void configure(HttpSecurity http) throws Exception {
         applyPasswordAuthenticationConfig(http);
         http
-                .authorizeRequests()
-                    .antMatchers(
+                .authorizeRequests().antMatchers(
                         SecurityConstants.DEFAULT_UNAUTHENTICATION_URL
                         ,securityProperties.getBrowser().getLoginPage()
-                        , "/layui/**","/js/**","/css/**","/images/*","/fonts/**","/**/*.png","/**/*.jpg")
-                    .permitAll()
+                        , "/layui/**","/js/**","/css/**","/images/*","/fonts/**","/**/*.png","/**/*.jpg").permitAll()
                     .anyRequest()
                     .authenticated()
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl(securityProperties.getBrowser().getLoginPage())
                     .and()
                 .csrf().disable();
     }

@@ -42,10 +42,13 @@ public class ExhibitsInfo {
     private String exhibitsLink;
 
     /** 展品状态 0下架 1上架 */
-    private Integer exhibitsStatus;
+    private Integer exhibitsStatus = 0;
 
     /** 父节点iD */
     private String parentId;
+
+    /** 景点ID */
+    private String areasId;
 
     private LocalDateTime createTime;
 
