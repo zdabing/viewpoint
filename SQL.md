@@ -59,12 +59,15 @@ create table `exhibits_info` (
     `exhibits_description` varchar(128) comment '展品介绍',
     `exhibits_content` longtext comment '展品详情',
     `exhibits_icon` varchar(512) comment '展品小图',
+    `exhibits_mp3` varchar(512) comment '展品音频',
+    `exhibits_mp4` varchar(512) comment '展品视频',
+    `exhibits_link` varchar(512) comment '二维码链接',
     `exhibits_status` tinyint DEFAULT '0' COMMENT '展品状态',
-    `master_id` varchar(32) comment '',
+    `parent_id` varchar(32) comment '',
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '更新时间',
     primary key (`exhibits_id`),
-    key `idx_master_id` (`master_id`)
+    key `idx_parent_id` (`parent_id`)
 );
 
 create table `exhibits_master` (
@@ -90,10 +93,13 @@ create table `user` (
     `password` varchar(128) not null comment '密码',
     `openid` varchar(32) comment '微信openid',
     `alias` varchar(64) COMMENT '昵称',
-    `user_icon` varchar(255) COMMENT '头像',
+    `icon` varchar(255) COMMENT '头像',
+    `role` int unsigned not null default 0 COMMENT '权限',
 	primary key (`id`),
 	key `idx_open_id` (`openid`)
 );
+INSERT INTO `user` VALUES ('1', 'admin', '$2a$10$WqRJmPOwloMI4aYVaPKJWuHjPlV13F5oB2zwGgJ/Dwr6wNFk4jWUm', null, null, null, '2');
+INSERT INTO `user` VALUES ('2', 'admin1', '$2a$10$WqRJmPOwloMI4aYVaPKJWuHjPlV13F5oB2zwGgJ/Dwr6wNFk4jWUm', null, null, null, '2');
 
 create table `areas` (
     `areas_id` varchar(32) not null,
