@@ -23,13 +23,13 @@
 					</div>
 					<label class="layui-form-label">文章标题</label>
 					<div class="layui-input-block">
-						<input type="text" class="layui-input" id="title" name="title" placeholder="请输入文章标题" th:value="${article?.title}" value="">
+						<input type="text" lay-verify="required" class="layui-input" id="title" name="title" placeholder="请输入文章标题" th:value="${article?.title}" value="">
 					</div>
 				</div>
 			</div>
 			<div class="layui-col-md3 layui-col-xs5">
 				<div class="layui-upload-list thumbBox mag0 magt3">
-					<img class="layui-upload-img thumbImg" id="articleLogo" th:src="${article?.articleLogo}" src="">
+					<img lay-verify="required" class="layui-upload-img thumbImg" id="articleLogo" th:src="${article?.articleLogo}" src="">
 				</div>
 			</div>
 		</div>
@@ -37,14 +37,14 @@
 		<div class="layui-form-item magb0">
 			<label class="layui-form-label">文章内容</label>
 			<div class="layui-input-block" id="content" >
-				<p th:utext="${article?.content}"></p>
+				<p th:utext="${article?.content}" ></p>
 			</div>
 		</div>
 
 	</div>
 
 	<div class="layui-col-md3 layui-col-xs12">
-		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 活动标签</blockquote>
+		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 文章标签</blockquote>
 		<div class="border category">
 			<div class="">
 				<div class="layui-form-item">
@@ -100,8 +100,6 @@
                 $('.thumbBox').css("background","#fff");
             }
         });
-
-
 
 
         form.on("submit(add)",function(data){

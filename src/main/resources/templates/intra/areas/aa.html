@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=" utf-8">
+    <meta name="author" content="" />
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            position: relative;
+        }
+
+        p {
+            position: absolute;
+            left: 100px;
+            top: 20px;
+            user-select: none;
+        }
+
+        #box {
+            width: 300px;
+            height: 300px;
+            background: red;
+            overflow: hidden;
+            position: absolute;
+            left: 100px;
+            top: 100px;
+        }
+
+        #drag {
+            width: 50px;
+            height: 50px;
+            background: green;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            var obox = document.getElementById("box");
+            var odrag = document.getElementById("drag");
+            var oSpan = document.getElementsByTagName("span")[0];
+            var isDrag = false;
+            var x, y;
+            var x1, y1;
+
+            odrag.onmousedown = down;
+            document.onmousemove = move;
+            document.onmouseup = up;
+
+            function down(ev) {
+                var ev = window.event || ev;
+                x = ev.clientX - this.offsetLeft;
+                y = ev.clientY - this.offsetTop;
+                this.style.cursor = "move";
+                isDrag = true;
+            }
+
+            function move(ev) {
+                // oSpan.innerHTML = "left:" + odrag.style.left + ", top:" + odrag.style.top;
+                oSpan.innerHTML = "left:" + x1 + ", top:" + y1;
+                if (isDrag) {
+                    var ev = window.event || ev;
+                    odrag.style.left = (ev.clientX - x) + "px";
+                    odrag.style.top = (ev.clientY - y) + "px";
+                    x1 = (ev.clientX - x)/obox.clientWidth*100 + "%";
+                    y1 = (ev.clientY - y)/obox.clientHeight*100 + "%";
+                    if (parseInt(odrag.style.left) < 0) {
+                        odrag.style.left = 0;
+                        x1 = 0 + "%";
+                    }
+                    if (parseInt(odrag.style.top) < 0) {
+                        odrag.style.top = 0;
+                        y1 = 0 + "%";
+                    }
+                    if (parseInt(odrag.style.left) > obox.clientWidth - odrag.clientWidth) {
+                        odrag.style.left = (obox.clientWidth - odrag.clientWidth) + "px";
+                        x1 = (obox.clientWidth - odrag.clientWidth)/obox.clientWidth*100 + "%";
+                    }
+                    if (parseInt(odrag.style.top) > obox.clientHeight - odrag.clientHeight) {
+                        odrag.style.top = (obox.clientHeight - odrag.clientHeight) + "px";
+                        y1 = (obox.clientHeight - odrag.clientHeight)/obox.clientHeight*100 + "%"
+                    }
+
+                }
+            }
+
+            function up() {
+                isDrag = false;
+                odrag.style.cursor = "pointer";
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+<p>拖放状态：<span>未开始</span></p>
+<div id="box">
+    <div id="drag"></div>
+</div>
+</body>
+

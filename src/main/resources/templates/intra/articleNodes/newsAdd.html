@@ -24,7 +24,7 @@
 
 					<label class="layui-form-label">节点名称</label>
 					<div class="layui-input-block" style = "width:210px;">
-						<input type="text" class="layui-input" id="name" placeholder="请输入节点名称" th:value="${articleNodes?.nodeName}" value="">
+						<input type="text" class="layui-input" lay-verify="required" id="name" placeholder="请输入节点名称" th:value="${articleNodes?.nodeName}" value="">
 					</div>
 				</div>
 
@@ -54,7 +54,7 @@
 				<div class="layui-form-item"  style = "width:322px;">
 					<label class="layui-form-label">排序</label>
 					<div class="layui-input-block">
-						<input type="text" class="layui-input" id="sort" placeholder="请输入序号" th:value="${articleNodes?.sort}" value="">
+						<input type="text" lay-verify="required" class="layui-input" id="sort" placeholder="请输入序号" th:value="${articleNodes?.sort}" value="">
 					</div>
 				</div>
 
