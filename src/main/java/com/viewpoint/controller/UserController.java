@@ -51,6 +51,13 @@ public class UserController {
         return "intra/admin/adminAdd";
     }
 
+    @RequestMapping("/resetPassword")
+    public String resetPassword(@RequestParam(value = "id") Integer id,Model model){
+        User user = userService.findById(id);
+        model.addAttribute("user",user);
+        return "intra/admin/resetPassword";
+    }
+
     @PostMapping("/save")
     @ResponseBody
     public ResultVO save(User user){
@@ -64,6 +71,17 @@ public class UserController {
             userInfo.setRole(2);
             userService.save(userInfo);
         }  catch (ViewpointException e) {
+            return ResultVOUtil.error(1,e.getMessage());
+        }
+        return ResultVOUtil.success();
+    }
+
+    @PostMapping("/del")
+    @ResponseBody
+    public ResultVO del(Integer id){
+        try {
+            userService.delete(id);
+        } catch (ViewpointException e){
             return ResultVOUtil.error(1,e.getMessage());
         }
         return ResultVOUtil.success();
