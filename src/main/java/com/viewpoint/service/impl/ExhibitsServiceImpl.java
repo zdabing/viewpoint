@@ -64,9 +64,15 @@ public class ExhibitsServiceImpl implements ExhibitsService {
         if (exhibitsInfo == null){
             throw new ViewpointException(ResultEnum.EXHIBITS_NOT_EXIST);
         }
+        exhibitsInfo.setExhibitsStatus(exhibitsStatus);
         exhibitsInfoRepository.save(exhibitsInfo);
         List<ExhibitsInfo> exhibitsInfoList = exhibitsInfoRepository.findByParentId(exhibitsId);
-        exhibitsInfoRepository.saveAll(exhibitsInfoList);
+        if (exhibitsInfoList != null){
+            exhibitsInfoList.stream().forEach(e ->{
+                e.setExhibitsStatus(exhibitsStatus);
+            });
+            exhibitsInfoRepository.saveAll(exhibitsInfoList);
+        }
     }
 
     @Override

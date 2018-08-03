@@ -7,7 +7,7 @@ import com.viewpoint.exception.ViewpointException;
 import com.viewpoint.form.ExhibitsForm;
 import com.viewpoint.service.AreasService;
 import com.viewpoint.service.ExhibitsService;
-import com.viewpoint.utils.FtpUtil;
+import com.viewpoint.utils.FTPUtil;
 import com.viewpoint.utils.KeyUtil;
 import com.viewpoint.utils.QRCodeUtils;
 import com.viewpoint.utils.ResultVOUtil;
@@ -46,7 +46,7 @@ public class ExhibitsController {
     private AreasService areasService;
 
     @Autowired
-    private FtpUtil ftpUtil;
+    private FTPUtil ftpUtil;
 
     @GetMapping("/index")
     public String index(){
@@ -80,10 +80,13 @@ public class ExhibitsController {
                          @RequestParam(value = "parentId",required = false) String parentId){
         Page<ExhibitsInfo> exhibitsInfoPage = exhibitsService.findByParentId(parentId,PageRequest.of(page-1,size));
         List<ExhibitsInfo> exhibitsInfoList = exhibitsInfoPage.getContent();
-        exhibitsInfoList.stream().forEach(e -> {
-            Areas areas = areasService.findByAreasId(Integer.valueOf(e.getAreasId()));
-            e.setAreasId(areas.getAreasName());
-        });
+        // parentId 为空证明是主展品 查询主展品所在的景点
+        if (StringUtils.isEmpty(parentId)){
+            exhibitsInfoList.stream().forEach(e -> {
+                Areas areas = areasService.findByAreasId(Integer.valueOf(e.getAreasId()));
+                e.setAreasId(areas.getAreasName());
+            });
+        }
         return ResultVOUtil.success(exhibitsInfoList,exhibitsInfoPage.getTotalElements());
     }
 
@@ -107,7 +110,7 @@ public class ExhibitsController {
                 ImageOutputStream imageOutput = ImageIO.createImageOutputStream(byteArrayOutputStream);
                 ImageIO.write(bufferedImage, "png", imageOutput);
                 InputStream inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-                String urlLink = ftpUtil.upload2url(inputStream,exhibitsId+".png");
+                String urlLink = ftpUtil.uploadLocalFile(inputStream,exhibitsId+".png");
                 exhibitsInfo.setExhibitsLink(urlLink);
             } catch (WriterException e) {
                 e.printStackTrace();
@@ -125,6 +128,28 @@ public class ExhibitsController {
             BeanUtils.copyProperties(exhibitsForm, exhibitsInfo);
             exhibitsService.save(exhibitsInfo);
         }  catch (ViewpointException e) {
+            return ResultVOUtil.error(1,e.getMessage());
+        }
+        return ResultVOUtil.success();
+    }
+
+    @ResponseBody
+    @PostMapping("/updateSale")
+    public ResultVO updateSale(String exhibitsId,Integer exhibitsStatus){
+        try {
+            exhibitsService.updateSale(exhibitsId,exhibitsStatus);
+        } catch (ViewpointException e){
+            return ResultVOUtil.error(1,e.getMessage());
+        }
+        return ResultVOUtil.success();
+    }
+
+    @PostMapping("/del")
+    @ResponseBody
+    public ResultVO del(String exhibitsId){
+        try {
+            exhibitsService.delBatch(exhibitsId);
+        } catch (ViewpointException e){
             return ResultVOUtil.error(1,e.getMessage());
         }
         return ResultVOUtil.success();

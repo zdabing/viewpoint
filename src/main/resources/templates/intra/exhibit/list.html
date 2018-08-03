@@ -53,35 +53,31 @@
 			<div class="weadmin-block demoTable">
 				<button class="layui-btn" onclick="WeAdminShow('添加展品','/exhibit/add')"><i class="layui-icon">&#xe61f;</i>添加</button>
 			</div>
-			<table class="layui-hide" id="userList" lay-filter="user">
+			<table class="layui-hide" id="exhibitList" lay-filter="exhibit">
 
 			</table>
 
 			<!--操作-->
-			<script type="text/html" id="newsListBar">
+			<script type="text/html" id="doTpl">
 				<a class="layui-btn layui-btn-normal layui-btn-xs" onclick="WeAdminShow('添加附属展品','/exhibit/item/{{d.exhibitsId}}')" lay-event="edit">附属展品</a>
 				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminShow('编辑展品','/exhibit/add?exhibitsId={{d.exhibitsId}}')">编辑</a>
 				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
-				<a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="look">预览</a>
+				<!--<a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="look">预览</a>-->
 			</script>
 
-			<script type="text/html" id="down">
-				<a class="layui-btn layui-btn-normal layui-btn-xs" href="{{d.exhibitsLink}}" download="{{d.exhibitsName}}" lay-event="download">下载</a>
+			<script type="text/html" id="downTpl">
+				<a class="layui-btn layui-btn-normal layui-btn-xs" href="/upload/download?fileUrl={{d.exhibitsLink}}" download="{{d.exhibitsName}}" lay-event="download">下载</a>
 				<a class="layui-btn layui-btn-xs layui-btn-primary" href="{{d.exhibitsLink}}">查看</a>
-				<a class="layui-btn layui-btn-xs layui-btn-primary" href="#" onClick="downLoad()">查看</a>
 			</script>
+
+			<script type="text/html" id="enabledTpl">
+				<input type="checkbox" name="{{d.exhibitsId}}" value="{{d.exhibitsStatus}}" lay-filter="up" lay-skin="switch" lay-text="已上架|已下架" {{ d.exhibitsStatus == 1 ? 'checked' : '' }}>
+			</script>
+
 			<script src="/layui/layui.js" charset="utf-8"></script>
 		</div>
 	</body>
 	<script>
-
-        function downLoad(){
-            var elemIF = document.createElement("iframe");
-            elemIF.src = "http://121.196.219.118/group1/M00/00/08/rBCKu1puu_aASpQuBaee18l3s9w627.MP4";
-            elemIF.style.display = "none";
-            document.body.appendChild(elemIF);
-        }
-
         layui.extend({
             admin: '/js/admin'
         });
@@ -92,7 +88,7 @@
                 admin = layui.admin;
 
             var tableIns = table.render({
-                elem: '#userList',
+                elem: '#exhibitList',
                 url: '/exhibit/list',
                 cellMinWidth: 80,
                 cols: [
@@ -108,12 +104,11 @@
                     }, {
                         field: 'exhibitsIcon',title: '展品图',align:"center"
                     }, {
-                        field: 'exhibitsLink',title: '二维码',align:"center",templet:'#down'
+                        field: 'exhibitsLink',title: '二维码',align:"center",templet:'#downTpl'
                     }, {
-                        field: 'exhibitsStatus',title: '展品状态',align:"center",width:200, templet:function(d){
-                            return '<input type="checkbox" name="newsTop" lay-filter="newsTop" lay-skin="switch" lay-text="是|否">'}
+                        field: 'exhibitsStatus',title: '展品状态',align:"center",width:200, templet:'#enabledTpl'
 					}, {
-                        title: '操作',width:250, templet:'#newsListBar',fixed:"right",align:"center"
+                        title: '操作',width:250, templet:'#doTpl',fixed:"right",align:"center"
                     }]
                 ],
                 event: true,
@@ -123,6 +118,65 @@
             });
             $(function(){
                 form.render();
+            });
+
+            //监听上下架操作
+            form.on('switch(up)', function(obj){
+                var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+                if(this.value == 1){
+                    var exhibitsStatus =0;
+                }else{
+                    var exhibitsStatus =1;
+                }
+                $.ajax({
+                    url : '/exhibit/updateSale',
+                    data : {
+                        exhibitsId : this.name,
+                        exhibitsStatus : exhibitsStatus
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success : function(data) {
+                        layer.close(index);
+                        if(data.code == 0){
+                            layer.msg(data.msg);
+                        }else {
+                            layer.msg(data.msg);
+                        }
+                        tableIns.reload();
+                    },
+                    error : function() {
+                        layer.msg("系统繁忙!请重试");
+                        tableIns.reload();
+                    }
+                });
+            });
+
+            table.on('tool(exhibit)', function(obj){
+                if(obj.event === 'del'){ //删除
+                    layer.confirm('真的删除么', function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url : '/exhibit/del',
+                            data : {
+                                exhibitsId : obj.data.exhibitsId
+                            },
+                            type: "post",
+                            dataType: "json",
+                            success : function(data) {
+                                if(data.code == 0){
+                                    layer.msg(data.msg);
+                                }else {
+                                    layer.msg(data.msg);
+                                }
+                                tableIns.reload();
+                            },
+                            error : function() {
+                                layer.msg("系统繁忙!请重试");
+                            }
+                        });
+                    });
+                }
             });
         });
 	</script>

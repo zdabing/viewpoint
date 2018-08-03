@@ -9,8 +9,8 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="/layui/css/layui.css" media="all" />
-	<link rel="stylesheet" href="/css/public.css" media="all" />
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 </head>
 <body class="childrenBody">
 <form class="layui-form layui-row layui-col-space10">
@@ -64,17 +64,17 @@
 		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 视频</blockquote>
 		<div class="border category" style="text-align:center">
 			<button type="button" class="layui-btn layui-btn-normal" id="upMp4"><i class="layui-icon"></i>上传视频</button>
-			<video src="" id="exhibitsMp4" controls="controls" style="display: none"></video>
-			<button type="button" class="layui-btn" id="mp4Show" style="display: none;margin-left: 15px">查看</button>
-			<button type="button" id="mp4Del" class="layui-btn layui-btn-danger" style="display: none">删除</button>
+			<video src="" th:src="${exhibitsInfo?.exhibitsMp4}" id="exhibitsMp4" controls="controls" style="display: none"></video>
+			<button type="button" class="layui-btn" id="mp4Show" th:style="'display:' + @{(${#strings.isEmpty(exhibitsInfo?.exhibitsMp4)} ? 'none' : 'inline-block')} + ''" style="display: none;margin-left: 15px">查看</button>
+			<button type="button" id="mp4Del" class="layui-btn layui-btn-danger" th:style="'display:' + @{(${#strings.isEmpty(exhibitsInfo?.exhibitsMp4)} ? 'none' : 'inline-block')} + ''" style="display: none" onclick="delMp4()">删除</button>
 		</div>
 
 		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 音频</blockquote>
 		<div class="border category" style="text-align:center">
 			<button type="button" class="layui-btn layui-btn-normal" id="upMp3"><i class="layui-icon"></i>上传音频</button>
-			<audio src="" id="exhibitsMp3" controls="controls" style="display: none"></audio>
-			<button type="button" id="mp3Show" class="layui-btn" style="display: none;margin-right: 15px">查看</button>
-			<button type="button" id="mp3Del" class="layui-btn layui-btn-danger" style="display: none">删除</button>
+			<audio th:src="${exhibitsInfo?.exhibitsMp3}" src=""  id="exhibitsMp3" controls="controls" style="display: none"></audio>
+			<button type="button" id="mp3Show" class="layui-btn" th:style="'display:' + @{(${#strings.isEmpty(exhibitsInfo?.exhibitsMp3)} ? 'none' : 'inline-block')} + ''" style="display: none; margin-left: 15px">查看</button>
+			<button type="button" id="mp3Del" class="layui-btn layui-btn-danger" th:style="'display:' + @{(${#strings.isEmpty(exhibitsInfo?.exhibitsMp3)} ? 'none' : 'inline-block')} + ''" style="display: none" onclick="delMp3()">删除</button>
 		</div>
 
 		<div class="border">
@@ -89,6 +89,65 @@
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script src="/js/wangEditor.js"></script>
 <script type="text/javascript">
+	function delMp4(){
+        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        $.ajax({
+            url : '/upload/del',
+            data : {
+                fileUrl : $('#exhibitsMp4').attr("src")
+            },
+            type: "post",
+            dataType: "json",
+            success : function(data) {
+                if(data.code == 0){
+                    setTimeout(function(){
+                        top.layer.close(index);
+                        top.layer.msg("删除成功");
+                        $('#exhibitsMp4').attr('src',null);
+                        $('#mp4Show').css("display","none");
+                        $('#mp4Del').css("display","none");
+                    },1000);
+                    return false;
+                }else {
+                    layer.alert("删除失败!请重试");
+                    return false;
+                }
+            },
+            error : function() {
+                layer.alert("系统繁忙!请重试");
+            }
+        });
+	}
+    function delMp3(){
+        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        $.ajax({
+            url : '/upload/del',
+            data : {
+                fileUrl : $('#exhibitsMp3').attr("src")
+            },
+            type: "post",
+            dataType: "json",
+            success : function(data) {
+                if(data.code == 0){
+                    setTimeout(function(){
+                        top.layer.close(index);
+                        top.layer.msg("删除成功");
+                        $('#exhibitsMp3').attr('src',null);
+                        $('#mp3Show').css("display","none");
+                        $('#mp3Del').css("display","none");
+                    },1000);
+                    return false;
+                }else {
+                    layer.alert("删除失败!请重试");
+                    return false;
+                }
+            },
+            error : function() {
+                layer.alert("系统繁忙!请重试");
+            }
+        });
+    }
+
     layui.use(['form','layer','layedit','laydate','upload'],function(){
         var form = layui.form
         layer = parent.layer === undefined ? layui.layer : top.layer,
@@ -187,8 +246,8 @@
                     exhibitsDescription : $("#exhibitsDescription").val(),
                     exhibitsIcon : $("#exhibitsIcon").attr("src"),
                     exhibitsContent : exhibitsContent,
-                    exhibitsMp3 : $("#exhibitsMp3").val(),
-                    exhibitsMp4 : $("#exhibitsMp4").val(),
+                    exhibitsMp3 : $("#exhibitsMp3").attr("src"),
+                    exhibitsMp4 : $("#exhibitsMp4").attr("src"),
                     parentId : $("#parentId").val(),
                     areasId : $("#areasId").val()
                 },

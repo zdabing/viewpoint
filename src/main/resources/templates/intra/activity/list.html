@@ -136,6 +136,7 @@
                     },
                     error : function() {
                         layer.msg("系统繁忙!请重试");
+                        tableIns.reload();
                     }
                 });
             };
@@ -171,7 +172,7 @@
                 });
             });
 
-            table.on('tool(activity)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            table.on('tool(activity)', function(obj){ //注：tool是工具条事件名，activity是table原始容器的属性 lay-filter="对应的值"
                 if(obj.event === 'del'){ //删除
                     layer.confirm('真的删除么', function(index){
                         layer.close(index);

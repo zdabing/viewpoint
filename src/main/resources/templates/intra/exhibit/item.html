@@ -44,15 +44,19 @@
 			<div class="weadmin-block demoTable">
 				<button class="layui-btn" th:onclick="|javascript:WeAdminShow('添加展品','/exhibit/add?parentId=${parentId}')|"><i class="layui-icon">&#xe61f;</i>添加</button>
 			</div>
-			<table class="layui-hide" id="exList" lay-filter="user">
+			<table class="layui-hide" id="itemList" lay-filter="item">
 
 			</table>
+
+			<script type="text/html" id="enabledTpl">
+				<input type="checkbox" name="{{d.exhibitsId}}" value="{{d.exhibitsStatus}}" lay-filter="up" lay-skin="switch" lay-text="已上架|已下架" {{ d.exhibitsStatus == 1 ? 'checked' : '' }}>
+			</script>
 
 			<!--操作-->
 			<script type="text/html" id="newsListBar">
 				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminShow('编辑附属展品','/exhibit/add?exhibitsId={{d.exhibitsId}}&parentId={{d.parentId}}')">编辑</a>
 				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
-				<a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="look">预览</a>
+				<!--<a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="look">预览</a>-->
 			</script>
 			<script src="/layui/layui.js" charset="utf-8"></script>
 		</div>
@@ -71,7 +75,7 @@
                 admin = layui.admin;
 
             var tableIns = table.render({
-                elem: '#exList',
+                elem: '#itemList',
                 url: '/exhibit/list?parentId='+parentId,
                 cellMinWidth: 80,
                 cols: [
@@ -84,8 +88,7 @@
                     }, {
                         field: 'exhibitsIcon',title: '展品图',align:"center"
                     }, {
-                        field: 'exhibitsStatus',title: '展品状态',align:"center",width:200, templet:function(d){
-                            return '<input type="checkbox" name="newsTop" lay-filter="newsTop" lay-skin="switch" lay-text="是|否">'}
+                        field: 'exhibitsStatus',title: '展品状态',align:"center",width:200, templet:'#enabledTpl'
 					}, {
                         title: '操作',width:250, templet:'#newsListBar',fixed:"right",align:"center"
                     }]
@@ -95,6 +98,64 @@
             });
             $(function(){
                 form.render();
+            });
+            //监听上下架操作
+            form.on('switch(up)', function(obj){
+                var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+                if(this.value == 1){
+                    var exhibitsStatus =0;
+                }else{
+                    var exhibitsStatus =1;
+                }
+                $.ajax({
+                    url : '/exhibit/updateSale',
+                    data : {
+                        exhibitsId : this.name,
+                        exhibitsStatus : exhibitsStatus
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success : function(data) {
+                        layer.close(index);
+                        if(data.code == 0){
+                            layer.msg(data.msg);
+                        }else {
+                            layer.msg(data.msg);
+                        }
+                        tableIns.reload();
+                    },
+                    error : function() {
+                        layer.msg("系统繁忙!请重试");
+                        tableIns.reload();
+                    }
+                });
+            });
+
+            table.on('tool(item)', function(obj){
+                if(obj.event === 'del'){ //删除
+                    layer.confirm('真的删除么', function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url : '/exhibit/del',
+                            data : {
+                                exhibitsId : obj.data.exhibitsId
+                            },
+                            type: "post",
+                            dataType: "json",
+                            success : function(data) {
+                                if(data.code == 0){
+                                    layer.msg(data.msg);
+                                }else {
+                                    layer.msg(data.msg);
+                                }
+                                tableIns.reload();
+                            },
+                            error : function() {
+                                layer.msg("系统繁忙!请重试");
+                            }
+                        });
+                    });
+                }
             });
         });
 	</script>
