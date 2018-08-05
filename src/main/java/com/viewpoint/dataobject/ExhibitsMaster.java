@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -11,8 +12,9 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-public class ExhibitsMaster {
+public class ExhibitsMaster implements Serializable {
 
+    private static final long serialVersionUID = 6009603121059096715L;
     @Id
     private String masterId;
 

@@ -7,11 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Article {
+public class Article implements Serializable {
+
+    private static final long serialVersionUID = -77218928824527733L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

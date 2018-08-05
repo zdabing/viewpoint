@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -18,8 +19,9 @@ import java.time.LocalDateTime;
 @Data
 @DynamicInsert
 @DynamicUpdate
-public class Areas {
+public class Areas implements Serializable {
 
+    private static final long serialVersionUID = 6232534241897000757L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer areasId;

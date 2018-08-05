@@ -7,14 +7,16 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @DynamicUpdate
 @DynamicInsert
-public class Activity {
+public class Activity implements Serializable {
 
+    private static final long serialVersionUID = 374456721275499152L;
     @Id
     private String activityId;
 

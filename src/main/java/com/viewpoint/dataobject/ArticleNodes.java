@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -14,7 +15,9 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-public class ArticleNodes {
+public class ArticleNodes implements Serializable {
+
+    private static final long serialVersionUID = -3586721485985187931L;
 
     /** 节点ID */
     @Id
