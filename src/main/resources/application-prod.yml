@@ -5,7 +5,7 @@ spring:
     password: 123456
     url: jdbc:mysql://192.168.2.143/viewpoint?characterEncoding=utf-8&useSSL=false
   jpa:
-    show-sql: true
+    #show-sql: true
     open-in-view: false
   jackson:
     default-property-inclusion: non_null
