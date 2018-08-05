@@ -1,7 +1,9 @@
 package com.viewpoint.exception;
 
 import com.viewpoint.enums.ResultEnum;
+import lombok.Data;
 
+@Data
 public class ViewpointException extends RuntimeException{
 
     private Integer code;
