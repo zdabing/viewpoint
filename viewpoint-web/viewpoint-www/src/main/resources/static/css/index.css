@@ -1,0 +1,11 @@
+img { max-width: 100%; }
+
+.main-pic { position: relative; display: block; border-radius: 4px; -webkit-box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.26); box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.26); }
+.main-pic .dt { position: absolute; left: 0; right: 0; bottom: 0; height: 1.8rem; background-color: rgba(0, 0, 0, 0.5); color: #fff; padding: 5px 12px; }
+.main-pic .dt h2 .wenmiao { width: 98px; }
+.main-pic .dt h2 .next { width: 13px; margin-left: 5px; position: relative; top: -5px; }
+.main-pic .dt .line { width: 150px; margin-top: -9px; margin-left: 10px; }
+.main-pic .dt p { font-size: 14px; margin-left: 30px; }
+
+.content .mui-card .box { position: relative; }
+.content .mui-card .box p { font-size: 14px; color: #303030; margin: 3px 5px 0; }

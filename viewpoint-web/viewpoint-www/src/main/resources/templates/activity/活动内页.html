@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>活动内页</title>
+  <link rel="stylesheet" href="../css/jquery.mobile-1.4.5.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/activity.css">
+  <script src="../js/libs/flexsible.js"></script>
+  <script src="../js/libs/jquery.min.js"></script>
+  <script src="../js/libs/jquery.mobile-1.4.5.min.js"></script>
+  <script src="../js/common.js"></script>
+</head>
+
+<body>
+  <div class="footer" id="footer">
+    <a class="item home normal">
+      <div class="pic"></div>
+      <div class="text">首页</div>
+    </a>
+    <a class="item spot" id="spot">
+      <div class="pic"></div>
+      <div class="text">景点</div>
+    </a>
+    <a class="item normal guide">
+      <div class="pic">
+        <img src="../img/icon/icon-guide.png" alt="导览">
+      </div>
+    </a>
+    <a class="item activity normal active">
+      <div class="pic"></div>
+      <div class="text">活动</div>
+    </a>
+    <a class="item my normal">
+      <div class="pic"></div>
+      <div class="text">我的</div>
+    </a>
+  </div>
+  <div class="footer-mask"></div>
+  <div id="spot-popover">
+    <ul>
+      <li>
+        <a href="javascript:" class="active">文庙介绍</a>
+      </li>
+      <li>
+        <a href="javascript:">历史足迹</a>
+      </li>
+      <li>
+        <a href="javascript:">科举文化</a>
+      </li>
+      <li>
+        <a href="javascript:">政府关怀</a>
+      </li>
+      <li>
+        <a href="javascript:">南方夫子</a>
+      </li>
+      <li>
+        <a href="javascript:">文物介绍</a>
+      </li>
+    </ul>
+  </div>
+  <div class="mui-content baoming">
+  	<div class="main-pic">
+  		<img src="../img/activity/main.jpg" class="bigmainpic">
+      <!-- <a id="baoming" href="#" class="baoming">报名参与</a> -->
+  		<a id="baoming" href="#popup_msg" class="baoming" data-rel="popup" data-position-to="window">报名参与</a>
+  	</div>
+    <div class="w">
+    	<div class="biaoti">2018年“文化和自然遗产日”暨首届言子文化节启动仪式圆满成功</div>
+      <div class="para">
+        <p>2018年常熟市“文化和自然遗产日”系列活动暨首届言子文化节启动仪式在文庙尊经阁顺利举行。首届言子文化节正式开幕！</p>
+        <img src="../img/activity/pic1.jpg">
+      </div>
+    </div>
+  </div>
+  
+  <!-- 弹窗 -->
+  <!-- <div class="mymask"></div> -->
+
+  <!-- 报名信息 -->
+
+  <div id="popup_msg" class="mypopup popup_msg" data-role="popup" data-overlay-theme="b" data-dismissible="false">
+  <!-- <div id="popup_msg" class="mypopup popup_msg"> -->
+  	<h3>报名信息</h3>
+  	<form class="group">
+	    <div class="uf row uf-ac">
+        <label>联系人：</label>
+	   		<input type="text" placeholder="请输入用户名">
+	    </div>
+	    <div class="uf row uf-ac">
+        <label>联系方式：</label>
+        <input type="text" placeholder="请输入联系方式">
+	    </div>
+	    <div class="row btns uf uf-pc">
+        <a id="submit" href="#" class="ui-btn ui-btn-inline submit">提交</a>
+        <!-- <a id="submit" href="#popup_suc" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-inline submit">提交</a> -->
+        <a data-rel="back" class="ui-btn ui-btn-inline cancel">取消</a>
+	    </div>
+  	</form>
+  </div>
+  
+
+  <!-- 报名成功 -->
+
+  <!-- <div id="popup_suc" class="mypopup popup_suc" data-role="popup" data-overlay-theme="b"> -->
+  <div id="popup_suc" class="mypopup popup_suc">
+  	<div class="dt">
+  		<img src="../img/activity/suc.png">
+  		<h3>报名成功</h3>
+  		<a class="ui-btn close">关闭</a>
+  	</div>
+  </div>
+  
+  <script src="../js/activity_inner.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title,cssPaths)">
+    <meta charset="utf-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" th:href="@{/css/jquery.mobile-1.4.5.css}" href="../css/jquery.mobile-1.4.5.css">
+    <link rel="stylesheet" th:href="@{/css/common.css}" href="../css/common.css">
+    <!--begin::页面样式 -->
+    <link rel="stylesheet" type="text/css" th:each="cssPath,status:${#strings.setSplit(cssPaths,',')}" th:href="@{${cssPath}}"/>
+    <!--end::页面样式 -->
+    <script th:src="@{/js/libs/flexsible.js}" src="../js/libs/flexsible.js"></script>
+    <script th:src="@{/js/libs/jquery.min.js}" src="../js/libs/jquery.min.js"></script>
+    <script th:src="@{/js/libs/jquery.mobile-1.4.5.min.js}" src="../js/libs/jquery.mobile-1.4.5.min.js"></script>
+    <script th:src="@{/js/common.js}" src="../js/common.js"></script>
+</head>
+</html>

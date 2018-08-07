@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>导览</title>
+  <link rel="stylesheet" href="../css/jquery.mobile-1.4.5.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/guide.css">
+  <script src="../js/libs/flexsible.js"></script>
+  <script src="../js/libs/jquery.min.js"></script>
+  <script src="../js/libs/jquery.mobile-1.4.5.min.js"></script>
+  <script src="../js/common.js"></script>
+</head>
+
+<body>
+  <div class="footer" id="footer">
+    <a class="item home normal">
+      <div class="pic"></div>
+      <div class="text">首页</div>
+    </a>
+    <a class="item spot" id="spot">
+      <div class="pic"></div>
+      <div class="text">景点</div>
+    </a>
+    <a class="item normal guide active">
+      <div class="pic">
+        <img src="../img/icon/icon-guide.png" alt="导览">
+      </div>
+    </a>
+    <a class="item activity normal">
+      <div class="pic"></div>
+      <div class="text">活动</div>
+    </a>
+    <a class="item my normal">
+      <div class="pic"></div>
+      <div class="text">我的</div>
+    </a>
+  </div>
+  <div class="footer-mask"></div>
+  <div id="spot-popover">
+    <ul>
+      <li>
+        <a href="javascript:" class="active">文庙介绍</a>
+      </li>
+      <li>
+        <a href="javascript:">历史足迹</a>
+      </li>
+      <li>
+        <a href="javascript:">科举文化</a>
+      </li>
+      <li>
+        <a href="javascript:">政府关怀</a>
+      </li>
+      <li>
+        <a href="javascript:">南方夫子</a>
+      </li>
+      <li>
+        <a href="javascript:">文物介绍</a>
+      </li>
+    </ul>
+  </div>
+  <div class="mui-content">
+    <div class="w">
+      <div class="bg"></div>
+      <a href="#hot1popup" data-rel="popup" class="hot hot1" data-position-to="window">
+      </a>
+    </div>
+  </div>
+  <div data-role="popup" id="hot1popup" class="g-popup" data-overlay-theme="b">
+    <a href="#" data-rel="back" class="close-btn">×</a>
+    <div class="p-title">棂星门</div>
+    <div class="dt uf">
+      <div class="pic">
+        <img src="../img/guide/pic1.jpg">
+      </div>
+      <div class="tt uf-1">
+        <p class="line6">“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出。将棂星门置于文庙之前,表示棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出。将棂星门置于文庙之前,表示</p>
+        <div class="btns uf uf-pc">
+          <a class="btn jieshuo"><em></em><span>解说</span></a>
+          <a href="#" class="btn details"><em></em><span>详情</span></a>
+        </div>
+        <audio hidden>
+          <source src="http://m7.music.126.net/20180726165514/67addb7b93897276cb560bf2d76542b2/ymusic/9ddc/b10e/919e/2ef50b0473f7f2cce3193ed620898cd7.mp3" type="audio/ogg">
+          <source src="http://m7.music.126.net/20180726165514/67addb7b93897276cb560bf2d76542b2/ymusic/9ddc/b10e/919e/2ef50b0473f7f2cce3193ed620898cd7.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+  </div>
+  <script src="../js/guide.js"></script>
+  <script>
+    $(document).ready(function() {
+      $(".hot1").css({
+        "left":"49%",
+        "top":"10%"
+      });
+
+    }); 
+  </script>
+</body>
+
+</html>

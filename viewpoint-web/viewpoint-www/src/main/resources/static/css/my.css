@@ -1,0 +1,26 @@
+body, html { width: 100%; height: 100%; }
+
+.mymsg { width: 100%; height: 4.266667rem; background: url(../img/my/tbg.png) 0 0 no-repeat; background-size: 100% 100%; }
+.mymsg .pic { width: 1.226667rem; height: 1.213333rem; display: block; border-radius: 50%; margin-right: 0.6rem; margin-left: 1.1rem; margin-top: 0.85rem; float: left; }
+.mymsg .dt { float: left; color: #f8f8f8; margin-top: 0.9rem; }
+.mymsg .dt .name { font-size: 0.373333rem; }
+.mymsg .dt .time { font-size: 0.293333rem; }
+
+.my_main { background-color: transparent; }
+.my_main .mui-card { margin: 10px; padding: 0; background-color: #fff; overflow: hidden; min-height: 14rem; }
+.my_main .mui-card:first-child { margin-top: -40px; }
+.my_main .mui-card .item:first-child h4 img { position: relative; top: -2px; }
+.my_main .mui-card .item.myactivity { margin-top: 2px; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6; }
+.my_main .mui-card h4 { padding: 0; font-size: 0.373333rem; color: #303030; }
+.my_main .mui-card h4 img { max-width: 0.42rem; margin-right: 10px; vertical-align: middle; }
+.my_main .mui-card h4 .arrow { float: right; display: inline-block; width: 0.24rem; height: 0.133333rem; background: url(../img/my/down.png) 0 0 no-repeat; background-size: contain; position: relative; top: 10px; }
+.my_main .mui-card ul { padding: 0rem 0 0.2rem 0.85rem; }
+.my_main .mui-card ul a { display: inline-block; margin: 0.1rem 0.08rem; }
+.my_main .mui-card ul a img { width: 1.306667rem; height: 1.306667rem; }
+
+.ui-collapsible-collapsed .arrow { -webkit-transform: rotate(-90deg); transform: rotate(-90deg); }
+
+.my_activity_main .mui-card { margin: 0; padding: 0; min-height: 16rem; }
+.my_activity_main .mui-card ul li { overflow: hidden; height: 1rem; line-height: 1rem; font-size: 0.373333rem; color: #303030; padding: 0 0.2rem; border-bottom: 1px solid #e6e6e6; }
+.my_activity_main .mui-card ul li span { display: inline-block; width: 60%; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.my_activity_main .mui-card ul li em { float: right; font-size: 0.293333rem; color: #9a9a9a; }

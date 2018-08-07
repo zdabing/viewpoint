@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.1.143/viewpoint?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+    open-in-view: false
+  jackson:
+    default-property-inclusion: non_null
+      #date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+    check-template: true
+    enabled: true
+    encoding: utf-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+  servlet:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB
+  resources:
+    static-locations: classpath:/static/
+server:
+  port: 8080
+ftp:
+  port: 21
+  hostname: 192.168.1.145
+  userName: ftp_test
+  password: 123456
+  basePath:
+  fileUploadPath: http://192.168.1.145:7777/
+imooc:
+  security:
+    browser:
+      #loginType:  REDIRECT
+      loginPage:  /login.html

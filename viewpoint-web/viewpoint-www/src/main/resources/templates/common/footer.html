@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="footer" id="footer" th:fragment="footer">
+    <a href="index.html" class="item home normal active">
+        <div class="pic"></div>
+        <div class="text">首页</div>
+    </a>
+    <a class="item spot" id="spot">
+        <div class="pic"></div>
+        <div class="text">景点</div>
+    </a>
+    <a href="导览.html" class="item normal guide">
+        <div class="pic">
+            <img th:src="@{/img/icon/icon-guide.png}" src="../img/icon/icon-guide.png" alt="导览">
+        </div>
+    </a>
+    <a href="activity/活动.html" class="item activity normal">
+        <div class="pic"></div>
+        <div class="text">活动</div>
+    </a>
+    <a href="我的.html" class="item my normal">
+        <div class="pic"></div>
+        <div class="text">我的</div>
+    </a>
+</div>
+</html>
