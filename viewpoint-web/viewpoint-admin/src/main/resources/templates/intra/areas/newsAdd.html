@@ -25,7 +25,7 @@
 					</div>
 					<label class="layui-form-label" style="color: #009f95;font-weight: bold">景点名称(*)</label>
 					<div class="layui-input-block">
-						<input type="text" class="layui-input" id="areasName" placeholder="请输入景点名称" th:value="${areas?.areasName}" value="" lay-verify="required" autocomplete="off">
+						<input type="text" class="layui-input" id="areasName" placeholder="请输入景点名称" th:value="${areas?.areasName}" value="" autocomplete="off">
 					</div>
 				</div>
 
@@ -305,7 +305,29 @@
 			}
         });
         $(document).on('click','#urlDelete',function(){
+            var areasVideoShow1 = $("#areasVideoShow").attr("src");
             $('#areasVideoShow').attr('src','');
+
+            $.ajax({
+                url : '/upload/del',
+                data : {
+                    fileUrl : areasVideoShow1
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    layer.close(index);
+                    if(data.code == 0){
+                        layer.msg(data.msg);
+                    }else {
+                        layer.msg(data.msg);
+                    }
+                    uploadListIns1.reload();
+                },
+                error : function() {
+                    layer.msg("系统繁忙!请重试");
+                }
+            });
         });
 
         //通过url上传音乐
@@ -323,7 +345,29 @@
             }
         });
         $(document).on('click','#urlMusicDelete',function(){
+            var areasAudioShow1 = $("#areasAudioShow").attr("src");
             $('#areasAudioShow').attr('src','');
+            $.ajax({
+                url : '/upload/del',
+                data : {
+                    fileUrl : areasAudioShow1
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    layer.close(index);
+                    if(data.code == 0){
+                        layer.msg(data.msg);
+                    }else {
+                        layer.msg(data.msg);
+                    }
+                    uploadListIns1.reload();
+                },
+                error : function() {
+                    layer.msg("系统繁忙!请重试");
+                }
+            });
+
         });
 
         //上传缩略图
@@ -446,14 +490,30 @@
 
         // 表单提交
         form.on("submit(add)",function(data){
-			if(data.areasLeft == null || data.areasTop == null){
-                layer.alert('请选择景点地图位置', {
+            var areasName1 = $("#areasName").val();
+			var areasLeft1 = $("#areasLeft").val();
+			var areasTop1 = $("#areasTop").val();
+			var areasContent = editor.txt.html();
+
+			//判断景点是否为空的
+            var areasName2 = areasName1.replace(/(^\s*)|(\s*$)/g, '');
+            if(areasName2 == '' || areasName2 == undefined || areasName2 == null){
+                layer.alert('请填写景点名称', {
                     icon: 2,
                     skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
                 })
-				return false;
-			}
-            var  areasContent= editor.txt.html();
+                return false;
+            };
+
+            //判断地图位置是否为空的
+            if(areasTop1 == "undefined" || areasLeft1 == "undefined"){
+                layer.alert('请选择地图位置', {
+                    icon: 2,
+                    skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                })
+                return false;
+            };
+
                 $.ajax({
                 url : '/areas/save',
                 data : {
