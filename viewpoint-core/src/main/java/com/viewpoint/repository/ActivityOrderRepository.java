@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface ActivityOrderRepository extends JpaRepository<ActivityOrder,String> {
 
-    List<ActivityOrder> findByBuyerOpenid(String buyerOpenid, Pageable pageable);
+    List<ActivityOrder> findByBuyerOpenid(String buyerOpenid);
+
+    ActivityOrder findByBuyerOpenidAndActivityId(String buyerOpenid,String activityId);
 }
