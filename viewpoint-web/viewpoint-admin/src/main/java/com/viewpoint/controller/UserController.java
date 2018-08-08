@@ -31,12 +31,12 @@ public class UserController {
 
     @GetMapping("/admin/index")
     public String adminIndex(){
-        return "intra/admin/list";
+        return "admin/list";
     }
 
     @GetMapping("/registered/index")
     public String registeredIndex(){
-        return "intra/registered/list";
+        return "registered/list";
     }
 
     @ResponseBody
@@ -53,14 +53,14 @@ public class UserController {
             User user = userService.findById(id);
             model.addAttribute("user",user);
         }
-        return "intra/admin/adminAdd";
+        return "admin/adminAdd";
     }
 
     @RequestMapping("/resetPassword")
     public String resetPassword(@RequestParam(value = "id") Integer id,Model model){
         User user = userService.findById(id);
         model.addAttribute("user",user);
-        return "intra/admin/resetPassword";
+        return "admin/resetPassword";
     }
 
     @PostMapping("/save")

@@ -29,7 +29,7 @@ public class ActivityController {
 
     @GetMapping("/index")
     public String list(){
-        return "intra/activity/list";
+        return "activity/list";
     }
 
     @ResponseBody
@@ -46,7 +46,7 @@ public class ActivityController {
             Activity activity = activityService.findOne(activityId);
             model.addAttribute("activity",activity);
         }
-        return "intra/activity/newsAdd";
+        return "activity/newsAdd";
     }
 
     @PostMapping("/save")

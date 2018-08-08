@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<title>活动</title>
@@ -9,8 +9,8 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="/layui/css/layui.css" media="all" />
-	<link rel="stylesheet" href="/css/public.css" media="all" />
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 </head>
 <body class="childrenBody">
 <form class="layui-form layui-row layui-col-space10">
@@ -69,9 +69,14 @@
 		</div>
 	</div>
 </form>
-<script type="text/javascript" src="/layui/layui.js"></script>
-<script src="/js/wangEditor.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/wangEditor.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+
     layui.use(['form','layer','layedit','laydate','upload'],function(){
         var form = layui.form
         layer = parent.layer === undefined ? layui.layer : top.layer,
@@ -107,7 +112,7 @@
                 parentId = 0;
 			}
             $.ajax({
-                url : '/articleNodes/save',
+                url : basePath + 'articleNodes/save',
                 data : {
                     nodeId : $("#articleNodeId").val(),
 					nodeName : $("#name").val(),

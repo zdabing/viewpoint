@@ -38,7 +38,12 @@
 </div>
 
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-<script>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+
 	layui.extend({
 		admin: '/js/admin'
 	});
@@ -50,7 +55,7 @@
 
 		var tableIns = table.render({
 			elem: '#userList',
-			url: '/user/list/2',
+			url: basePath + 'user/list/2',
 			cellMinWidth: 80,
 			cols: [
 				[{
@@ -76,7 +81,7 @@
 				layer.confirm('真的删除么', function(index){
 					layer.close(index);
 					$.ajax({
-						url : '/user/del',
+						url : basePath + 'user/del',
 						data : {
 							id : obj.data.id
 						},

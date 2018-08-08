@@ -88,11 +88,16 @@
 </form>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:src="@{/js/wangEditor.js}"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+
 	function delMp4(){
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         $.ajax({
-            url : '/upload/del',
+            url : basePath + 'upload/del',
             data : {
                 fileUrl : $('#exhibitsMp4').attr("src")
             },
@@ -121,7 +126,7 @@
     function delMp3(){
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         $.ajax({
-            url : '/upload/del',
+            url : basePath + 'upload/del',
             data : {
                 fileUrl : $('#exhibitsMp3').attr("src")
             },
@@ -180,7 +185,7 @@
         //上传缩略图
         upload.render({
             elem: '.thumbBox',
-            url: '/upload/image',
+            url: basePath + 'upload/image',
             method : "post",
             done: function(res, index, upload){
                 $('.thumbImg').attr('src',res.data.src);
@@ -192,7 +197,7 @@
         });
         upload.render({
             elem: '#upMp4'
-			,url: '/upload/image'
+			,url: basePath + 'upload/image'
             ,accept: 'video' //视频
 			,method : "post"
             ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
@@ -212,7 +217,7 @@
         });
         upload.render({
             elem: '#upMp3'
-            ,url: '/upload/image'
+            ,url: basePath + 'upload/image'
             ,accept: 'audio' //音频
             ,method : "post"
             ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
@@ -239,7 +244,7 @@
             var   startTime = $("#startTime").val()
             var  endTime = $("#endTime").val()*/
             $.ajax({
-                url : '/exhibit/save',
+                url : basePath + 'exhibit/save',
                 data : {
                     exhibitsName : $("#exhibitsName").val(),  //文章标题
                     exhibitsId : $("#exhibitsId").val(),

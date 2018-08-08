@@ -50,13 +50,13 @@ public class ExhibitsController {
 
     @GetMapping("/index")
     public String index(){
-        return "intra/exhibit/list";
+        return "exhibit/list";
     }
 
     @GetMapping("/item/{parentId}")
     public String item(@PathVariable(value = "parentId") String parentId , Model model){
         model.addAttribute("parentId",parentId);
-        return "intra/exhibit/item";
+        return "exhibit/item";
     }
 
     @GetMapping("/add")
@@ -70,7 +70,7 @@ public class ExhibitsController {
         model.addAttribute("parentId",parentId);
         List<Areas> areasList = areasService.findAll();
         model.addAttribute("areasList",areasList);
-        return "intra/exhibit/add";
+        return "exhibit/add";
     }
 
     @GetMapping("/list")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>活动管理</title>
@@ -7,8 +7,8 @@
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="stylesheet" href="/css/font.css">
-		<link rel="stylesheet" href="/css/weadmin.css">
+		<link rel="stylesheet" th:href="@{/css/font.css}">
+		<link rel="stylesheet" th:href="@{/css/weadmin.css}">
 		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 		<!--[if lt IE 9]>
 	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -56,11 +56,11 @@
 
 			</table>
 
-			<script type="text/html" id="enabledTpl">
+			<script type="text/html" id="enabledTpl" >
 			  <input type="checkbox" name="{{d.activityId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
 			</script>
 
-			<script type="text/html" id="operateTpl">
+			<script type="text/html" id="operateTpl" >
 				<a   title="编辑" onclick="WeAdminEdit('编辑','/activity/add?activityId={{d.activityId}}')" href="javascript:;">
 					<i class="layui-icon">&#xe642;</i>
 				</a>
@@ -68,11 +68,16 @@
 					<i class="layui-icon">&#xe640;</i>
 				</a>
 			</script>
-			<script src="/layui/layui.js" charset="utf-8"></script>
+			<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 		</div>
 	</body>
-	<script>
-        layui.extend({
+	<script th:inline="javascript">
+
+        /*<![CDATA[*/
+        var basePath = /*[[@{/}]]*/;
+        /*]]>*/
+
+		layui.extend({
             admin: '/js/admin'
         });
         layui.use(['table', 'jquery','form', 'admin', "element",'layer'], function() {
@@ -83,7 +88,7 @@
                 admin = layui.admin;
             var tableIns = table.render({
                 elem: '#articleList',
-                url: '/activity/list',
+                url: basePath + 'activity/list',
                 cellMinWidth: 80,
                 cols: [
                     [{
@@ -119,7 +124,7 @@
             window.onDelete = function(activityId) {
                 var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
                 $.ajax({
-                    url : '/activity/delete',
+                    url : basePath + 'activity/delete',
                     data : {
                         activityId : activityId,
                     },
@@ -150,7 +155,7 @@
                     var enable =1;
 				}
                 $.ajax({
-                    url : '/activity/updateSale',
+                    url : basePath + 'activity/updateSale',
                     data : {
                         activityId : this.name,
                         enabled : enable
@@ -177,7 +182,7 @@
                     layer.confirm('真的删除么', function(index){
                         layer.close(index);
                         $.ajax({
-                            url : '/activity/del',
+                            url : basePath + 'activity/del',
                             data : {
                                 activityId : obj.data.activityId
                             },

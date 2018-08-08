@@ -30,7 +30,7 @@ public class AreasController {
      */
     @RequestMapping("/toAdd")
     public String toAdd(){
-        return "intra/areas/aa";
+        return "areas/aa";
     }
 
     /**
@@ -39,7 +39,7 @@ public class AreasController {
      */
     @RequestMapping("/index")
     public String list(){
-        return "intra/areas/list";
+        return "areas/list";
     }
 
     /**
@@ -53,7 +53,7 @@ public class AreasController {
             Areas areas = areasService.findByAreasId(areasId);
             model.addAttribute("areas",areas);
         }
-        return  "intra/areas/newsAdd";
+        return  "areas/newsAdd";
     }
 
     /**

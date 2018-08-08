@@ -36,7 +36,7 @@ public class ArticleController {
 
     @GetMapping("/index")
     public String list(){
-        return "intra/article/list";
+        return "article/list";
     }
 
     @RequestMapping("/list")
@@ -71,7 +71,7 @@ public class ArticleController {
             }
         }
         model.addAttribute("nodes",nodes);
-        return "intra/article/newsAdd";
+        return "article/newsAdd";
     }
 
 

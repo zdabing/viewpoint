@@ -29,7 +29,7 @@ public class ArticleNodesController {
 
     @GetMapping("/index")
     public String list(){
-        return "intra/articleNodes/list";
+        return "articleNodes/list";
     }
 
 
@@ -61,12 +61,12 @@ public class ArticleNodesController {
                     }
                 }
                 model.addAttribute("articleNodesList",articleNodesList);
-                return "intra/articleNodes/newsAdd";
+                return "articleNodes/newsAdd";
             }
         }
 
         model.addAttribute("articleNodesList",articleNodesList);
-        return "intra/articleNodes/newsAdd";
+        return "articleNodes/newsAdd";
     }
 
     @PostMapping("/save")
@@ -164,6 +164,13 @@ public class ArticleNodesController {
     @ResponseBody
     public ResultVO delete(Integer nodeId){
         try{
+            ArticleNodes articleNodes = articleNodesService.findByNodeId(nodeId);
+            if(articleNodes.getParentId() == 0){
+                List<ArticleNodes> articleNodesList = articleNodesService.findChildrenId(nodeId);
+                for (ArticleNodes articleNodes1 : articleNodesList){
+                    articleNodesService.delete(articleNodes1.getNodeId());
+                }
+            }
             articleNodesService.delete(nodeId);
         }catch (ViewpointException e){
            return ResultVOUtil.error(ResultEnum.ERROR.getCode(),e.getMessage());

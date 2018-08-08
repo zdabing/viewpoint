@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:position="http://www.w3.org/1999/xhtml">
+<!--xmlns:th="http://www.w3.org/1999/xhtml" xmlns:position="http://www.w3.org/1999/xhtml"-->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<title>景点</title>
@@ -9,8 +10,8 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="/layui/css/layui.css" media="all" />
-	<link rel="stylesheet" href="/css/public.css" media="all" />
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 </head>
 <body class="childrenBody">
 <form class="layui-form layui-row layui-col-space10">
@@ -186,8 +187,8 @@
 
 	</div>
 
-<script type="text/javascript" src="/layui/layui.js"></script>
-<script src="/js/wangEditor.js"></script>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/wangEditor.js}"></script>
 
 <style type="text/css">
 	* {
@@ -234,7 +235,12 @@
 	}
 </style>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+
     layui.use(['form','layer','layedit','laydate','upload'],function(){
         var form = layui.form
         layer = parent.layer === undefined ? layui.layer : top.layer,
@@ -348,7 +354,7 @@
             var areasAudioShow1 = $("#areasAudioShow").attr("src");
             $('#areasAudioShow').attr('src','');
             $.ajax({
-                url : '/upload/del',
+                url : basePath + 'upload/del',
                 data : {
                     fileUrl : areasAudioShow1
                 },
@@ -373,7 +379,7 @@
         //上传缩略图
         upload.render({
             elem: '.thumbBox',
-            url: '/upload/image',
+            url: basePath + 'upload/image',
             method : "post",
             before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
             layer.msg('图片正在上传请稍后！');//上传loading
@@ -407,7 +413,7 @@
         //选完视频文件后不自动上传
         var uploadListIns = upload.render({
             elem: '#test8'
-            ,url: '/upload/image'
+            ,url: basePath + 'upload/image'
 			,accept: 'video' //视频
             ,auto: false
             //,multiple: true
@@ -449,7 +455,7 @@
 //选完音乐文件后不自动上传
         var uploadListIns1 = upload.render({
             elem: '#selectMusic'
-            ,url: '/upload/image'
+            ,url: basePath + 'upload/image'
             ,accept: 'audio' //视频
             ,auto: false
             //,multiple: true
@@ -515,7 +521,7 @@
             };
 
                 $.ajax({
-                url : '/areas/save',
+                url : basePath + 'areas/save',
                 data : {
                     areasId : $("#areasId").val(),
                     areasName : $("#areasName").val(),

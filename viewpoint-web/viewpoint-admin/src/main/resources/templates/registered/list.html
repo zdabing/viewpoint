@@ -2,13 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>展品列表</title>
+		<title>管理员列表</title>
 		<meta name="Description" content="基于layUI数据表格操作"/>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="stylesheet" th:href="@{/css/font.css}">
 		<link rel="stylesheet" th:href="@{/css/weadmin.css}">
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+		<style type="text/css">
+			.layui-form-switch {
+				width: 55px;
+			}			
+			.layui-form-switch em {
+				width: 40px;
+			}			
+			.layui-form-onswitch i {
+				left: 45px;
+			}
+			body{overflow-y: scroll;}
+		</style>
 	</head>
 
 	<body>
@@ -17,49 +34,30 @@
         <a href="">首页</a>
         <a href="">会员管理</a>
         <a>
-          <cite>管理员列表</cite></a>
+          <cite>会员列表</cite></a>
       </span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
 		</div>
 		<div class="weadmin-body">
-			<div class="layui-row">
-				<!--<form class="layui-form layui-col-md12 we-search">
-					活动搜索：
-					<div class="layui-inline">
-						<input type="text" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
-					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-				</form>-->
-			</div>
-			<div class="weadmin-block demoTable">
-				<button class="layui-btn" onclick="WeAdminShow('添加展品','/exhibit/add')"><i class="layui-icon">&#xe61f;</i>添加</button>
-			</div>
-			<table class="layui-hide" id="exhibitList" lay-filter="exhibit">
+			<table class="layui-hide" id="userList" lay-filter="user">
 
 			</table>
 
-			<!--操作-->
-			<script type="text/html" id="doTpl">
-				<a class="layui-btn layui-btn-normal layui-btn-xs" onclick="WeAdminShow('添加附属展品','/exhibit/item/{{d.exhibitsId}}')" lay-event="edit">附属展品</a>
-				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminShow('编辑展品','/exhibit/add?exhibitsId={{d.exhibitsId}}')">编辑</a>
-				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
-				<!--<a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="look">预览</a>-->
+			<script type="text/html" id="operateTpl">
+				<a title="删除" href="javascript:;" lay-event="del">
+					<i class="layui-icon">&#xe640;</i>
+				</a>
 			</script>
-
-			<script type="text/html" id="downTpl">
-				<a class="layui-btn layui-btn-normal layui-btn-xs" href="/upload/download?fileUrl={{d.exhibitsLink}}" download="{{d.exhibitsName}}" lay-event="download">下载</a>
-				<a class="layui-btn layui-btn-xs layui-btn-primary" href="{{d.exhibitsLink}}">查看</a>
-			</script>
-
-			<script type="text/html" id="enabledTpl">
-				<input type="checkbox" name="{{d.exhibitsId}}" value="{{d.exhibitsStatus}}" lay-filter="up" lay-skin="switch" lay-text="已上架|已下架" {{ d.exhibitsStatus == 1 ? 'checked' : '' }}>
-			</script>
-
-			<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+			<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 		</div>
 	</body>
-	<script>
+	<script th:inline="javascript">
+
+        /*<![CDATA[*/
+        var basePath = /*[[@{/}]]*/;
+        /*]]>*/
+
         layui.extend({
             admin: '/js/admin'
         });
@@ -70,27 +68,25 @@
                 admin = layui.admin;
 
             var tableIns = table.render({
-                elem: '#exhibitList',
-                url: '/exhibit/list',
-                cellMinWidth: 80,
+                elem: '#userList',
+                url: basePath + 'user/list/1',
+                cellMinWidth : 80,
                 cols: [
                     [{
                         type: 'checkbox'
                     }, {
-                        field: 'areasId',title: '所属景点',align:"center"
-                    }
-                    , {
-                        field: 'exhibitsName',title: '展品名称',align:"center"
+                        field: 'id',title: 'ID',sort: true,width:80, align:"center"
                     }, {
-                        field: 'exhibitsDescription',title: '展品简介',align:"center"
+                        field: 'name',title: '登录名', align:"center"
                     }, {
-                        field: 'exhibitsIcon',title: '展品图',align:"center"
+                        field: 'openid',title: 'openid', align:"center"
                     }, {
-                        field: 'exhibitsLink',title: '二维码',align:"center",templet:'#downTpl'
+                        field: 'alias',title: '昵称', align:"center"
                     }, {
-                        field: 'exhibitsStatus',title: '展品状态',align:"center",width:200, templet:'#enabledTpl'
-					}, {
-                        title: '操作',width:250, templet:'#doTpl',fixed:"right",align:"center"
+                        field: 'icon',title: '头像',align:"center",templet:function(d){
+                            return '<a href="'+d.icon+'" target="_blank"><img src="'+d.icon+'" height="26" /></a>';}
+                    }, {
+                        field: 'operate',title: '操作',toolbar: '#operateTpl',align: 'center'
                     }]
                 ],
                 event: true,
@@ -101,20 +97,19 @@
             $(function(){
                 form.render();
             });
-
             //监听上下架操作
-            form.on('switch(up)', function(obj){
+            form.on('checkbox(up)', function(obj){
                 var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
                 if(this.value == 1){
-                    var exhibitsStatus =0;
-                }else{
-                    var exhibitsStatus =1;
-                }
+                    var enable =0;
+				}else{
+                    var enable =1;
+				}
                 $.ajax({
-                    url : '/exhibit/updateSale',
+                    url : basePath + 'activity/updateSale',
                     data : {
-                        exhibitsId : this.name,
-                        exhibitsStatus : exhibitsStatus
+                        activityId : this.name,
+                        enabled : enable
                     },
                     type: "post",
                     dataType: "json",
@@ -129,19 +124,17 @@
                     },
                     error : function() {
                         layer.msg("系统繁忙!请重试");
-                        tableIns.reload();
                     }
                 });
             });
-
-            table.on('tool(exhibit)', function(obj){
+            table.on('tool(user)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
                 if(obj.event === 'del'){ //删除
                     layer.confirm('真的删除么', function(index){
                         layer.close(index);
                         $.ajax({
-                            url : '/exhibit/del',
+                            url : basePath + 'activity/del',
                             data : {
-                                exhibitsId : obj.data.exhibitsId
+                                activityId : obj.data.activityId
                             },
                             type: "post",
                             dataType: "json",

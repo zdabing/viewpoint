@@ -8,11 +8,11 @@ public class BasicController {
 
     @RequestMapping("/login")
     public String login(){
-        return "intra/login";
+        return "login";
     }
 
     @RequestMapping(value = {"/","index"})
     public String index(){
-        return "intra/index";
+        return "index";
     }
 }
