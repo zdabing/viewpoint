@@ -4,6 +4,8 @@ import com.viewpoint.dataobject.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ArticleService {
 
     /**增加文章*/
@@ -22,4 +24,6 @@ public interface ArticleService {
      * @return
      */
     Article updateSale(Integer articleId, Integer enabled);
+
+    List<Article> findByNodeId(Integer nodeId);
 }

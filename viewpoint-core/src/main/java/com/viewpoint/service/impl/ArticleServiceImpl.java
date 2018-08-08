@@ -1,6 +1,7 @@
 package com.viewpoint.service.impl;
 
 import com.viewpoint.dataobject.Article;
+import com.viewpoint.enums.StatusEnum;
 import com.viewpoint.repository.ArticleRepository;
 import com.viewpoint.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -70,6 +72,12 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = articleOptional.orElse(null);
         article.setEnabled(enabled);
         return articleReponsitory.save(article);
+    }
+
+    @Override
+    public List<Article> findByNodeId(Integer nodeId) {
+        List<Article> articleList = articleReponsitory.findByNodeIdAndEnabled(nodeId, StatusEnum.UP.getCode());
+        return articleList;
     }
 
 
