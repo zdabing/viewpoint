@@ -5,29 +5,6 @@
 <body>
 <div>
   <div th:replace="/common/footer :: footer"></div>
-  <div class="footer-mask"></div>
-  <div id="spot-popover">
-    <ul>
-      <li>
-        <a href="javascript:">文庙介绍</a>
-      </li>
-      <li>
-        <a href="javascript:">历史足迹</a>
-      </li>
-      <li>
-        <a href="javascript:">科举文化</a>
-      </li>
-      <li>
-        <a href="javascript:">政府关怀</a>
-      </li>
-      <li>
-        <a href="javascript:" class="active">南方夫子</a>
-      </li>
-      <li>
-        <a href="javascript:">文物介绍</a>
-      </li>
-    </ul>
-  </div>
   <div class="mui-content">
     <a href="javascript:" class="main-pic">
       <img src="../img/index/banner.jpg" class="bigmainpic">
@@ -41,19 +18,20 @@
       <div class="title">
         <img th:src="@{/img/index/hot.png}" src="../img/index/hot.png">
         <label>最新活动</label>
-        <a href="javascript:" class="more">更多&gt;</a>
+        <a th:href="@{/activity/item}" href="javascript:" data-ajax="false" class="more">更多&gt;</a>
       </div>
       <div class="mui-card" th:each="activity: ${activityList}">
+        <a th:href="@{'/activity/detail-'+${activity.activityId}}" href="javascript:" data-ajax="false">
         <div class="box">
           <img th:src="${activity.activityLogo}" src="../img/index/pic1.jpg" class="bigmainpic">
           <p th:text="${activity.activityDesc}">2018年“文化和自然遗产日”暨首届言子文化节启动仪式圆满成功</p>
           <div class="tag_date" th:text="${#temporals.format(activity.releaseTime, 'yyyy-MM-dd')}">2018-6-9</div>
         </div>
+        </a>
       </div>
     </div>
   </div>
 </div>
-  <script></script>
 </body>
 
 </html>

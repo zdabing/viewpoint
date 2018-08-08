@@ -1,68 +1,11 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>景点-南方夫子</title>
-  <link rel="stylesheet" href="../css/jquery.mobile-1.4.5.css">
-  <link rel="stylesheet" href="../css/common.css">
-  <link rel="stylesheet" href="../css/spot.css">
-  <script src="../js/libs/flexsible.js"></script>
-  <script src="../js/libs/jquery.min.js"></script>
-  <script src="../js/libs/jquery.mobile-1.4.5.min.js"></script>
-  <script src="../js/common.js"></script>
-</head>
-
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/head :: head('活动','/css/activity.css')"></head>
 <body>
-  <div class="footer" id="footer">
-    <a class="item home normal">
-      <div class="pic"></div>
-      <div class="text">首页</div>
-    </a>
-    <a class="item spot active" id="spot">
-      <div class="pic"></div>
-      <div class="text">景点</div>
-    </a>
-    <a class="item normal guide">
-      <div class="pic">
-        <img src="../img/icon/icon-guide.png" alt="导览">
-      </div>
-    </a>
-    <a class="item activity normal">
-      <div class="pic"></div>
-      <div class="text">活动</div>
-    </a>
-    <a class="item my normal">
-      <div class="pic"></div>
-      <div class="text">我的</div>
-    </a>
-  </div>
-  <div class="footer-mask"></div>
-  <div id="spot-popover">
-    <ul>
-      <li>
-        <a href="javascript:">文庙介绍</a>
-      </li>
-      <li>
-        <a href="javascript:">历史足迹</a>
-      </li>
-      <li>
-        <a href="javascript:">科举文化</a>
-      </li>
-      <li>
-        <a href="javascript:">政府关怀</a>
-      </li>
-      <li>
-        <a href="javascript:" class="active">南方夫子</a>
-      </li>
-      <li>
-        <a href="javascript:">文物介绍</a>
-      </li>
-    </ul>
-  </div>
+<div th:replace="/common/footer :: footer"></div>
   <div class="mui-content fuzi">
     <div class="video-box">
-      <video src="../img/movie.mp4" controls="controls">
+      <video th:src="@{/img/movie.mp4}" src="../img/movie.mp4" controls="controls">
       your browser does not support the video tag
       </video>
     </div>

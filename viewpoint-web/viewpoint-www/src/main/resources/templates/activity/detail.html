@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/head :: head('活动','/css/activity.css')"></head>
+
+<body>
+<div th:replace="/common/footer :: footer"></div>
+  <div class="mui-content baoming">
+  	<div class="main-pic">
+  		<img th:src="${activity.activityLogo}" src="../img/activity/main.jpg" class="bigmainpic">
+  		<a id="baoming" href="#popup_msg" class="baoming" data-rel="popup" data-position-to="window">报名参与</a>
+  	</div>
+    <div class="w">
+    	<div class="biaoti" th:text="${activity.activityName}">2018年“文化和自然遗产日”暨首届言子文化节启动仪式圆满成功</div>
+      <div class="para" th:utext="${activity.activityContent}">
+		  <p>2018年常熟市“文化和自然遗产日”系列活动暨首届言子文化节启动仪式在文庙尊经阁顺利举行。首届言子文化节正式开幕！</p>
+		  <img th:src="@{/img/activity/pic1.jpg}" src="../img/activity/pic1.jpg">
+      </div>
+    </div>
+  </div>
+  
+  <!-- 弹窗 -->
+  <!-- <div class="mymask"></div> -->
+
+  <!-- 报名信息 -->
+
+  <div id="popup_msg" class="mypopup popup_msg" data-role="popup" data-overlay-theme="b" data-dismissible="false">
+  	<h3>报名信息</h3>
+
+  	<div class="group">
+		<input type="text" th:value="${activity.activityId}" id="buyerName" style="display: none">
+	    <div class="uf row uf-ac">
+        <label>联系人：</label>
+	   		<input type="text" id="activityId" placeholder="请输入用户名">
+	    </div>
+	    <div class="uf row uf-ac">
+        <label>联系方式：</label>
+        <input type="text" id="buyerPhone" placeholder="请输入联系方式">
+	    </div>
+	    <div class="row btns uf uf-pc">
+        <a id="submit" href="#" class="ui-btn ui-btn-inline submit">提交</a>
+        <a data-rel="back" class="ui-btn ui-btn-inline cancel">取消</a>
+	    </div>
+  	</div>
+  </div>
+  
+  <div id="popup_suc" class="mypopup popup_suc">
+  	<div class="dt">
+  		<img th:src="@{/img/activity/suc.png}" src="../img/activity/suc.png">
+  		<h3>报名成功</h3>
+  		<a class="ui-btn close">关闭</a>
+  	</div>
+  </div>
+  
+  <!--<script th:src="@{/js/activity_inner.js}" src="../js/activity_inner.js"></script>-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+    $(document).ready(function() {
+        $(".popup_suc").hide();
+        // 报名成功弹窗
+        $("#submit").on('tap',function(e){
+            $.ajax({
+                url : basePath+'activity/order',
+                data : {
+                    activityId : $("#activityId").val(),
+                    buyerName : $("#buyerName").val(),
+                    buyerPhone : $("#buyerPhone").val()
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    if(data.code == 0){
+                        $(".popup_suc").show();
+                        return false;
+                    }else {
+                        alert("修改失败!请重试");
+                        return false;
+                    }
+                },
+                error : function() {
+                    alert("系统繁忙!请重试");
+                }
+            });
+        });
+        $("#popup_suc .close").on('tap',function(e){
+            $("#popup_suc").hide();
+            $("#popup_msg-screen").hide();
+            $("#popup_msg").hide();
+        });
+        /*$("#popup_msg-screen").on('tap',function(e){
+            $("#popup_suc").hide();
+        });*/
+    });
+</script>
+</body>
+
+</html>
