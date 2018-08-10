@@ -16,7 +16,7 @@ create table `article` (
 
 create table `article_nodes` (
     `node_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '节点ID',
-    `parent_id` int unsigned NOT NULL DEFAULT '0' COMMENT '父节点ID',
+    `parent_id` int cunsigned NOT NULL DEFAULT '0' COMMENT '父节点ID',
     `node_name` varchar(255)  NOT NULL DEFAULT '' COMMENT '节点名称',
     `has_children` tinyint NOT NULL DEFAULT '0' COMMENT '对否有子节点',
     `enabled` tinyint NOT NULL DEFAULT '0' COMMENT '上架',
@@ -102,11 +102,28 @@ create table `user` (
 INSERT INTO `user` VALUES ('1', 'admin', '$2a$10$WqRJmPOwloMI4aYVaPKJWuHjPlV13F5oB2zwGgJ/Dwr6wNFk4jWUm', null, null, null, '2');
 INSERT INTO `user` VALUES ('2', 'admin1', '$2a$10$WqRJmPOwloMI4aYVaPKJWuHjPlV13F5oB2zwGgJ/Dwr6wNFk4jWUm', null, null, null, '2');
 
-create table `areas` (
-    `areas_id` varchar(32) not null,
-    `areas_des` varchar(32) not null comment '景区介绍',
-    `areas_content` varchar(32) not null comment '景区详情',
-    `create_time` timestamp not null default current_timestamp comment '创建时间',
-    `update_time` timestamp not null default current_timestamp on update current_timestamp comment '更新时间',
-		primary key (`areas_id`)
-);
+CREATE TABLE `areas` (
+  `areas_id` int(20) NOT NULL AUTO_INCREMENT,
+  `areas_content` longtext NOT NULL COMMENT '介绍',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `areas_top` varchar(32) NOT NULL,
+  `areas_left` varchar(32) NOT NULL,
+  `areas_audio` varchar(255) DEFAULT NULL,
+  `areas_video` varchar(255) DEFAULT NULL,
+  `areas_name` varchar(20) NOT NULL,
+  `areas_logo` varchar(255) NOT NULL,
+  PRIMARY KEY (`areas_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `history_footprints` (
+  `history_id` int(20) NOT NULL AUTO_INCREMENT,
+  `history_content` longtext CHARACTER SET utf8 NOT NULL,
+  `start_year` int(20) NOT NULL,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `sort` int(20) NOT NULL,
+  PRIMARY KEY (`history_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+
+

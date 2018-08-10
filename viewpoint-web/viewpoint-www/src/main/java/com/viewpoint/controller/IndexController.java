@@ -21,6 +21,7 @@ public class IndexController {
         List<Activity> activityList = activityService.findUpAll();
         // 截取前4个
         activityList = activityList.stream().limit(4).collect(Collectors.toList());
+        System.out.println(activityList);
         model.addAttribute("activityList",activityList);
         return "index";
     }
