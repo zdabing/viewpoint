@@ -28,6 +28,14 @@
 					<div class="layui-input-block">
 						<input type="text" class="layui-input" id="areasName" placeholder="请输入景点名称" th:value="${areas?.areasName}" value="" autocomplete="off">
 					</div>
+
+					<!--景点Logo-->
+					<label class="layui-form-label" style="color: #009f95;font-weight: bold">景点Logo</label>
+					<div class="layui-col-md3 layui-col-xs5" style="margin-top: 15px">
+						<div class="layui-upload-list thumbBox mag0 magt3" >
+							<img class="layui-upload-img thumbImg" id="areasLogo" th:src="${areas?.areasLogo}" src="">
+						</div>
+					</div>
 				</div>
 
 <!--景点地图-->
@@ -44,6 +52,7 @@
 						</div>
 					</div>
 				</div>
+
 
 	<!--视频上传-->
 				<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 视频上传</blockquote>
@@ -160,32 +169,29 @@
 				</div>
 
 		</div>
-
 			<!--景点说明-->
-		<div class="layui-form-item magb0" style="margin-top:15px;">
-
-			<label class="layui-form-label" style="color: #009f95;font-weight: bold">景点说明(*)</label>
-			<div class="layui-input-block" id="areasContent">
-				<p th:utext="${areas?.areasContent}" ></p>
+			<div class="layui-form-item magb0" >
+				<label class="layui-form-label" style="color: #009f95;font-weight: bold">景点说明(*)</label>
+				<div class="layui-input-block" id="areasContent">
+					<p th:utext="${areas?.areasContent}" ></p>
+				</div>
 			</div>
-
-		</div>
 
 			<!--最后发布-->
-		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
-		<div class="border">
-
-			<hr class="layui-bg-gray" />
-			<div class="layui-right" style="text-align:center">
-				<a class="layui-btn layui-btn-sm" lay-filter="add" lay-submit><i class="layui-icon">&#xe609;</i>发布</a>
-				<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
+			<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
+			<div class="border">
+				<hr class="layui-bg-gray" />
+				<div class="layui-right" style="text-align:center">
+					<a class="layui-btn layui-btn-sm" lay-filter="add" lay-submit><i class="layui-icon">&#xe609;</i>发布</a>
+					<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
+				</div>
 			</div>
 
-</form>		</div>
-
 		</div>
-
 	</div>
+
+
+</form>
 
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
 <script th:src="@{/js/wangEditor.js}"></script>
@@ -386,8 +392,8 @@
         	}
             ,done: function(res, index, upload){
                 //var num = parseInt(4*Math.random());  //生成0-4的随机数，随机显示一个头像信息
-                var index = res.data.src.lastIndexOf('/');
-                var len = res.data.src.length;
+                // var index = res.data.src.lastIndexOf('/');
+                // var len = res.data.src.length;
                 $('#areasImgName').text('图片上传成功');
                 $('.thumbImg').attr('src',res.data.src);
                 $('.thumbBox').css("background","#fff");
@@ -526,6 +532,7 @@
                     areasId : $("#areasId").val(),
                     areasName : $("#areasName").val(),
                     areasContent : areasContent,
+					areasLogo : $("#areasLogo").attr("src"),
                     areasAudio : $("#areasAudioShow").attr("src"),
                     areasVideo : $("#areasVideoShow").attr("src"),
 					areasLeft : $("#areasLeft").val(),
@@ -572,6 +579,7 @@
     // 配置服务器端地址
     editor.customConfig.uploadImgServer = '/upload/wangEditor'
     editor.create()
+
 </script>
 
 

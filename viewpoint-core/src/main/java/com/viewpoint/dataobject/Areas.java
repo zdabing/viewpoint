@@ -40,7 +40,7 @@ public class Areas implements Serializable {
 
     private String areasTop;
 
-  //  private String areasLogo;
+    private String areasLogo;
 
     //音频
     private String areasAudio;
