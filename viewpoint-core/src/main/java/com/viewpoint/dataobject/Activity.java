@@ -49,7 +49,13 @@ public class Activity implements Serializable {
     /** 活动限制人数 */
     private Integer buyLimit = 1000;
 
+    /** 热度 */
+    private Integer hot = 0;
+
     /** 发布 */
     private Integer enabled = 0;
+
+    /** 活动状态 */
+    private Integer activityStatus;
 
 }

@@ -14,4 +14,6 @@ public interface ExhibitsInfoRepository extends JpaRepository<ExhibitsInfo,Strin
     List<ExhibitsInfo> findByParentId(String patentId);
 
     Page<ExhibitsInfo> findByParentId(String patentId, Pageable pageable);
+
+    List<ExhibitsInfo> findByAreasId(String areasId);
 }

@@ -29,4 +29,11 @@ public interface ExhibitsService {
     List<ExhibitsInfo> findByParentId(String patentId);
 
     ExhibitsInfo findOne(String exhibitsId);
+
+    /**
+     * 根据景点ID获取所有的主展品
+     * @param areasId
+     * @return
+     */
+    List<ExhibitsInfo> findByAreasId(String areasId);
 }
