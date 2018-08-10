@@ -36,6 +36,8 @@ create table `activity` (
     `start_time` timestamp not null comment '开始时间',
     `end_time` timestamp not null comment '结束时间',
     `buy_limit`	int unsigned NOT NULL DEFAULT '0' comment '限制人数',
+    `hot` int unsigned NOT NULL DEFAULT '0' comment '热度',
+    `activity_status` int unsigned NOT NULL DEFAULT '0' comment '0:报名中 1:未开始 2:已结束',
     `enabled` tinyint NOT NULL DEFAULT '0' comment '上架',
     primary key (`activity_id`)
 );
@@ -96,6 +98,7 @@ create table `user` (
     `alias` varchar(64) COMMENT '昵称',
     `icon` varchar(255) COMMENT '头像',
     `role` int unsigned not null default 0 COMMENT '权限',
+    `create_time` timestamp not null default current_timestamp comment '创建时间',
 	primary key (`id`),
 	key `idx_open_id` (`openid`)
 );
