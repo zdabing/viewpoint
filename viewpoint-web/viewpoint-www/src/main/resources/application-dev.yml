@@ -29,25 +29,7 @@ spring:
     mode: HTML
     prefix: classpath:/templates/
     suffix: .html
-  servlet:
-    multipart:
-      max-file-size: 128MB
-      max-request-size: 128MB
   resources:
     static-locations: classpath:/static/
 server:
-  port: 8080
-ftp:
-  port: 21
-  hostname: 192.168.1.145
-  userName: ftp_test
-  password: 123456
-  basePath:
-  fileUploadPath: http://192.168.1.145:7777/
-imooc:
-  security:
-    browser:
-      #loginType:  REDIRECT
-      loginPage:  /login.html
-
-
+  port: 8090
