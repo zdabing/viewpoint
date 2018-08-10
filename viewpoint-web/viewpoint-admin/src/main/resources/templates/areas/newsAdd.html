@@ -15,6 +15,7 @@
 </head>
 <body class="childrenBody">
 <form class="layui-form layui-row layui-col-space10">
+
 	<div class="layui-col-md9 layui-col-xs12">
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-md9 layui-col-xs7">
@@ -26,7 +27,7 @@
 					</div>
 					<label class="layui-form-label" style="color: #009f95;font-weight: bold">景点名称(*)</label>
 					<div class="layui-input-block">
-						<input type="text" class="layui-input" id="areasName" placeholder="请输入景点名称" th:value="${areas?.areasName}" value="" autocomplete="off">
+						<input type="text" class="layui-input" style="width: 235px" id="areasName" placeholder="请输入景点名称" th:value="${areas?.areasName}" value="" autocomplete="off">
 					</div>
 
 					<!--景点Logo-->
@@ -169,6 +170,7 @@
 				</div>
 
 		</div>
+
 			<!--景点说明-->
 			<div class="layui-form-item magb0" >
 				<label class="layui-form-label" style="color: #009f95;font-weight: bold">景点说明(*)</label>
@@ -186,10 +188,9 @@
 					<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
 				</div>
 			</div>
-
 		</div>
-	</div>
 
+	</div>
 
 </form>
 
@@ -208,16 +209,16 @@
 		height: 100%;
 	}
 
-	p {
-		position: absolute;
-		left: 100px;
-		top: 20px;
-		user-select: none;
-		position: absolute;
-		left: 0;
-		top: 0;
-		z-index: 9999;
-	}
+	/*p {*/
+		/*position: absolute;*/
+		/*left: 100px;*/
+		/*top: 20px;*/
+		/*user-select: none;*/
+		/*position: absolute;*/
+		/*left: 0;*/
+		/*top: 0;*/
+		/*z-index: 9999;*/
+	/*}*/
 
 	#box {
 		width: 375px;
