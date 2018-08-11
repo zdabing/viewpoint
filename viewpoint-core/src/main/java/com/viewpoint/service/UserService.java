@@ -15,4 +15,6 @@ public interface UserService {
     void delete(Integer id);
 
     Page<User> findByRole(Integer role, Pageable pageable);
+
+    User findByOpenid(String openid);
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/head :: head('景点-历史足迹','/css/spot.css')"></head>
+
+<body>
+<div th:replace="/common/footer :: footer"></div>
+  <div class="mui-content">
+    <div class="w">
+      <div class="title">
+        <img th:src="@{/img/spot/history/icon.png}" src="../img/spot/history/icon.png">
+        <label>历史足迹</label>
+      </div>
+      <div class="content">
+        <ul class="timeline">
+          <li th:each="historyFootprints : ${historyFootprintsList}">
+            <p th:text="${historyFootprints.historyContent}">文字北宋至和年间（1054-1056年）文庙建立，初建时有大成殿、明伦堂等建筑。1</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+</html>

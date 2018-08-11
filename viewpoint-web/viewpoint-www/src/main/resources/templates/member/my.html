@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/head :: head('我的','/css/my.css')"></head>
+
+<body>
+<div th:replace="/common/footer :: footer"></div>
+  <div class="mymsg">
+    <img th:src="${member.icon}" src="../img/my/userhead.jpg" class="pic">
+    <div class="dt">
+      <div class="name" th:text="${member.alias}">昵称</div>
+      <div class="time">注册时间：<span th:text="${#temporals.format(member.alias, 'yyyy-MM-dd')}">2018年7月7日</span></div>
+    </div>
+  </div>
+  <div class="mui-content my_main">
+    <div class="mui-card">
+      <div data-role="collapsible" class="item">
+        <h4><img th:src="@{/img/my/my_icon_1.png}" src="../img/my/my_icon_1.png">我的足迹<span class="arrow"></span></h4>
+        <ul data-role="listview">
+          <a href="#" th:each="history : ${historyList}">
+            <img th:src="${history.exhibit.exhibitsIcon}" src="../img/my/foot-1.jpg">
+          </a>
+        </ul>
+      </div>
+      <div data-role="collapsible" class="item myactivity">
+        <h4><img th:src="@{/img/my/my_icon_2.png}" src="../img/my/my_icon_2.png">我的活动<span class="arrow"></span></h4>
+      </div>
+    </div>
+  </div>
+    <script>
+    </script>
+</body>
+
+</html>

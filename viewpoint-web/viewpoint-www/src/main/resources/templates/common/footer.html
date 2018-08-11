@@ -10,7 +10,7 @@
         <div class="pic"></div>
         <div class="text">景点</div>
     </a>
-    <a href="导览.html" class="item normal guide">
+    <a th:href="@{/area/guide}" data-ajax="false" href="导览.html" class="item normal guide">
         <div class="pic">
             <img th:src="@{/img/icon/icon-guide.png}" src="../img/icon/icon-guide.png" alt="导览">
         </div>
@@ -27,8 +27,11 @@
 <div class="footer-mask"></div>
 <div id="spot-popover">
     <ul>
+        <li>
+            <a th:href="@{/history/foot}" data-ajax="false" href="">历史足迹</a>
+        </li>
         <li th:each="node : ${nodeList}">
-            <a href="javascript:" th:text="${node.nodeName}">文庙介绍</a>
+            <a href="javascript:" th:text="${node.nodeName}" data-ajax="false">文庙介绍</a>
         </li>
     </ul>
 </div>

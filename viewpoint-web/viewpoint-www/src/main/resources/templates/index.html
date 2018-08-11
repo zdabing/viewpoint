@@ -21,7 +21,7 @@
         <a th:href="@{/activity/item}" href="javascript:" data-ajax="false" class="more">更多&gt;</a>
       </div>
       <div class="mui-card" th:each="activity: ${activityList}">
-        <a th:href="@{'/activity/detail-'+${activity.activityId}}" href="javascript:" data-ajax="false">
+        <a th:href="@{'/activity/detail/'+${activity.activityId}}" href="javascript:" data-ajax="false">
         <div class="box">
           <img th:src="${activity.activityLogo}" src="../img/index/pic1.jpg" class="bigmainpic">
           <p th:text="${activity.activityDesc}">2018年“文化和自然遗产日”暨首届言子文化节启动仪式圆满成功</p>

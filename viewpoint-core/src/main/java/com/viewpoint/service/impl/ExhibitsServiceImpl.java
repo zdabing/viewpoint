@@ -93,4 +93,9 @@ public class ExhibitsServiceImpl implements ExhibitsService {
         ExhibitsInfo exhibitsInfo = exhibitsInfoRepository.findById(exhibitsId).orElse(null);
         return exhibitsInfo;
     }
+
+    @Override
+    public List<ExhibitsInfo> findByAreasId(String areasId) {
+        return exhibitsInfoRepository.findByAreasId(areasId);
+    }
 }

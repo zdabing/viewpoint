@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     Page<User> findByRole(Integer role, Pageable pageable);
 
     User findByName(String name);
+
+    User findByOpenid(String openid);
 }

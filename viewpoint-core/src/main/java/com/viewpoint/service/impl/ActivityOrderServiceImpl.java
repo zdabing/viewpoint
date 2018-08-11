@@ -1,14 +1,11 @@
 package com.viewpoint.service.impl;
 
-import com.viewpoint.dataobject.Activity;
 import com.viewpoint.dataobject.ActivityOrder;
 import com.viewpoint.enums.ResultEnum;
 import com.viewpoint.exception.ViewpointException;
 import com.viewpoint.repository.ActivityOrderRepository;
-import com.viewpoint.repository.ActivityRepository;
 import com.viewpoint.service.ActivityOrderService;
 import com.viewpoint.service.ActivityService;
-import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,14 +26,18 @@ public class ActivityOrderServiceImpl implements ActivityOrderService {
     @Override
     @Transactional
     public void save(ActivityOrder activityOrder) {
-        // 活动是不是过期
         Activity activity = activityService.findOne(activityOrder.getActivityId());
-        if (LocalDateTime.now().isAfter(activity.getEndTime())){
-            throw new ViewpointException(ResultEnum.TIME_IS_AFTEr);
+        // 活动是否存在
+        if (activity == null || activity.getEnabled() == StatusEnum.DOWN.getCode()) {
+            throw new ViewpointException(ResultEnum.ACTIVITY_NOT_EXIST);
         }
-        // 活动是不是未开始
+        // 活动是否开始
         if (LocalDateTime.now().isBefore(activity.getStartTime())) {
-            throw new ViewpointException(ResultEnum.TIME_IS_BEFORE);
+            throw new ViewpointException(ResultEnum.ACTIVITY_NOT_STAR);
+        }
+        // 活动是否结束
+        if (LocalDateTime.now().isAfter(activity.getEndTime())) {
+            throw new ViewpointException(ResultEnum.ACTIVITY_IS_END);
         }
         // 已申请
         ActivityOrder order = activityOrderRepository.findByBuyerOpenidAndActivityId(activityOrder.getBuyerOpenid(),
@@ -51,5 +52,11 @@ public class ActivityOrderServiceImpl implements ActivityOrderService {
     public List<ActivityOrder> findByBuyerOpenid(String buyerOpenid) {
         List<ActivityOrder> activityOrderList = activityOrderRepository.findByBuyerOpenid(buyerOpenid);
         return activityOrderList;
+    }
+
+    @Override
+    public long countByActivityId(String activityId) {
+
+        return activityOrderRepository.countByActivityId(activityId);
     }
 }

@@ -1,23 +1,16 @@
-package com.viewpoint.dataobject;
+package com.viewpoint.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
 @Data
-@DynamicUpdate
-@DynamicInsert
-public class Activity implements Serializable {
+public class ActivityVO implements Serializable {
 
-    private static final long serialVersionUID = 374456721275499152L;
-    @Id
+    private static final long serialVersionUID = 1453472870734225103L;
+
     private String activityId;
 
     /** 活动名称 */
@@ -52,10 +45,12 @@ public class Activity implements Serializable {
     /** 热度 */
     private Integer hot = 0;
 
-    /** 发布 */
-    private Integer enabled = 0;
+    /** 已参加人数 */
+    private long orderCount;
 
     /** 活动状态 */
-    private Integer activityStatus;
+    private String activityStatus;
 
+    /** 订单状态 */
+    private Integer orderStatus;
 }

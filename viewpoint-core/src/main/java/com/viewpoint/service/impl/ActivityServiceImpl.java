@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,13 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     @Transactional
     public Activity save(Activity activity) {
+        if (LocalDateTime.now().isBefore(activity.getStartTime())){
+            activity.setActivityStatus(StatusEnum.ACTIVITY_STATUS_BEFORE.getCode());
+        }else if (LocalDateTime.now().isAfter(activity.getEndTime())){
+            activity.setActivityStatus(StatusEnum.ACTIVITY_STATUS_AFTER.getCode());
+        } else {
+            activity.setActivityStatus(StatusEnum.ACTIVITY_STATUS_NOW.getCode());
+        }
         return activityRepository.save(activity);
     }
 

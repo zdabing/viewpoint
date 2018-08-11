@@ -27,10 +27,10 @@
   	<h3>报名信息</h3>
 
   	<div class="group">
-		<input type="text" th:value="${activity.activityId}" id="buyerName" style="display: none">
+		<input type="text" th:value="${activity.activityId}" id="activityId" style="display: none">
 	    <div class="uf row uf-ac">
         <label>联系人：</label>
-	   		<input type="text" id="activityId" placeholder="请输入用户名">
+	   		<input type="text" id="buyerName" placeholder="请输入用户名">
 	    </div>
 	    <div class="uf row uf-ac">
         <label>联系方式：</label>
@@ -73,7 +73,7 @@
                         $(".popup_suc").show();
                         return false;
                     }else {
-                        alert("修改失败!请重试");
+                        alert(data.msg);
                         return false;
                     }
                 },

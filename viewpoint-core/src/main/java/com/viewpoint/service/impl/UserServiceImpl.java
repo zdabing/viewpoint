@@ -50,4 +50,9 @@ public class UserServiceImpl implements UserService {
     public Page<User> findByRole(Integer role,Pageable pageable) {
         return userRepository.findByRole(role,pageable);
     }
+
+    @Override
+    public User findByOpenid(String openid) {
+        return userRepository.findByOpenid(openid);
+    }
 }

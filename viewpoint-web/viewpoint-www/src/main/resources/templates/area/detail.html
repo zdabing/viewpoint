@@ -1,80 +1,23 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>景点详情</title>
-  <link rel="stylesheet" href="../css/jquery.mobile-1.4.5.css">
-  <link rel="stylesheet" href="../css/common.css">
-  <link rel="stylesheet" href="../css/spot_details.css">
-  <script src="../js/libs/flexsible.js"></script>
-  <script src="../js/libs/jquery.min.js"></script>
-  <script src="../js/libs/jquery.mobile-1.4.5.min.js"></script>
-  <script src="../js/common.js"></script>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/head :: head('导览','/css/spot_details.css')"></head>
 
 <body>
-  <div>
-    <div class="footer" id="footer">
-    <a class="item home normal">
-      <div class="pic"></div>
-      <div class="text">首页</div>
-    </a>
-    <a class="item spot active" id="spot">
-      <div class="pic"></div>
-      <div class="text">景点</div>
-    </a>
-    <a class="item normal guide">
-      <div class="pic">
-        <img src="../img/icon/icon-guide.png" alt="导览">
-      </div>
-    </a>
-    <a class="item activity normal">
-      <div class="pic"></div>
-      <div class="text">活动</div>
-    </a>
-    <a class="item my normal">
-      <div class="pic"></div>
-      <div class="text">我的</div>
-    </a>
-  </div>
-  <div class="footer-mask"></div>
-  <div id="spot-popover">
-    <ul>
-      <li>
-        <a href="javascript:" class="active">文庙介绍</a>
-      </li>
-      <li>
-        <a href="javascript:">历史足迹</a>
-      </li>
-      <li>
-        <a href="javascript:">科举文化</a>
-      </li>
-      <li>
-        <a href="javascript:">政府关怀</a>
-      </li>
-      <li>
-        <a href="javascript:">南方夫子</a>
-      </li>
-      <li>
-        <a href="javascript:">文物介绍</a>
-      </li>
-    </ul>
-  </div>
+<div th:replace="/common/footer :: footer"></div>
     <div class="mui-content exhibits-content">
       <div class="w">
         <div class="myaudio">
           <div class="myaudio-center">
             <audio id="aud">
-              <source src='../img/bg.mp3' type='audio/ogg' width='300px'>
-              <source src='../img/bg.mp3' type='audio/mpeg' width='300px'>
-              <source src='../img/bg.mp3' type='audio/wav' width='300px'> 浏览器不支持此格式
+              <source th:src="${area.areasAudio}" src='../img/bg.mp3' type='audio/ogg' width='300px'>
+              <source th:src="${area.areasAudio}" src='../img/bg.mp3' type='audio/mpeg' width='300px'>
+              <source th:src="${area.areasAudio}" src='../img/bg.mp3' type='audio/wav' width='300px'> 浏览器不支持此格式
             </audio>
             <div class="aud-btn">
-              <img src="../img/spot/details/audio_play.png" id="play">
+              <img th:src="@{/img/spot/details/audio_play.png}" src="../img/spot/details/audio_play.png" id="play">
             </div>
             <div class="aud-show">
-              <p>棂星门</p>
+              <p th:text="${area.areasName}">棂星门</p>
               <div id="Progress-time">00:00</div>
               <div id="Progress">
                 <span id="jin"></span><span id="yuan"></span>
@@ -84,10 +27,10 @@
           </div>
         </div>
         <div class="title">
-          <img src="../img/spot/details/icon.png">
-          <label>棂星门简介</label>
+          <img th:src="@{/img/spot/details/icon.png}" src="../img/spot/details/icon.png">
+          <label th:text="${area.areasName}+'简介'">棂星门简介</label>
         </div>
-        <div class="para">
+        <div class="para" th:utext="${area.areasContent}">
           <p>“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出。将棂星门置于文庙之前,表示以祭天的最高礼仪敬奉孔子。</p>
           <p>常熟文庙棂星门中轴线位于中轴线南端，戟门之前。勘探中发掘到了原有棂星门基础，同时有民国时期老照片作为依据，因此为原址原制修复。棂星门为《营造法式》中“乌头门”形制，两柱冲天石柱中夹两扇木门，三座门并立，中间连以红色宫墙。棂星门与两侧乡贤祠、名宦祠，及北侧戟门之间形成了一个院落,孔子“行教”像就矗立在院落之中。</p>
         </div>
@@ -95,33 +38,27 @@
       <div class="exhibits">
         <div class="tag_main">景点展品</div>
         <div class="w">
-          <div class="mui-card">
-            <div class="box uf">
-              <div class="pic">
-                <img src="../img/spot/details/pic2.jpg" alt="">
+          <div class="mui-card" th:each="exhibits : ${exhibitsInfoList}">
+            <a th:href="@{'/exhibit/detail/'+${exhibits.exhibitsId}}" data-ajax="false">
+              <div class="box uf">
+                <div class="pic">
+                  <img th:src="${exhibits.exhibitsIcon}" src="../img/spot/details/pic2.jpg" alt="">
+                </div>
+                <div class="dt uf-1">
+                  <h3 th:text="${exhibits.exhibitsName}">棂星门</h3>
+                  <p th:text="${exhibits.exhibitsDescription}">“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出</p>
+                </div>
               </div>
-              <div class="dt uf-1">
-                <h3>棂星门</h3>
-                <p>“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出</p>
-              </div>
-            </div>
-          </div>
-          <div class="mui-card">
-            <div class="box uf">
-              <div class="pic">
-                <img src="../img/spot/details/pic2.jpg" alt="">
-              </div>
-              <div class="dt uf-1">
-                <h3>棂星门</h3>
-                <p>“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出...</p>
-              </div>
-            </div>
+            </a>
           </div>
       </div>
     </div>
   </div>
-  <script src="../js/spot_details.js"></script>
-  <script type="text/javascript">
+  <script th:src="@{/js/spot_details.js}" src="../js/spot_details.js"></script>
+  <script type="text/javascript" th:inline="javascript">
+  /*<![CDATA[*/
+  var basePath = /*[[@{/}]]*/;
+  /*]]>*/
   //底部显示区域总宽度
   var footerW = $('.myaudio').width();
   //中央显示区域的宽度
@@ -136,10 +73,10 @@
   $('#play').on('tap',function(){
     i++;
     if (i % 2 != 0) {
-      $(this).attr('src', '../img/spot/details/audio_pause.png');
+      $(this).attr('src', basePath+'img/spot/details/audio_pause.png');
       aud_play();
     } else {
-      $(this).attr('src', '../img/spot/details/audio_play.png');
+      $(this).attr('src', basePath+'img/spot/details/audio_play.png');
       aud_pause()
     }
   });
@@ -223,7 +160,7 @@
       });
       $('#jin').width($(this).width() + moveX + sX - startX);
       var w = audio.duration.toFixed(2) * ($('#jin').width() / winW)
-      $('#play').attr('src', '../img/spot/details/audio_pause.png');
+      $('#play').attr('src', basePath+'img/spot/details/audio_pause.png');
       aud_play(w)
     },
     mousedown: function(ev) {
@@ -250,7 +187,7 @@
         $(this).css({ left: l })
         $('#jin').width($(this).width() + l);
         var w = audio.duration.toFixed(2) * ($('#jin').width() / winW)
-        $('#play').attr('src', '../img/spot/details/audio_pause.png');
+        $('#play').attr('src', basePath+'img/spot/details/audio_pause.png');
         aud_play(w)
       });
       $(this).mouseup(function() {

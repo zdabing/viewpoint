@@ -10,5 +10,5 @@ public interface ActivityOrderRepository extends JpaRepository<ActivityOrder,Str
 
     List<ActivityOrder> findByBuyerOpenid(String buyerOpenid);
 
-    ActivityOrder findByBuyerOpenidAndActivityId(String buyerOpenid,String activityId);
+    long countByActivityId(String activityId);
 }
