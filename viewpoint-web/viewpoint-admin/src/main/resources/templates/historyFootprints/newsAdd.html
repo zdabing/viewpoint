@@ -31,6 +31,14 @@
 						<div class="layui-form-mid ">年</div>
 					</div>
 
+					<div class="layui-form-item"  >
+						<label class="layui-form-label">排列序号</label>
+						<div class="layui-input-inline">
+							<input type="text" th:onblur="|javascript:sortRepeat()|" lay-verify="required" class="layui-input" id="sort" placeholder="请输入序号" th:value="${historyFootprints?.sort}" value="">
+						</div>
+						<div class="layui-form-mid " id="sortTips" style="color: red;font-weight: bold"></div>
+					</div>
+
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">事迹内容</label>
@@ -38,14 +46,10 @@
 						<textarea placeholder="例：文字北宋至和年间（1054-1056）文庙建立，初建时有大成殿、明伦堂等建筑。。。" class="layui-textarea" id="historyContent" lay-verify="required" autocomplete="off" th:text="${historyFootprints?.historyContent}"></textarea>
 					</div>
 				</div>
+
 			</div>
 
-			<div class="layui-form-item"  style = "width:300px;">
-				<label class="layui-form-label">排序</label>
-				<div class="layui-input-block">
-					<input type="text" lay-verify="required" class="layui-input" id="sort" placeholder="请输入序号" th:value="${historyFootprints?.sort}" value="">
-				</div>
-			</div>
+
 		</div>
 
 		<hr class="layui-bg-gray" style="width:840px"/>
@@ -77,8 +81,39 @@
             laydate = layui.laydate,
             $ = layui.jquery;
 
+        window.sortRepeat = function() {
+            var sort = $("#sort").val();
+                $.ajax({
+                    url : basePath + 'historyFootprints/sortRepeat',
+                    data : {
+                        sort : sort
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success : function(data) {
+
+                        if(data.code == 0){
+                            $('#sortTips').html('');
+                        }else {
+                            $('#sortTips').html('序号已使用，请填写一个不重复的序号!');
+                        }
+
+                    },
+                    error : function() {
+                        layer.msg("系统繁忙!请重试");
+                    }
+                });
+
+
+        };
+
 
         form.on("submit(add)",function(data){
+
+            if($('#sortTips').html() != ''){
+                layer.alert("请填写一个不重复的序号");
+                return false;
+            }
 
             var startYear = $("#startYear").val()
             var historyContent = $("#historyContent").val()
@@ -112,17 +147,18 @@
                     }
                 },
                 error : function() {
-                    layer.alert("系统繁忙!请重试");
+					layer.alert("系统繁忙!请重试");
                 }
             });
             return false;
-        })
+        });
 
         //预览
         form.on("submit(look)",function(){
             layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
             return false;
-        })
+        });
+
     })
 
 </script>

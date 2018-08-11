@@ -6,6 +6,7 @@ import com.viewpoint.repository.HistoryFootprintsRepository;
 import com.viewpoint.service.HistoryFootprintsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,7 @@ public class HistoryFootprintsServiceImpl implements HistoryFootprintsService {
     }
 
     @Override
+    @Transactional
     public HistoryFootprints save(HistoryFootprints historyFootprints) {
         return historyFootprintsRepository.save(historyFootprints);
     }
@@ -33,6 +35,7 @@ public class HistoryFootprintsServiceImpl implements HistoryFootprintsService {
     }
 
     @Override
+    @Transactional
     public void delete(Integer historyId) {
         historyFootprintsRepository.deleteById(historyId);
     }
@@ -45,5 +48,14 @@ public class HistoryFootprintsServiceImpl implements HistoryFootprintsService {
     @Override
     public List<HistoryFootprints> orderBySort() {
         return historyFootprintsRepository.findByHistoryIdNotNullOrderBySortAsc();
+    }
+
+    /**
+     * 通过sort获取对象
+     * @return
+     */
+    @Override
+    public HistoryFootprints findBySort(Integer sort) {
+        return historyFootprintsRepository.findBySort(sort);
     }
 }

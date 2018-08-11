@@ -35,13 +35,28 @@
 			</fieldset>
 			<!--<i class="layui-icon layui-timeline-axis"></i>-->
 			<ul class="layui-timeline" >
-				<li class="layui-timeline-item" th:each="footprints : ${historyFootprintsList}">
+				<li class="layui-timeline-item" th:each="footprints : ${historyFootprintsList}" >
+
 					<i class="layui-icon layui-timeline-axis"></i>
 					<div class="layui-timeline-content layui-text">
-						<div class="class1" ><button id="deleteFootprints" th:value="${footprints.historyId}" class="layui-btn layui-btn-xs"><i class="layui-icon"></i>删除</button></div>
-						<a><div class="layui-timeline-title" th:onclick="|javascript:WeAdminShow('添加历史足迹','/historyFootprints/add?historyId=${footprints.historyId}')|" th:value="${footprints.historyId}" th:text="${footprints.historyContent}"></div>
-						</a>
+                        <!--删除-->
+						<div class="class1" >
+							<button  id="deleteFootprints" class="layui-btn layui-btn-xs" th:onclick="|javascript:onDelete('${footprints.historyId}')|"><i class="layui-icon"></i>删除</button>
+                        </div>
+                        <!--向上移-->
+                        <div class="class1" >
+                            <button  id="up" class="layui-btn layui-btn-xs" th:onclick="|javascript:onUp('${footprints.historyId}')|"><i class="layui-icon">&#xe619;</i>向上移</button>
+                        </div>
+                        <!--向下移-->
+                        <div class="class1" >
+                            <button  id="down" class="layui-btn layui-btn-xs" th:onclick="|javascript:onDown('${footprints.historyId}')|"><i class="layui-icon">&#xe61a;</i>向下移</button>
+                        </div>
+                        <a>
+                            <div class="layui-timeline-title" th:text="${footprints.historyContent}"  th:onclick="|javascript:WeAdminShow('添加历史足迹','/historyFootprints/add?historyId=${footprints.historyId}')|" >
+                            </div>
+                        </a>
 					</div>
+
 				</li>
 			</ul>
 
@@ -77,39 +92,87 @@
             //     window.location.href = "http://localhost:8080/historyFootprints/index";
             // });
 
-            $(document).on('click','#deleteFootprints',function(){
-                layer.confirm("确认要删除吗，删除后不能恢复", { title: "删除确认" },
-                    function (index) {
-                        layer.close(index);
-                        $.ajax({
-                            url : basePath+'historyFootprints/delete',
-                            dataType : 'json',
-                            data :{'historyId':$("#deleteFootprints").val()},
-                            success : function(data) {
-                                if (data.code == 0) {
-                                    layer.alert('删除成功', {
-                                        icon: 1,
-                                        skin: 'layer-ext-moon',
-                                        title: "删除操作",
-                                        btn: ['确定']
-                                    },function (index, item) {
-                                        location.reload();
-                                    });
-                                } else{
-                                    layer.alert('删除失败', {
-                                            icon: 2,
-                                            skin: 'layer-ext-moon',
-                                        title: "删除操作",
-										btn: ['确定']
-                                    },
-                                    function (index, item) {
-                                         ocation.reload();
-                                    });
-                                }
+            //删除足迹
+            window.onDelete = function(historyId) {
+                layer.confirm('确认要删除吗？', {
+                    btn : [ '确定', '取消' ]//按钮
+                }, function(index) {
+                    layer.close(index);
+                    //此处请求后台程序，下方是成功后的前台处理……
+                    var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true}); //0代表加载的风格，支持0-2
+                    $.ajax({
+                        url : basePath + 'historyFootprints/delete',
+                        data : {
+                            historyId : historyId,
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success : function(data) {
+                            layer.close(index);
+                            if(data.code == 0){
+                                layer.msg(data.msg);
+                            }else {
+                                layer.msg(data.msg);
                             }
-                        });
-                    })
-            });
+                            window.location.reload();
+                        },
+                        error : function() {
+                            layer.msg("系统繁忙!请重试");
+                        }
+                    });
+                });
+            };
+
+            //向下移动足迹
+            window.onDown = function(historyId) {
+                    var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true});
+                    $.ajax({
+                        url : basePath + 'historyFootprints/onDown',
+                        data : {
+                            historyId : historyId
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success : function(data) {
+                            layer.close(index);
+                            if(data.code == 0){
+                                window.location.reload();
+                            }else {
+                                layer.msg(data.msg,{icon: 5,time : 1000,anim: 6});
+                            }
+                        },
+                        error : function() {
+                            layer.msg("系统繁忙!请重试");
+                        }
+                    });
+            };
+
+            //向上移动足迹
+            window.onUp = function(historyId) {
+                var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true});
+                $.ajax({
+                    url : basePath + 'historyFootprints/onUp',
+                    data : {
+                        historyId : historyId
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success : function(data) {
+                        layer.close(index);
+                        if(data.code == 0){
+                            window.location.reload();
+                        }else {
+                            layer.msg(data.msg,{icon: 5,time : 1000,anim: 6});
+                        }
+
+                    },
+                    error : function() {
+                        layer.msg("系统繁忙!请重试");
+                    }
+                });
+            };
+
+
         });
 	</script>
 </html>

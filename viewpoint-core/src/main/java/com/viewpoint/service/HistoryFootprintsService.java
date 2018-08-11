@@ -17,4 +17,10 @@ public interface HistoryFootprintsService {
     List<HistoryFootprints> orderByStartTime();
 
     List<HistoryFootprints> orderBySort();
+
+    /**
+     * 通过sort获取对象
+     * @return
+     */
+    HistoryFootprints findBySort(Integer sort);
 }
