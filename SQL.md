@@ -16,7 +16,7 @@ create table `article` (
 
 create table `article_nodes` (
     `node_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '节点ID',
-    `parent_id` int cunsigned NOT NULL DEFAULT '0' COMMENT '父节点ID',
+    `parent_id` int unsigned NOT NULL DEFAULT '0' COMMENT '父节点ID',
     `node_name` varchar(255)  NOT NULL DEFAULT '' COMMENT '节点名称',
     `has_children` tinyint NOT NULL DEFAULT '0' COMMENT '对否有子节点',
     `enabled` tinyint NOT NULL DEFAULT '0' COMMENT '上架',
@@ -102,8 +102,8 @@ create table `user` (
 	primary key (`id`),
 	key `idx_open_id` (`openid`)
 );
-INSERT INTO `user` VALUES ('1', 'admin', '$2a$10$WqRJmPOwloMI4aYVaPKJWuHjPlV13F5oB2zwGgJ/Dwr6wNFk4jWUm', null, null, null, '2');
-INSERT INTO `user` VALUES ('2', 'admin1', '$2a$10$WqRJmPOwloMI4aYVaPKJWuHjPlV13F5oB2zwGgJ/Dwr6wNFk4jWUm', null, null, null, '2');
+
+INSERT INTO `user`(name,password,role) VALUES ('admin', '$2a$10$WqRJmPOwloMI4aYVaPKJWuHjPlV13F5oB2zwGgJ/Dwr6wNFk4jWUm','2');
 
 CREATE TABLE `areas` (
   `areas_id` int(20) NOT NULL AUTO_INCREMENT,
