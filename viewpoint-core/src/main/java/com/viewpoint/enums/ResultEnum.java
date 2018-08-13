@@ -11,6 +11,8 @@ public enum ResultEnum {
 
     ACTIVITY_NOT_EXIST(13,"活动不存在"),
 
+    ACTIVITY_ORDER_IS_EXIST(11,"请不要重复申请"),
+
     ACTIVITY_NOT_STAR(14,"活动未开始"),
 
     ACTIVITY_IS_END(15,"活动已结束"),
@@ -22,7 +24,6 @@ public enum ResultEnum {
     EXHIBITS_NOT_EXIST(43,"展品不存在"),
 
     AREA_NOT_EXIST(53,"景点不存在"),
-
     ;
 
     private Integer code;

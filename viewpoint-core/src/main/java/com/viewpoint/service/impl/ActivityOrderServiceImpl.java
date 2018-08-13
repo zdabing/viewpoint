@@ -1,9 +1,7 @@
 package com.viewpoint.service.impl;
 
-import com.viewpoint.dataobject.Activity;
 import com.viewpoint.dataobject.ActivityOrder;
 import com.viewpoint.enums.ResultEnum;
-import com.viewpoint.enums.StatusEnum;
 import com.viewpoint.exception.ViewpointException;
 import com.viewpoint.repository.ActivityOrderRepository;
 import com.viewpoint.service.ActivityOrderService;
@@ -11,6 +9,7 @@ import com.viewpoint.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,6 +38,12 @@ public class ActivityOrderServiceImpl implements ActivityOrderService {
         // 活动是否结束
         if (LocalDateTime.now().isAfter(activity.getEndTime())) {
             throw new ViewpointException(ResultEnum.ACTIVITY_IS_END);
+        }
+        // 已申请
+        ActivityOrder order = activityOrderRepository.findByBuyerOpenidAndActivityId(activityOrder.getBuyerOpenid(),
+                activityOrder.getActivityId());
+        if (StringUtils.isEmpty(order)) {
+            throw new ViewpointException(ResultEnum.ACTIVITY_ORDER_IS_EXIST);
         }
         activityOrderRepository.save(activityOrder);
     }
