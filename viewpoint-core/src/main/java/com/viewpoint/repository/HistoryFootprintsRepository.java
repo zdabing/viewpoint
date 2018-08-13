@@ -12,4 +12,6 @@ public interface HistoryFootprintsRepository extends JpaRepository<HistoryFootpr
     List<HistoryFootprints> findByHistoryIdNotNullOrderByStartYearAsc();
 
     List<HistoryFootprints> findByHistoryIdNotNullOrderBySortAsc();
+
+    HistoryFootprints findBySort(Integer sort);
 }
