@@ -52,7 +52,7 @@
 					<div class="layui-input-inline">
 						<select name="quiz1" id="nodeNameById">
 
-							<option value="" name="nodeId" th:each="node:${nodes}" th:value="${node.nodeId}" th:utext="${node.nodeName}" th:disabled="${node?.hasChildren == 1}" th:selected="${article?.nodeId} eq ${node.nodeId}" ></option>
+							<option value="" name="nodeId" th:each="node:${nodes}" th:value="${node.nodeId}" th:utext="${node.nodeName}" th:selected="${article?.nodeId} eq ${node.nodeId}" ></option>
 
 					</select>
 				</div>

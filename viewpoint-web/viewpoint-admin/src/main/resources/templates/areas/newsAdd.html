@@ -75,7 +75,7 @@
 							<div class="layui-row" style="width: 380px">
 								<div class="layui-col-xs3">
 									<button type="button" class="layui-btn layui-btn-normal" id="test8" style="display: block">选择文件</button>
-									<span id="areasVideoName" style="color: #007DDB;font-weight: bold"></span>
+									<span id="areasVideoName" style="color: red;font-weight: bold"></span>
 								</div>
 								<div class="layui-col-xs3">
 									<button type="button" class="layui-btn" id="test9" style="display: block">开始上传</button>
@@ -108,6 +108,7 @@
 						<label class="layui-form-label" style="color: #009f95;font-weight: bold">预览</label>
 						<div class="layui-input-inline" id="videoDiv">
 							<video src="" th:src="${areas?.areasVideo}" id="areasVideoShow" controls="controls" style="margin-top:10px;width: 206px" ></video>
+							<input type="hidden" th:value="${areas?.areasVideo}" value="" id="hiddenVideo">
 						</div>
 					</div>
 				</div>
@@ -132,7 +133,7 @@
 							<div class="layui-row" style="width: 380px">
 								<div class="layui-col-xs3">
 									<button type="button" class="layui-btn layui-btn-normal" id="selectMusic" style="display: block">选择文件</button>
-									<span id="areasAudioName" style="color: #007DDB;font-weight: bold"></span>
+									<span id="areasAudioName" style="color: red;font-weight: bold"></span>
 								</div>
 								<div class="layui-col-xs3">
 									<button type="button" class="layui-btn" id="startUpload" style="display: block">开始上传</button>
@@ -165,6 +166,7 @@
 						<label class="layui-form-label" style="color: #009f95;font-weight: bold">预览</label>
 						<div class="layui-input-inline">
 							<audio src="" th:src="${areas?.areasAudio}" id="areasAudioShow" controls="controls" style="margin-top:10px" ></audio>
+							<input type="hidden" th:value="${areas?.areasVideo}" value="" id="hiddenAudio">
 						</div>
 					</div>
 				</div>
@@ -308,29 +310,7 @@
 			}
         });
         $(document).on('click','#urlDelete',function(){
-            var areasVideoShow1 = $("#areasVideoShow").attr("src");
-            $('#areasVideoShow').attr('src','');
-
-            $.ajax({
-                url : '/upload/del',
-                data : {
-                    fileUrl : areasVideoShow1
-                },
-                type: "post",
-                dataType: "json",
-                success : function(data) {
-                    layer.close(index);
-                    if(data.code == 0){
-                        layer.msg(data.msg);
-                    }else {
-                        layer.msg(data.msg);
-                    }
-                    uploadListIns1.reload();
-                },
-                error : function() {
-                    layer.msg("系统繁忙!请重试");
-                }
-            });
+            $("#areasVideoShow").attr("src",'');
         });
 
         //通过url上传音乐
@@ -348,29 +328,7 @@
             }
         });
         $(document).on('click','#urlMusicDelete',function(){
-            var areasAudioShow1 = $("#areasAudioShow").attr("src");
-            $('#areasAudioShow').attr('src','');
-            $.ajax({
-                url : basePath + 'upload/del',
-                data : {
-                    fileUrl : areasAudioShow1
-                },
-                type: "post",
-                dataType: "json",
-                success : function(data) {
-                    layer.close(index);
-                    if(data.code == 0){
-                        layer.msg(data.msg);
-                    }else {
-                        layer.msg(data.msg);
-                    }
-                    uploadListIns1.reload();
-                },
-                error : function() {
-                    layer.msg("系统繁忙!请重试");
-                }
-            });
-
+            $("#areasAudioShow").attr("src",'');
         });
 
         //上传缩略图
@@ -406,90 +364,127 @@
             ,format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
         });
 
+        //再次选择文件的时候取消提示信息
+        $(document).on('click','#test8',function(){
+            $('#areasVideoName').text('');
+        });
 
         //选完视频文件后不自动上传
-        var uploadListIns = upload.render({
+        upload.render({
             elem: '#test8'
             ,url: basePath + 'upload/image'
 			,accept: 'video' //视频
             ,auto: false
             //,multiple: true
             ,bindAction: '#test9'
-			,choose: function(obj){
-                //将每次选择的文件追加到文件队列
-                var files = obj.pushFile();
-
-                //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
-                obj.preview(function(index, file, result){
-
-
-                    layer.msg('文件正在上传请稍后！');//上传loading
-                    $('#areasVideoShow').attr('src',result);
-                    layer.msg('导入成功！');//上传loading
-                    //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
-                    $(document).on('click','#test10',function(){
-                        delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
-						$("#areasVideoShow").attr('src','');
-						$("#areasVideoName").remove();
-                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-
-                    });
-
-                });
-            }
+			,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+				layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true}); //上传loading
+			}
             ,done: function(res){
-                var index = res.data.src.lastIndexOf('/');
-                var len = res.data.src.length;
-                $('#areasVideoName').text((res.data.src).substring(index+1,len)+'已上传');
+                layer.closeAll('loading'); //关闭loading
+                // var path = res.data.src;
+                // var index = path.lastIndexOf('/');
+                // var len = res.data.src.length;
+                $('#areasVideoName').text('视频上传成功');
                 $('#areasVideoShow').attr('src',res.data.src);
-                layer.msg('视频上传成功');
+                    layer.msg('视频上传成功');
             }
             ,error: function(index, upload){
-                layer.msg('上传失败请重新上传！');
+                layer.closeAll('loading'); //关闭loading
+                layer.msg('上传失败请重新上传！');0
             }
         });
 
-//选完音乐文件后不自动上传
-        var uploadListIns1 = upload.render({
+        //删除视频文件
+        $(document).on('click','#test10',function(){
+			var areasVideoShow1 = $("#areasVideoShow").attr('src');
+			 //  var index = layer.load(1,{shade: [0.7, '#393D49']}, {shadeClose: true}); //0代表加载的风格，支持0-2
+			   $.ajax({
+				   url : basePath + 'upload/del',
+				   data : {
+					   fileUrl : areasVideoShow1
+				   },
+				   type: "post",
+				   dataType: "json",
+				   success : function(data) {
+				    //   layer.close(index);
+					   if(data.code == 0){
+						   layer.msg('删除成功');
+						   $('#areasVideoShow').attr('src','');
+						   $('#areasVideoName').text('');
+				      }else {
+				            layer.msg(data.msg);
+				            $('#areasVideoShow').attr('src',areasVideoShow1);
+					   }
+				   },
+				   error : function() {
+					   layer.msg("系统繁忙!请重试");
+				   }
+			   });
+
+		});
+
+
+        //再次选择文件的时候取消提示信息
+        $(document).on('click','#selectMusic',function(){
+            $('#areasAudioName').text('');
+        });
+		//选完音乐文件后不自动上传
+        upload.render({
             elem: '#selectMusic'
             ,url: basePath + 'upload/image'
             ,accept: 'audio' //视频
             ,auto: false
             //,multiple: true
             ,bindAction: '#startUpload'
-            ,choose: function(obj){
-                //将每次选择的文件追加到文件队列
-                var files = obj.pushFile();
-
-                //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
-                obj.preview(function(index, file, result){
-
-                    layer.msg('文件正在上传请稍后！');//上传loading
-                    $('#areasAudioShow').attr('src',result);
-                    layer.msg('导入成功！');//上传loading
-                    //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
-                    $(document).on('click','#deleteMusic',function(){
-                        delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
-                        $("#areasAudioShow").attr('src','');
-                        $("#areasAudioName").remove();
-                        uploadListIns1.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-                    });
-
-                });
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true}); //上传loading
             }
             ,done: function(res){
-                var index = res.data.src.lastIndexOf('/');
-                var len = res.data.src.length;
-                $('#areasAudioName').text((res.data.src).substring(index+1,len)+'已上传');
+               layer.closeAll('loading'); //关闭loading
+                // var index = res.data.src.lastIndexOf('/');
+                // var len = res.data.src.length;
+                // $('#areasAudioName').text((res.data.src).substring(index+1,len)+'已上传');
+                $('#areasAudioName').text('音乐上传成功');
                 $('#areasAudioShow').attr('src',res.data.src);
                 layer.msg('音频上传成功');
 
             }
             ,error: function(index, upload){
+               layer.closeAll('loading'); //关闭loading
                 layer.msg('上传失败请重新上传！');
             }
         });
 
+		//删除音乐文件
+        $(document).on('click','#deleteMusic',function(){
+            var areasAudioShow1 = $("#areasAudioShow").attr('src');
+            //  var index = layer.load(1,{shade: [0.7, '#393D49']}, {shadeClose: true}); //0代表加载的风格，支持0-2
+            $.ajax({
+                url : basePath + 'upload/del',
+                data : {
+                    fileUrl : areasAudioShow1
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    //   layer.close(index);
+                    if(data.code == 0){
+                        layer.msg('删除成功');
+                        $('#areasAudioShow').attr('src','');
+                        $('#areasAudioName').text('');
+                    }else {
+                        layer.msg(data.msg);
+                        $('#areasAudioShow').attr('src',areasAudioShow1);
+                    }
+
+                },
+                error : function() {
+                    layer.msg("系统繁忙!请重试");
+                }
+            });
+
+        });
 
         // 表单提交
         form.on("submit(add)",function(data){
