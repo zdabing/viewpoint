@@ -551,6 +551,7 @@ public class FTPUtil {
      * @param password 密码，如：root
      */
     private void login(String address, int port, String username, String password) {
+        ftpClient = new FTPClient();
         try {
             ftpClient.connect(address, port);
             ftpClient.login(username, password);
@@ -570,7 +571,6 @@ public class FTPUtil {
      *
      */
     private void closeConnect() {
-        boolean status = ftpClient.isConnected();
         if (ftpClient != null && ftpClient.isConnected()) {
             try {
                 ftpClient.logout();
