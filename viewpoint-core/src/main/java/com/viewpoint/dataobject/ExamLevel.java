@@ -2,6 +2,8 @@ package com.viewpoint.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,35 +13,34 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- *
+ * 科举等级
  */
-@Data
+
 @Entity
-public class ArticleNodes implements Serializable {
+@Data
+@DynamicUpdate
+@DynamicInsert
+public class ExamLevel implements Serializable {
 
-    private static final long serialVersionUID = -3586721485985187931L;
+    private static final long serialVersionUID = -77218928824527733L;
 
-    /** 节点ID */
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer nodeId;
+    private Integer levelId;
 
-    /** 父节点ID */
-    private Integer parentId;
+    private String levelName;
 
-    /** 节点名称  */
-    private String nodeName;
-
-    /** 是否有子节点 */
-    private Integer hasChildren;
-
-    /** 发布 */
-    private Integer enabled;
-
-    /** 排序 */
     private Integer sort;
 
-    /** 修改时间 */
+    private Integer enabled;
+
+    //名次的描述
+    private String levelDesc;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
+
 }

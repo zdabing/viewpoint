@@ -1,6 +1,7 @@
 package com.viewpoint.controller;
 
 import com.viewpoint.dataobject.Activity;
+import com.viewpoint.dataobject.ExamLevel;
 import com.viewpoint.exception.ViewpointException;
 import com.viewpoint.form.ActivityForm;
 import com.viewpoint.service.ActivityService;
@@ -48,6 +49,7 @@ public class ActivityController {
         }
         return "activity/newsAdd";
     }
+
 
     @PostMapping("/save")
     @ResponseBody

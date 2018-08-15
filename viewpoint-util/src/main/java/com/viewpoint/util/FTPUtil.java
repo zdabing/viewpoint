@@ -571,6 +571,7 @@ public class FTPUtil {
      *
      */
     private void closeConnect() {
+        boolean status = ftpClient.isConnected();
         if (ftpClient != null && ftpClient.isConnected()) {
             try {
                 ftpClient.logout();

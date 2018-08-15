@@ -121,12 +121,37 @@ CREATE TABLE `areas` (
 
 CREATE TABLE `history_footprints` (
   `history_id` int(20) NOT NULL AUTO_INCREMENT,
-  `history_content` longtext CHARACTER SET utf8 NOT NULL,
+  `history_content` longtext NOT NULL,
   `start_year` int(20) NOT NULL,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `sort` int(20) NOT NULL,
-  PRIMARY KEY (`history_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`history_id`,`sort`),
+  UNIQUE KEY `sort` (`sort`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `exam_level` (
+  `level_id` int(20) NOT NULL AUTO_INCREMENT,
+  `level_name` varchar(20) NOT NULL,
+  `sort` int(20) NOT NULL,
+  `enabled` int(5) NOT NULL DEFAULT '0',
+  `level_desc` longtext NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`level_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `history_person` (
+  `person_id` int(20) NOT NULL AUTO_INCREMENT,
+  `person_name` varchar(20) NOT NULL COMMENT '人物名字',
+  `person_icon` varchar(255) NOT NULL COMMENT '人物画像',
+  `person_desc` longtext NOT NULL COMMENT '人物介绍',
+  `level_id` varchar(20) NOT NULL,
+  `enabled` int(5) NOT NULL DEFAULT '0',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`person_id`),
+  KEY `level_id` (`level_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 
