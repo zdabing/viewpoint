@@ -58,7 +58,7 @@
 				</form>
 			</div>
 			<div class="weadmin-block demoTable">
-				<button class="layui-btn" onclick="WeAdminShow('添加节点','/articleNodes/add')"><i class="layui-icon">&#xe61f;</i>添加节点</button>
+				<button class="layui-btn" onclick="WeAdminShow('添加节点','/articleNodes/add',800,400)"><i class="layui-icon">&#xe61f;</i>添加节点</button>
 			</div>
 			<table class="layui-hide" id="articleNodesList" lay-filter="articleNodes"></table>
 
@@ -78,7 +78,7 @@
 
 			<!--操作-->
 			<script type="text/html" id="doTpl">
-				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminEdit('编辑','/articleNodes/add?nodeId={{d.nodeId}}')">编辑</a>
+				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminEdit('编辑','/articleNodes/add?nodeId={{d.nodeId}}','',800,400)">编辑</a>
 				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
 			</script>
 

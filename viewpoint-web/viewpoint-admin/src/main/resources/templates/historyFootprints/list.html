@@ -25,7 +25,7 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="weadmin-block demoTable">
-				<button class="layui-btn" th:onclick="|javascript:WeAdminShow('添加历史足迹','@{/historyFootprints/add}')|"  onclick="WeAdminShow('添加历史足迹','/historyFootprints/add')"><i class="layui-icon">&#xe61f;</i>添加足迹</button>
+				<button class="layui-btn" th:onclick="|javascript:WeAdminShow('添加历史足迹','@{/historyFootprints/add}',900,450)|"  ><i class="layui-icon">&#xe61f;</i>添加足迹</button>
 				<!--<button class="layui-btn" id="orderByStartYear"><i class="layui-icon">&#xe625;</i>历史时间排序(默认)</button>-->
 				<!--<button class="layui-btn" id="orderBySort"><i class="layui-icon">&#xe625;</i>序号排序</button>-->
 			</div>
@@ -52,7 +52,7 @@
                             <button  id="down" class="layui-btn layui-btn-xs" th:onclick="|javascript:onDown('${footprints.historyId}')|"><i class="layui-icon">&#xe61a;</i>向下移</button>
                         </div>
                         <a>
-                            <div class="layui-timeline-title" th:text="${footprints.historyContent}"  th:onclick="|javascript:WeAdminShow('添加历史足迹','/historyFootprints/add?historyId=${footprints.historyId}')|" >
+                            <div class="layui-timeline-title" th:text="${footprints.historyContent}"  th:onclick="|javascript:WeAdminShow('修改历史足迹','/historyFootprints/add?historyId=${footprints.historyId}',900,450)|" >
                             </div>
                         </a>
 					</div>
