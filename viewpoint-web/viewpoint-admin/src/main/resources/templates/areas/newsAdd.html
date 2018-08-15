@@ -61,7 +61,7 @@
 					<label class="layui-form-label">导入方式</label>
 					<div class="layui-input-block">
 						<input type="radio" name="sex" value="0" lay-filter="videoFilter" title="本地导入" checked="">
-						<input type="radio" name="sex" value="1" lay-filter="videoFilter" title="URL导入">
+						<input type="radio" name="sex" value="1" lay-filter="videoFilter" title="URL导入" >
 					</div>
 				</div>
 
@@ -253,7 +253,7 @@
         $("#urlDelete").hide();
         form.on('radio(videoFilter)', function(data){
             var parent = $("#articleParentId").val();
-            if(data.value==0){
+            if(data.value == 0){
                 $("#urlDelete").hide();
                 $("#urlBotton").hide();
                 $("#areasVideoURL").hide();
@@ -270,7 +270,6 @@
                 $("#urlDelete").show();
             }
         });
-
 
         //设置音乐上传按钮的隐藏与显示
         $("#urlMusicBotton").hide();
@@ -312,20 +311,20 @@
             $('#areasVideoShow').attr('src','');
 
             $.ajax({
-                url : '/upload/del',
+                url : basePath +'areas/delete',
                 data : {
-                    fileUrl : areasVideoShow1
+                    areasId : $("#areasId").val(),
+                    areasVideo : areasVideoShow1
                 },
                 type: "post",
                 dataType: "json",
                 success : function(data) {
-                    layer.close(index);
                     if(data.code == 0){
                         layer.msg(data.msg);
                     }else {
                         layer.msg(data.msg);
                     }
-                    uploadListIns1.reload();
+
                 },
                 error : function() {
                     layer.msg("系统繁忙!请重试");
@@ -351,9 +350,10 @@
             var areasAudioShow1 = $("#areasAudioShow").attr("src");
             $('#areasAudioShow').attr('src','');
             $.ajax({
-                url : basePath + 'upload/del',
+                url : basePath + 'areas/delete',
                 data : {
-                    fileUrl : areasAudioShow1
+                    areasId : $("#areasId").val(),
+                    areasAudio : areasAudioShow1
                 },
                 type: "post",
                 dataType: "json",
@@ -364,7 +364,7 @@
                     }else {
                         layer.msg(data.msg);
                     }
-                    uploadListIns1.reload();
+
                 },
                 error : function() {
                     layer.msg("系统繁忙!请重试");

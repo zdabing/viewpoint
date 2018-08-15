@@ -4,6 +4,7 @@ package com.viewpoint.controller;
 import com.viewpoint.dataobject.Areas;
 import com.viewpoint.enums.ResultEnum;
 import com.viewpoint.form.AreasCoordinateForm;
+import com.viewpoint.repository.AreasRepository;
 import com.viewpoint.service.AreasService;
 import com.viewpoint.utils.ResultVOUtil;
 import com.viewpoint.vo.ResultVO;
@@ -24,6 +25,8 @@ public class AreasController {
 
     @Autowired
     private AreasService areasService;
+    @Autowired
+    private AreasRepository areasRepository;
 
     /**
      *跳到地图页面
@@ -107,4 +110,28 @@ public class AreasController {
         return ResultVOUtil.success();
     }
 
+    /**
+     * 删除视频或音乐的URL
+     *
+     * @return
+     */
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ResultVO deleteURL(@RequestParam(value = "areasId", required = false)Integer areasId, @RequestParam(value = "areasVideo", required = false) String areasVideo, @RequestParam(value = "areasAudio", required = false) String areasAudio) {
+        if(areasId != null){
+            Areas areas = areasService.findByAreasId(areasId);
+            //删除视屏的url
+            if (!StringUtils.isEmpty(areasVideo) && StringUtils.isEmpty(areasAudio)) {
+                areas.setAreasVideo(null);
+                areasService.save(areas);
+            }
+            //删除视屏的url
+            if (StringUtils.isEmpty(areasVideo) && !StringUtils.isEmpty(areasAudio)) {
+                areas.setAreasAudio(null);
+                areasService.save(areas);
+            }
+
+        }
+        return ResultVOUtil.success();
+    }
 }
