@@ -66,14 +66,21 @@
 			  <input type="checkbox" name="{{d.levelId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
 			</script>
 
-			<script type="text/html" id="operateTpl">
-				<a   title="编辑" onclick="WeAdminEdit('编辑','/examLevel/add?levelId={{d.levelId}}')" href="javascript:;">
-					<i class="layui-icon">&#xe642;</i>
-				</a>
-				<a title="删除" id="delete" lay-event="del" onclick="onDelete('{{d.levelId}}');">
-					<i class="layui-icon">&#xe640;</i>
-				</a>
+			<!--<script type="text/html" id="operateTpl">-->
+				<!--<a   title="编辑" onclick="WeAdminEdit('编辑','/examLevel/add?levelId={{d.levelId}}')" href="javascript:;">-->
+					<!--<i class="layui-icon">&#xe642;</i>-->
+				<!--</a>-->
+				<!--<a title="删除" id="delete" lay-event="del" onclick="onDelete('{{d.levelId}}');">-->
+					<!--<i class="layui-icon">&#xe640;</i>-->
+				<!--</a>-->
+			<!--</script>-->
+
+			<!--操作-->
+			<script type="text/html" id="doTpl">
+				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminEdit('编辑','/examLevel/add?levelId={{d.levelId}}')">编辑</a>
+				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
 			</script>
+
 			<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 		</div>
 	</body>
@@ -108,7 +115,7 @@
 					}, {
                         field: 'enable',title: '发布',templet: '#enabledTpl',align: 'center'
                     }, {
-                        field: 'operate',title: '操作',toolbar: '#operateTpl',align: 'center'
+                        field: 'operate',title: '操作',toolbar: '#doTpl',align: 'center'
                     }]
                 ]
             });

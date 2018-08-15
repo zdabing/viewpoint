@@ -60,13 +60,19 @@
 			</div>
 
 			<table class="layui-hide" id="areasList" lay-filter="areas"></table>
-			<script type="text/html" id="operateTpl">
-				<a   title="编辑" onclick="WeAdminEdit('编辑','/areas/add?areasId={{d.areasId}}')" href="javascript:;">
-					<i class="layui-icon">&#xe642;</i>
-				</a>
-				<a title="删除" href="javascript:;" lay-event="del">
-					<i class="layui-icon">&#xe640;</i>
-				</a>
+			<!--<script type="text/html" id="operateTpl">-->
+				<!--<a   title="编辑" onclick="WeAdminEdit('编辑','/areas/add?areasId={{d.areasId}}')" href="javascript:;">-->
+					<!--<i class="layui-icon">&#xe642;</i>-->
+				<!--</a>-->
+				<!--<a title="删除" href="javascript:;" lay-event="del">-->
+					<!--<i class="layui-icon">&#xe640;</i>-->
+				<!--</a>-->
+			<!--</script>-->
+
+			<!--操作-->
+			<script type="text/html" id="doTpl">
+				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminEdit('编辑','/areas/add?areasId={{d.areasId}}')">编辑</a>
+				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
 			</script>
 
 			<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
@@ -105,7 +111,7 @@
                     }, {
                         field: 'updateTime',title: '修改时间',sort: true
                     }, {
-                        field: 'operate',title: '操作',toolbar: '#operateTpl',align: 'center'
+                        field: 'operate',title: '操作',toolbar: '#doTpl',align: 'center'
                     }]
                 ],
                 event: true,

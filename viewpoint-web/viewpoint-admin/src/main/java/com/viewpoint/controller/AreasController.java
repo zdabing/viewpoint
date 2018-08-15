@@ -7,6 +7,7 @@ import com.viewpoint.form.AreasCoordinateForm;
 import com.viewpoint.service.AreasService;
 import com.viewpoint.utils.ResultVOUtil;
 import com.viewpoint.vo.ResultVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,8 +48,7 @@ public class AreasController {
      * @return
      */
     @RequestMapping("/add")
-    public String add(@RequestParam(value = "areasCoordinateForm",required = false)AreasCoordinateForm areasCoordinateForm, @RequestParam(value = "areasId",required = false)Integer areasId, Model model){
-        model.addAttribute("areasCoordinateForm",areasCoordinateForm);
+    public String add( @RequestParam(value = "areasId",required = false)Integer areasId, Model model){
         if(!StringUtils.isEmpty(areasId)){
             Areas areas = areasService.findByAreasId(areasId);
             model.addAttribute("areas",areas);
@@ -79,7 +79,17 @@ public class AreasController {
         if(areas == null){
             return ResultVOUtil.error(ResultEnum.ERROR.getCode(),"参数不能为空");
         }
-        areasService.save(areas);
+
+        if(StringUtils.isEmpty(areas.getAreasId())){
+            //说明是新增
+            areasService.save(areas);
+        }else{
+            Areas areas1 = areasService.findByAreasId(areas.getAreasId());
+            areas.setCreateTime(areas1.getCreateTime());
+            areas.setUpdateTime(areas1.getUpdateTime());
+            BeanUtils.copyProperties(areas,areas1);
+            areasService.save(areas1);
+        }
         return ResultVOUtil.success();
     }
 
