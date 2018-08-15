@@ -1,7 +1,6 @@
 package com.viewpoint.repository;
 
 import com.viewpoint.dataobject.ActivityOrder;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -9,6 +8,8 @@ import java.util.List;
 public interface ActivityOrderRepository extends JpaRepository<ActivityOrder,String> {
 
     List<ActivityOrder> findByBuyerOpenid(String buyerOpenid);
+
+    ActivityOrder findByBuyerOpenidAndActivityId(String buyerOpenid, String activityId);
 
     long countByActivityId(String activityId);
 }

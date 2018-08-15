@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/common/head :: head('活动','/css/activity.css')"></head>
+<head th:replace="common/head :: head('活动','/css/activity.css')"></head>
 
 <body>
-<div th:replace="/common/footer :: footer"></div>
+<div th:replace="common/footer :: footer"></div>
   <div class="mui-content baoming">
   	<div class="main-pic">
   		<img th:src="${activity.activityLogo}" src="../img/activity/main.jpg" class="bigmainpic">

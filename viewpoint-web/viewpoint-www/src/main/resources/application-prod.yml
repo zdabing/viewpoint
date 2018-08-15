@@ -2,8 +2,19 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 123456
-    url: jdbc:mysql://192.168.2.143/viewpoint?characterEncoding=utf-8&useSSL=false
+    password: KeYpZrZx
+    url: jdbc:mysql://172.31.56.105/viewpoint?characterEncoding=utf-8&useSSL=false
+    # HikariCP数据库连接池
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
   jpa:
     #show-sql: true
     open-in-view: false
@@ -21,28 +32,14 @@ spring:
     #request-context-attribute: request
     #suffix: .html
   thymeleaf:
-    cache: false
+    cache: true
     check-template: true
     enabled: true
     encoding: utf-8
     mode: HTML
     prefix: classpath:/templates/
     suffix: .html
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+  resources:
+    static-locations: classpath:/static/
 server:
-  port: 8080
-ftp:
-  port: 21
-  hostname: 192.168.2.143
-  userName: ftpuser
-  password: 123456
-  basePath: /home/ftpuser
-  fileUploadPath: http://192.168.2.143
-imooc:
-  security:
-    browser:
-      #loginType:  REDIRECT
-      loginPage:  /login.html
+  port: 8091

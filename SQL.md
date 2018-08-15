@@ -8,7 +8,7 @@ create table `article` (
     `content` longtext comment '文章详情',
     `enabled` tinyint NOT NULL DEFAULT '0' COMMENT '上架',
     `node_id` int unsigned NOT NULL COMMENT '节点ID',
-    `order_sort` int unsigned NOT NULL,
+    `sort` int unsigned NOT NULL,
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '更新时间',
     primary key (`article_id`)

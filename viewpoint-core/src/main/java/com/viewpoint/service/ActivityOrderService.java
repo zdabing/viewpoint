@@ -2,6 +2,8 @@ package com.viewpoint.service;
 
 import com.viewpoint.dataobject.ActivityOrder;
 
+import java.util.List;
+
 public interface ActivityOrderService {
     /**
      * 生成订单

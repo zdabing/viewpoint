@@ -49,13 +49,17 @@ public class UploadController {
         String fileName = file.getOriginalFilename();
         // 获取后缀
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        String url = null;
         Map<String, String> map = new HashMap<>();
         try {
             // 上传获取文件地址
-            String url = ftpUtil.uploadLocalFile(file.getInputStream(),fileName);
+            url = ftpUtil.uploadLocalFile(file.getInputStream(),fileName);
             map.put("src", url);
         } catch (IOException e){
             return ResultVOUtil.error(1,e.getMessage());
+        }
+        if (StringUtils.isEmpty(url)) {
+            return ResultVOUtil.error(1,"上传失败");
         }
         return ResultVOUtil.success(map);
     }
