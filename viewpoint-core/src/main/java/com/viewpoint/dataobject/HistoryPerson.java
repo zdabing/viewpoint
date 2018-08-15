@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,42 +12,34 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * 展区
- */
 @Entity
 @Data
-@DynamicInsert
 @DynamicUpdate
-public class Areas implements Serializable {
+@DynamicInsert
+public class HistoryPerson implements Serializable {
 
-    private static final long serialVersionUID = 6232534241897000757L;
+    private static final long serialVersionUID = 374456721275499152L;
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer areasId;
+    private Integer personId;
 
-  //  private String areasDes;
+    private String personName;
 
-    private String areasContent;
+    //人物的头像链接
+    private String personIcon;
+
+    private String personDesc;
+
+    //关联ExamLevel的levelId
+    private String levelId;
+
+    //有无上下架
+    private Integer enabled;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
-
-    private String areasLeft;
-
-    private String areasTop;
-
-    private String areasLogo;
-
-    //音频
-    private String areasAudio;
-
-    //视频
-    private String areasVideo;
-
-    private String areasName;
-
 }

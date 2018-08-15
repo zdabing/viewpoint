@@ -39,6 +39,7 @@ public class ArticleNodes implements Serializable {
     /** 排序 */
     private Integer sort;
 
-    /** 修改时间 */@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    /** 修改时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>节点管理</title>
+		<title>历代先贤</title>
 		<meta name="Description" content="基于layUI数据表格操作"/>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -32,9 +32,9 @@
 		<div class="weadmin-nav">
 			<span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">文章节点管理</a>
+        <a href="">人物管理</a>
         <a>
-          <cite>文章节点列表</cite></a>
+          <cite>人物列表</cite></a>
       </span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
@@ -42,7 +42,7 @@
 		<div class="weadmin-body">
 			<div class="layui-row">
 				<form class="layui-form layui-col-md12 we-search">
-					节点搜索：
+					文章搜索：
 					<!--<div class="layui-input-inline">
 						<select name="cateid">
 							<option>请选择分类</option>
@@ -58,31 +58,40 @@
 				</form>
 			</div>
 			<div class="weadmin-block demoTable">
-				<button class="layui-btn" onclick="WeAdminShow('添加节点','/articleNodes/add')"><i class="layui-icon">&#xe61f;</i>添加节点</button>
+<!--			<button class="layui-btn layui-btn-danger" data-type="getCheckData"><i class="layui-icon">&#xe640;</i>批量删除</button>
+				<button class="layui-btn" data-type="Recommend"><i class="layui-icon">&#xe6c6;</i>推荐</button>
+				<button class="layui-btn" data-type="Top"><i class="layui-icon">&#xe619;</i>置顶</button>
+				<button class="layui-btn" data-type="Review"><i class="layui-icon">&#xe6b2;</i>审核</button>-->
+				<button class="layui-btn" onclick="WeAdminShow('添加人物','/historyPerson/add')"><i class="layui-icon">&#xe61f;</i>添加人物</button>
+				<!--<span class="fr" style="line-height:40px">共有数据：88 条</span>-->
 			</div>
-			<table class="layui-hide" id="articleNodesList" lay-filter="articleNodes"></table>
+			<table class="layui-hide" id="historyPersonList" lay-filter="historyPerson"></table>
+
+			<div class="layui-tab-item">
+				<div id="pageDemo"></div>
+			</div>
 
 			<script type="text/html" id="enabledTpl">
-
-			  <input type="checkbox" name="{{d.nodeId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
+			  <!-- 这里的 checked 的状态只是演示 -->
+			  <input type="checkbox" name="{{d.personId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
 			</script>
 
 			<!--<script type="text/html" id="operateTpl">-->
-				<!--<a   title="编辑" onclick="WeAdminEdit('编辑','/articleNodes/add?nodeId={{d.nodeId}}')" href="javascript:;">-->
+				<!--<a   title="编辑" onclick="WeAdminEdit('编辑','/historyPerson/add?personId={{d.personId}}')" href="javascript:;">-->
 					<!--<i class="layui-icon">&#xe642;</i>-->
 				<!--</a>-->
-				<!--<a title="删除" id="delete" lay-event="del" onclick="onDelete('{{d.nodeId}}');">-->
+				<!--<a title="删除" id="delete" lay-event="del">-->
 					<!--<i class="layui-icon">&#xe640;</i>-->
 				<!--</a>-->
 			<!--</script>-->
 
 			<!--操作-->
 			<script type="text/html" id="doTpl">
-				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminEdit('编辑','/articleNodes/add?nodeId={{d.nodeId}}')">编辑</a>
+				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminEdit('编辑','/historyPerson/add?personId={{d.personId}}')">编辑</a>
 				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
 			</script>
 
-			<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+			<script src="/layui/layui.js" charset="utf-8"></script>
 		</div>
 	</body>
 	<script th:inline="javascript">
@@ -94,45 +103,52 @@
         layui.extend({
             admin: '/js/admin'
         });
-        layui.use(['table', 'jquery','form', 'admin'], function() {
+
+        layui.use(['table','laypage', 'jquery','form', 'admin'], function() {
             var table = layui.table,
                 $ = layui.jquery,
                 form = layui.form,
-                admin = layui.admin;
+                admin = layui.admin
 
-           var tableIns = table.render({
-                elem: '#articleNodesList',
-                url: basePath + 'articleNodes/list',
+            var tableIns = table.render({
+                elem: '#historyPersonList',
+                url: basePath + 'historyPerson/list',
                 cellMinWidth: 50,
                 cols: [
                     [{
                         type: 'checkbox'
-                    },  {
-                        field: 'nodeName',title: '节点名'
-                    },{
-                        field: 'updateTime',title: '修改时间',sort: true
                     }, {
+                        field: 'personId',title: 'ID',sort: true
+                    }, {
+                        field: 'personName',title: '人物名字'
+                    }, {
+                        field: 'levelId',title: '人物名次'
+                    }, {
+						field: 'createTime',title: '创建时间',sort: true
+					},{
                         field: 'enable',title: '发布',templet: '#enabledTpl',align: 'center'
                     }, {
                         field: 'operate',title: '操作',toolbar: '#doTpl',align: 'center'
                     }]
-                ]
+                ],
+                event: true,
+                page: true,
+				limits: [1, 5, 10, 20, 50],
+				limit: 10 //默认采用10
             });
-
 
             $(function(){
                 form.render();
             });
 
-            //删除操作
-            table.on('tool(articleNodes)', function(obj){ //注：tool是工具条事件名，activity是table原始容器的属性 lay-filter="对应的值"
+            table.on('tool(historyPerson)', function(obj){
                 if(obj.event === 'del'){ //删除
                     layer.confirm('真的删除么', function(index){
                         layer.close(index);
                         $.ajax({
-                            url : basePath + 'articleNodes/delete',
+                            url : basePath + 'historyPerson/del',
                             data : {
-                                nodeId : obj.data.nodeId
+                                personId : obj.data.personId
                             },
                             type: "post",
                             dataType: "json",
@@ -144,13 +160,14 @@
                                 }
                                 tableIns.reload();
                             },
-                            error : function() {
+                            error : function(){
                                 layer.msg("系统繁忙!请重试");
                             }
                         });
                     });
                 }
             });
+
 
             //监听上下架操作
             form.on('checkbox(up)', function(obj){
@@ -161,9 +178,9 @@
                     var enable =1;
                 }
                 $.ajax({
-                    url : basePath + 'articleNodes/updateSale',
+                    url : basePath + 'historyPerson/updateSale',
                     data : {
-                        nodeId : this.name,
+                        personId : this.name,
                         enabled : enable
                     },
                     type: "post",
@@ -186,4 +203,3 @@
         });
 	</script>
 </html>
-

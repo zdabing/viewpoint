@@ -19,45 +19,49 @@
 			<div class="layui-col-md9 layui-col-xs7">
 				<div class="layui-form-item magt3">
 					<div class="layui-hide">
-						<input type="text" class="layui-input" id="articleId" th:value="${article?.articleId}">
+						<input type="text" class="layui-input" id="personId" th:value="${historyPerson?.personId}">
 					</div>
-					<label class="layui-form-label">文章标题</label>
+					<label class="layui-form-label">人物姓名</label>
 					<div class="layui-input-block">
-						<input type="text" lay-verify="required" class="layui-input" id="title" name="title" placeholder="请输入文章标题" th:value="${article?.title}" value="">
+						<input type="text" lay-verify="required" class="layui-input" id="personName" name="personName" placeholder="请输入人物姓名" th:value="${historyPerson?.personName}" value="">
 					</div>
 				</div>
 			</div>
-			<div class="layui-col-md3 layui-col-xs5">
-				<div class="layui-upload-list thumbBox mag0 magt3">
-					<img class="layui-upload-img thumbImg" id="articleLogo" th:src="${article?.articleLogo}" src="">
-				</div>
+
+		</div>
+
+		<label class="layui-form-label">人物画像</label>
+		<div class="layui-col-md3 layui-col-xs5">
+			<div class="layui-upload-list thumbBox mag0 magt3">
+				<img class="layui-upload-img thumbImg" id="personIcon" th:src="${historyPerson?.personIcon}" src="">
 			</div>
 		</div>
 
 		<div class="layui-form-item magb0">
-			<label class="layui-form-label">文章内容</label>
-			<div class="layui-input-block" id="content" >
-				<p th:utext="${article?.content}" ></p>
+			<label class="layui-form-label">人物介绍</label>
+			<div class="layui-input-block" id="personDesc" >
+				<p th:utext="${historyPerson?.personDesc}" ></p>
 			</div>
 		</div>
 
 	</div>
 
 	<div class="layui-col-md3 layui-col-xs12">
-		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 文章标签</blockquote>
+		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i>人物名次</blockquote>
 		<div class="border category">
 			<div class="">
 				<div class="layui-form-item">
 					<label class="layui-form-label">标签</label>
 					<div class="layui-input-inline">
-						<select name="quiz1" id="nodeNameById">
+						<select name="quiz1" id="historyPersonLevel">
 
-							<option value="" name="nodeId" th:each="node:${nodes}" th:value="${node.nodeId}" th:utext="${node.nodeName}" th:selected="${article?.nodeId} eq ${node.nodeId}" ></option>
+							<option value="" name="personId" th:each="examLevel:${examLevelList}" th:value="${examLevel?.levelId}" th:utext="${examLevel?.levelName}" th:selected="${examLevel?.levelId} eq ${historyPerson?.levelId}" ></option>
 
-					</select>
+						</select>
+					</div>
 				</div>
 			</div>
-		</div>
+
 		<div style="height: 50px">
 
 		</div>
@@ -109,16 +113,16 @@
 
 
         form.on("submit(add)",function(data){
-            var articleContent = editor.txt.html();
-            var articleLogo = $("#articleLogo").attr("src")
+            var personDesc = editor.txt.html();
+            var personIcon = $("#personIcon").attr("src")
             $.ajax({
-                url : basePath + 'article/save',
+                url : basePath + 'historyPerson/save',
                 data : {
-                    title : $("#title").val(),  //文章标题
-                    articleId : $("#articleId").val(),
-                    articleLogo : articleLogo,
-                    content : articleContent,
-                    nodeId : $("#nodeNameById").val()
+                    personId : $("#personId").val(),  //文章标题
+                    personName : $("#personName").val(),
+                    personIcon : personIcon,
+                    personDesc : personDesc,
+                    levelId : $("#historyPersonLevel").val()
                 },
                 type: "post",
                 dataType: "json",
@@ -154,7 +158,7 @@
     })
     //创建一个编辑器
     var E = window.wangEditor
-    var editor = new E('#content')
+    var editor = new E('#personDesc')
     // 配置服务器端地址
     editor.customConfig.uploadImgServer = '/upload/wangEditor'
     editor.create()

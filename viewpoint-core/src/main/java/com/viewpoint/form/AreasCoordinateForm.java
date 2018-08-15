@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 public class AreasCoordinateForm {
 
     @NotEmpty
-    private Double left;
+    private String left;
 
     @NotEmpty
     private Double top;
