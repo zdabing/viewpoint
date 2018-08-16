@@ -154,4 +154,15 @@ CREATE TABLE `history_person` (
   KEY `level_id` (`level_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `goods_category` (
+  `goods_id` varchar(32) NOT NULL,
+  `goods_icon` varchar(255) NOT NULL,
+  `goods_name` varchar(20) NOT NULL,
+  `goods_desc` longtext NOT NULL,
+  `goods_content` longtext NOT NULL,
+  `enabled` int(3) NOT NULL DEFAULT '0',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`goods_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
