@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head :: head('景点-科举文化','/css/spot.css')"></head>
+
+<body>
+<div th:replace="common/footer :: footer('1','2')"></div>
+  <div class="mui-content keju keju_inner">
+    <div class="w">
+      <div class="title">
+        <img th:src="@{/img/spot/keju/icon.png}" src="../img/spot/keju/icon.png">
+        <label th:text="${examLevel.levelName}">状元</label>
+      </div>
+      <div class="para">
+        <p th:text="${examLevel.levelDesc}">状元是中国科举时代经过层层考试而最终成为殿试中选拔出的第一名，是当时读书人梦寐以求的最高理想和最高荣誉。历史上常熟共产生8位文武科状元，他们中间既有权掌要职的刚直文臣，也有驰骋疆场的威猛武将及才思飞扬的文人墨客。他们成为常熟宝贵的精神财富，激励人们攻坚克难、自强不息，挑战自我，勇于创新，追求卓越，敢于领先。</p>
+      </div>
+      <div class="main">
+        <div class="mui-card" th:each="historyPerson : ${historyPersonList}">
+          <div class="box uf">
+            <div class="pic">
+              <img th:src="${historyPerson.personIcon}" src="../img/spot/keju/person.jpg">
+            </div>
+            <div class="dt uf-1">
+              <p th:text="${historyPerson.personDesc}">陆器（生卒年不详） 字祖容，常熟人，居河阳山。唐开成五年（840）状元</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    
+  </script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@
 <head th:replace="common/head :: head('活动','/css/activity.css')"></head>
 <body>
 <div>
-  <div th:replace="common/footer :: footer"></div>
+  <div th:replace="common/footer :: footer('3','')"></div>
   <div class="mui-content activity_list">
     <div class="w">
       <div class="title">
@@ -21,10 +21,10 @@
                   <img th:src="@{/img/activity/space.png}" src="../img/activity/space.png">
                 </div>
                 <div class="num">
-                  <span class="state">已报名</span>
-                  <span>名额紧张</span>
+                  <span class="state" th:text="${activity.orderStatus}"></span>
+                  <span th:unless="${#strings.trim(activity.activityStatus).equalsIgnoreCase('已<br>结<br>束')}">名额紧张</span>
                   <span><em th:text="${activity.hot}">2316</em>阅读</span>
-                  <span><em>1000</em>报名</span>
+                  <span><em th:text="${activity.orderCount}">1000</em>报名</span>
                 </div>
               </div>
               <div class="tag_date" th:text="${#temporals.format(activity.releaseTime, 'yyyy-MM-dd')}">2018-6-9</div>
@@ -37,24 +37,26 @@
     <div class="tag_main">青少年活动</div>
     <div class="w">
       <div class="content">
-        <div class="mui-card">
-          <div class="box">
-            <img th:src="@{/img/activity/main.jpg}" src="../img/activity/main.jpg" class="bigmainpic">
-            <div class="tt">
-              <p>2018年“文化和自然遗产日”暨首届言子文化节启动仪式圆满成功</p>
-              <div class="space">
-                <img th:src="@{/img/activity/space.png}" src="../img/activity/space.png">
+        <div class="mui-card" th:each="activity : ${youngList}">
+          <a th:href="@{'/activity/detail/'+${activity.activityId}}" href="javascript:" data-ajax="false">
+            <div class="box">
+              <img th:src="${activity.activityLogo}" src="../img/activity/main.jpg" class="bigmainpic">
+              <div class="tt">
+                <p th:text="${activity.activityName}">2018年“文化和自然遗产日”暨首届言子文化节启动仪式圆满成功</p>
+                <div class="space">
+                  <img th:src="@{/img/activity/space.png}" src="../img/activity/space.png">
+                </div>
+                <div class="num">
+                  <span class="state" th:text="${activity.orderStatus}"></span>
+                  <span th:unless="${#strings.trim(activity.activityStatus).equalsIgnoreCase('已<br>结<br>束')}">名额紧张</span>
+                  <span><em th:text="${activity.hot}">2316</em>阅读</span>
+                  <span><em th:text="${activity.orderCount}">1000</em>报名</span>
+                </div>
               </div>
-              <div class="num">
-                <span class="state">已报名</span>
-                <span>名额紧张</span>
-                <span><em>2316</em>阅读</span>
-                <span><em>1000</em>报名</span>
-              </div>
+              <div class="tag_date" th:text="${#temporals.format(activity.releaseTime, 'yyyy-MM-dd')}">2018-6-9</div>
+              <div class="bm_state" th:utext="${activity.activityStatus}">报<br>名<br>中</div>
             </div>
-            <div class="tag_date">2018-6-9</div>
-            <div class="bm_state">报<br>名<br>中</div>
-          </div>
+          </a>
         </div>
       </div>
     </div>

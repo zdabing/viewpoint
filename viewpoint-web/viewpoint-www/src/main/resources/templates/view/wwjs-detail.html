@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head :: head('景点-文物介绍内页','/css/spot.css')"></head>
+
+<body>
+<div th:replace="common/footer :: footer('1','5')"></div>
+  <div class="mui-content wenwu_inner">
+    <div class="w">
+      <div class="title">
+        <img th:src="@{/img/spot/wenwu/icon.png}" src="../img/spot/wenwu/icon.png">
+        <label>碑刻介绍</label>
+      </div>
+      <div class="para">
+        <p>碑刻，是言子故里——江南常熟的一个文化亮点。我国自古有刻石立碑之传统，碑刻是研究地方历史的珍贵史料，它铭之于石，公之于众，与社会生活关系密切，所揭示的史实也较为可靠。</p>
+        <img src="../img/spot/wenwu/pic2.jpg">
+        <p>碑刻，是言子故里——江南常熟的一个文化亮点。我国自古有刻石立碑之传统，碑刻是研究地方历史的珍贵史料，它铭之于石，公之于众，与社会生活关系密切，所揭示的史实也较为可靠。</p>
+        <img src="../img/spot/wenwu/pic2.jpg">
+      </div>
+    </div>
+  </div>
+  <script th:src="@{/js/spot_details.js}" src="../js/spot_details.js"></script>
+</body>
+
+</html>

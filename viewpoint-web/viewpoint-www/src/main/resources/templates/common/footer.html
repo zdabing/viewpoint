@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="footer">
+<div th:fragment="footer(flag,tip)">
 <div class="footer" id="footer">
-    <a th:href="@{/index}" data-ajax="false" href="index.html" class="item home normal active">
+    <a th:href="@{/index}" data-ajax="false" href="index.html" th:classappend="(${flag} eq 0)? 'active'" class="item home normal">
         <div class="pic"></div>
         <div class="text">首页</div>
     </a>
-    <a class="item spot" id="spot">
+    <a class="item spot" id="spot" th:classappend="(${flag} eq 1)? 'active'">
         <div class="pic"></div>
         <div class="text">景点</div>
     </a>
-    <a th:href="@{/area/guide}" data-ajax="false" href="导览.html" class="item normal guide">
+    <a th:href="@{/area/guide}" data-ajax="false" href="导览.html" class="item normal guide" th:classappend="(${flag} eq 2)? 'active'">
         <div class="pic">
             <img th:src="@{/img/icon/icon-guide.png}" src="../img/icon/icon-guide.png" alt="导览">
         </div>
     </a>
-    <a th:href="@{/activity/item}" data-ajax="false" href="活动.html" class="item activity normal">
+    <a th:href="@{/activity/item}" data-ajax="false" href="活动.html" class="item activity normal" th:classappend="(${flag} eq 3)? 'active'">
         <div class="pic"></div>
         <div class="text">活动</div>
     </a>
-    <a href="我的.html" class="item my normal">
+    <a href="我的.html" class="item my normal" th:classappend="(${flag} eq 4)? 'active'">
         <div class="pic"></div>
         <div class="text">我的</div>
     </a>
@@ -28,10 +28,22 @@
 <div id="spot-popover">
     <ul>
         <li>
-            <a th:href="@{/history/foot}" data-ajax="false" href="">历史足迹</a>
+            <a th:href="@{/view/wmjs}" href="javascript:" data-ajax="false" th:class="(${tip?:''} eq 0)? 'active'">文庙介绍</a>
         </li>
-        <li th:each="node : ${nodeList}">
-            <a href="javascript:" th:text="${node.nodeName}" data-ajax="false">文庙介绍</a>
+        <li>
+            <a th:href="@{/history/foot}" href="javascript:" data-ajax="false" th:class="(${tip?:''} eq 1)? 'active'">历史足迹</a>
+        </li>
+        <li>
+            <a th:href="@{/view/kjwh}" href="javascript:" data-ajax="false" th:class="(${tip?:''} eq 2)? 'active'">科举文化</a>
+        </li>
+        <li>
+            <a th:href="@{/view/zfgh}" href="javascript:" data-ajax="false" th:class="(${tip?:''} eq 3)? 'active'">政府关怀</a>
+        </li>
+        <li>
+            <a th:href="@{/view/nffz}" href="javascript:" data-ajax="false" th:class="(${tip?:''} eq 4)? 'active'">南方夫子</a>
+        </li>
+        <li>
+            <a th:href="@{/view/wwjs}" href="javascript:" data-ajax="false" th:class="(${tip?:''} eq 5)? 'active'">文物介绍</a>
         </li>
     </ul>
 </div>

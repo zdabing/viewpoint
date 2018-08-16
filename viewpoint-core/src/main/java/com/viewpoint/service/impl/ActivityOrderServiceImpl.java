@@ -61,4 +61,14 @@ public class ActivityOrderServiceImpl implements ActivityOrderService {
 
         return activityOrderRepository.countByActivityId(activityId);
     }
+
+    @Override
+    public boolean isRepeated(String buyerOpenid, String activityId) {
+        // 已申请
+        ActivityOrder order = activityOrderRepository.findByBuyerOpenidAndActivityId(buyerOpenid, activityId);
+        if (!StringUtils.isEmpty(order)) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/common/head :: head('活动','/css/activity.css')"></head>
+<head th:replace="common/head :: head('景点-南方夫子','/css/spot.css')"></head>
+
 <body>
-<div th:replace="/common/footer :: footer"></div>
+<div th:replace="common/footer :: footer('1','4')"></div>
   <div class="mui-content fuzi">
     <div class="video-box">
       <video th:src="@{/img/movie.mp4}" src="../img/movie.mp4" controls="controls">

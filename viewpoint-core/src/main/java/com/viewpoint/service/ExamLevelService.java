@@ -1,8 +1,6 @@
 package com.viewpoint.service;
 
 import com.viewpoint.dataobject.ExamLevel;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,4 +19,11 @@ public interface ExamLevelService {
     ExamLevel save(ExamLevel examLevel);
 
     void delete(Integer levelId);
+
+    /**
+     * 查询已上架的等级 排序按照Sort
+     * @return
+     */
+    List<ExamLevel> findUpAllOrderBySort();
+
 }

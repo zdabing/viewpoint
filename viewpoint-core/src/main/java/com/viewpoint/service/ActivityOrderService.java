@@ -24,4 +24,13 @@ public interface ActivityOrderService {
      * @return
      */
     long countByActivityId(String activityId);
+
+    /**
+     * 是否已申请
+     * @param buyerOpenid
+     * @param activityId
+     * @return false : 未申请
+     *         true : 已申请
+     */
+    boolean isRepeated(String buyerOpenid, String activityId);
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head :: head('景点-文物介绍','/css/spot.css')"></head>
+
+<body>
+<div th:replace="common/footer :: footer('1','5')"></div>
+  <div class="mui-content wenwu">
+    <div class="w">
+      <div class="title">
+        <img th:src="@{/img/spot/wenwu/icon.png}" src="../img/spot/wenwu/icon.png">
+        <label>文物介绍</label>
+      </div>
+      <div class="para">
+        <p>江苏常熟是国家历史文化名城，是春秋先贤言子的故里。言子是“孔门十哲”之一，他继承了孔子的儒学思想传统并加以传播和发展，“道启东</p>
+      </div>
+    </div>
+    <div class="tag_main">文物分类</div>
+    <div class="w">
+      <div class="mui-card mylist">
+        <div class="box uf">
+          <div class="pic">
+            <img src="../img/spot/wenwu/pic1.jpg">
+          </div>
+          <div class="dt uf-1">
+            <h3>碑刻</h3>
+            <p>碑刻，是言子故里——江南常熟的一个文化亮点。我国自古有刻石立碑之传统，碑刻是研究地方历史的珍贵史料，它铭之于石...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:src="@{/js/spot_details.js}" src="../js/spot_details.js"></script>
+</body>
+
+</html>

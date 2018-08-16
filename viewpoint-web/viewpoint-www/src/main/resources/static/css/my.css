@@ -1,10 +1,12 @@
 body, html { width: 100%; height: 100%; }
 
+.title img { max-width: 14px; }
+
 .mymsg { width: 100%; height: 4.266667rem; background: url(../img/my/tbg.png) 0 0 no-repeat; background-size: 100% 100%; }
 .mymsg .pic { width: 1.226667rem; height: 1.213333rem; display: block; border-radius: 50%; margin-right: 0.6rem; margin-left: 1.1rem; margin-top: 0.85rem; float: left; }
 .mymsg .dt { float: left; color: #f8f8f8; margin-top: 0.9rem; }
-.mymsg .dt .name { font-size: 0.373333rem; }
-.mymsg .dt .time { font-size: 0.293333rem; }
+.mymsg .dt .name { font-size: 0.4rem; }
+.mymsg .dt .time { font-size: 0.3rem; }
 
 .my_main { background-color: transparent; }
 .my_main .mui-card { margin: 10px; padding: 0; background-color: #fff; overflow: hidden; min-height: 14rem; }

@@ -83,7 +83,7 @@ body, html { width: 100%; height: 100%; position: relative; }
 
 .mui-content { padding-bottom: 70px; }
 
-.w { padding: 0 12px; }
+.w { padding: 0 10px; }
 
 .mainpic { width: 100%; }
 .mainpic img { width: 100%; }
@@ -92,7 +92,7 @@ body, html { width: 100%; height: 100%; position: relative; }
 
 .bigmainpic { width: 100%; }
 
-.title { overflow: hidden; padding: 10px 0px; }
+.title { overflow: hidden; padding: 10px 0px 5px; }
 .title img { vertical-align: text-bottom; max-width: 18px; margin-right: 5px; position: relative; }
 .title label { font-size: 17px; color: #303030; display: inline-block; }
 .title .more { float: right; font-size: 14px; color: #9a9a9a !important; }
@@ -132,7 +132,7 @@ body, html { width: 100%; height: 100%; position: relative; }
 
 .footer { display: -webkit-box; display: -ms-flexbox; display: flex; position: fixed; z-index: 1000; bottom: 0; width: 100%; height: 50px; background-color: #f4f3f3; }
 .footer .item { display: block; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; padding: 5px 0 0; font-size: 0; text-align: center; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
-.footer .item .pic { display: inline-block; width: 22px; height: 22px; background-repeat: no-repeat; background-size: contain; background-position: 50% 50%; }
+.footer .item .pic { display: inline-block; width: 27px; height: 27px; background-repeat: no-repeat; background-size: contain; background-position: 50% 50%; }
 .footer .item .pic img { width: 100%; height: 100%; }
 .footer .item .text { text-align: center; color: #666; font-size: 10px; line-height: 1.8; }
 .footer .item.home .pic { background-image: url(../img/icon/icon-home.png); }

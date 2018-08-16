@@ -19,5 +19,5 @@ public interface HistoryPersonService {
 
     void deleteById(Integer personId);
 
-
+    List<HistoryPerson> findUpHistoryPersonList(String levelId);
 }

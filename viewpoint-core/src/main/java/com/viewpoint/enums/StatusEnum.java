@@ -12,6 +12,8 @@ public enum StatusEnum {
     ACTIVITY_STATUS_BEFORE(0,"未<br>开<br>始"),
     ACTIVITY_STATUS_NOW(1,"报<br>名<br>中"),
     ACTIVITY_STATUS_AFTER(2,"已<br>结<br>束"),
+    ACTIVITY_TAG(1,"青少年"),
+    ACTIVITY_ORDER_STATUS(3,"已报名"),
     ;
     private Integer code;
 
