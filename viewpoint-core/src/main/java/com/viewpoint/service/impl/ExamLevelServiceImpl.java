@@ -1,12 +1,10 @@
 package com.viewpoint.service.impl;
 
-import com.viewpoint.dataobject.Article;
 import com.viewpoint.dataobject.ExamLevel;
+import com.viewpoint.enums.StatusEnum;
 import com.viewpoint.repository.ExamLevelRepository;
 import com.viewpoint.service.ExamLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,6 +57,11 @@ public class ExamLevelServiceImpl implements ExamLevelService {
     @Override
     public ExamLevel findBySort(Integer sort) {
         return examLevelRepository.findBySort(sort);
+    }
+
+    @Override
+    public List<ExamLevel> findUpExamleveList() {
+        return examLevelRepository.findByEnabledOrderBySortAsc(StatusEnum.UP.getCode());
     }
 
 }

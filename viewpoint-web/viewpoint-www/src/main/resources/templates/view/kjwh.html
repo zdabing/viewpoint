@@ -19,10 +19,10 @@
     <div class="tag_main">历代先贤</div>
     <div class="w lidai">
       <div class="uf uf-pc uf-ac">
-        <a href="#">
-          <img th:src="@{/img/spot/keju/icon-1.png}" src="../img/spot/keju/icon-1.png" alt="状元">
+        <a href="#" th:href="@{'/view/kjwh/detail/'+${examLevel.levelId}}"  th:each="examLevel : ${upList}" data-ajax="false">
+          <img th:src="${examLevel.levelIcon}" src="../img/spot/keju/icon-1.png" th:alt="${examLevel.levelName}" alt="状元">
         </a>
-        <a href="#">
+        <!--<a href="#">
           <img th:src="@{/img/spot/keju/icon-2.png}" src="../img/spot/keju/icon-2.png" alt="榜眼">
         </a>
         <a href="#">
@@ -30,18 +30,18 @@
         </a>
         <a  href="#">
           <img th:src="@{/img/spot/keju/icon-4.png}" src="../img/spot/keju/icon-4.png" alt="传胪">
-        </a>
+        </a>-->
       </div>
       <div class="uf uf-pc uf-ac">
-        <a href="#">
-          <img th:src="@{/img/spot/keju/icon-5.png}" src="../img/spot/keju/icon-5.png" alt="进士">
+        <a th:href="@{'/view/kjwh/detail/'+${examLevel.levelId}}" href="#" th:each="examLevel : ${downList}" data-ajax="false">
+          <img th:src="${examLevel.levelIcon}" src="../img/spot/keju/icon-1.png" th:alt="${examLevel.levelName}" alt="状元">
         </a>
-        <a href="#">
+       <!-- <a href="#">
           <img th:src="@{/img/spot/keju/icon-6.png}" src="../img/spot/keju/icon-6.png" alt="举人">
         </a>
         <a href="#">
           <img th:src="@{/img/spot/keju/icon-7.png}" src="../img/spot/keju/icon-7.png" alt="秀才">
-        </a>
+        </a>-->
       </div>
     </div>
   </div>
