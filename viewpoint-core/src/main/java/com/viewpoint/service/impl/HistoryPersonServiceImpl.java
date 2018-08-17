@@ -1,7 +1,7 @@
 package com.viewpoint.service.impl;
 
-import com.viewpoint.dataobject.ExamLevel;
 import com.viewpoint.dataobject.HistoryPerson;
+import com.viewpoint.enums.StatusEnum;
 import com.viewpoint.repository.HistoryPersonRepository;
 import com.viewpoint.service.HistoryPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,5 +49,11 @@ public class HistoryPersonServiceImpl implements HistoryPersonService {
     @Override
     public void deleteById(Integer personId) {
         historyPersonRepository.deleteById(personId);
+    }
+
+    @Override
+    public List<HistoryPerson> findUpHistoryPersonList(String levelId) {
+
+        return historyPersonRepository.findByLevelIdAndEnabled(levelId, StatusEnum.UP.getCode());
     }
 }

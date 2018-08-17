@@ -1,69 +1,13 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>景点-科举文化</title>
-  <link rel="stylesheet" href="../css/jquery.mobile-1.4.5.css">
-  <link rel="stylesheet" href="../css/common.css">
-  <link rel="stylesheet" href="../css/spot.css">
-  <script src="../js/libs/flexsible.js"></script>
-  <script src="../js/libs/jquery.min.js"></script>
-  <script src="../js/libs/jquery.mobile-1.4.5.min.js"></script>
-  <script src="../js/common.js"></script>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head :: head('景点-科举文化','/css/spot.css')"></head>
 
 <body>
-  <div class="footer" id="footer">
-    <a class="item home normal">
-      <div class="pic"></div>
-      <div class="text">首页</div>
-    </a>
-    <a class="item spot active" id="spot">
-      <div class="pic"></div>
-      <div class="text">景点</div>
-    </a>
-    <a class="item normal guide">
-      <div class="pic">
-        <img src="../img/icon/icon-guide.png" alt="导览">
-      </div>
-    </a>
-    <a class="item activity normal">
-      <div class="pic"></div>
-      <div class="text">活动</div>
-    </a>
-    <a class="item my normal">
-      <div class="pic"></div>
-      <div class="text">我的</div>
-    </a>
-  </div>
-  <div class="footer-mask"></div>
-  <div id="spot-popover">
-    <ul>
-      <li>
-        <a href="javascript:">文庙介绍</a>
-      </li>
-      <li>
-        <a href="javascript:">历史足迹</a>
-      </li>
-      <li>
-        <a href="javascript:" class="active">科举文化</a>
-      </li>
-      <li>
-        <a href="javascript:">政府关怀</a>
-      </li>
-      <li>
-        <a href="javascript:">南方夫子</a>
-      </li>
-      <li>
-        <a href="javascript:">文物介绍</a>
-      </li>
-    </ul>
-  </div>
+<div th:replace="common/footer :: footer('1','2')"></div>
   <div class="mui-content keju">
     <div class="w">
       <div class="title">
-        <img src="../img/spot/keju/icon.png">
+        <img th:src="@{/img/spot/keju/icon.png}" src="../img/spot/keju/icon.png">
         <label>科举文化</label>
       </div>
       <div class="para">
@@ -76,27 +20,27 @@
     <div class="w lidai">
       <div class="uf uf-pc uf-ac">
         <a href="#">
-          <img src="../img/spot/keju/icon-1.png" alt="状元">
+          <img th:src="@{/img/spot/keju/icon-1.png}" src="../img/spot/keju/icon-1.png" alt="状元">
         </a>
         <a href="#">
-          <img src="../img/spot/keju/icon-1.png" alt="状元">
+          <img th:src="@{/img/spot/keju/icon-2.png}" src="../img/spot/keju/icon-2.png" alt="榜眼">
         </a>
         <a href="#">
-          <img src="../img/spot/keju/icon-1.png" alt="状元">
+          <img th:src="@{/img/spot/keju/icon-3.png}" src="../img/spot/keju/icon-3.png" alt="探花">
         </a>
-        <a href="#">
-          <img src="../img/spot/keju/icon-1.png" alt="状元">
+        <a  href="#">
+          <img th:src="@{/img/spot/keju/icon-4.png}" src="../img/spot/keju/icon-4.png" alt="传胪">
         </a>
       </div>
       <div class="uf uf-pc uf-ac">
         <a href="#">
-          <img src="../img/spot/keju/icon-1.png" alt="状元">
+          <img th:src="@{/img/spot/keju/icon-5.png}" src="../img/spot/keju/icon-5.png" alt="进士">
         </a>
         <a href="#">
-          <img src="../img/spot/keju/icon-1.png" alt="状元">
+          <img th:src="@{/img/spot/keju/icon-6.png}" src="../img/spot/keju/icon-6.png" alt="举人">
         </a>
         <a href="#">
-          <img src="../img/spot/keju/icon-1.png" alt="状元">
+          <img th:src="@{/img/spot/keju/icon-7.png}" src="../img/spot/keju/icon-7.png" alt="秀才">
         </a>
       </div>
     </div>

@@ -52,5 +52,5 @@ public class ActivityVO implements Serializable {
     private String activityStatus;
 
     /** 订单状态 */
-    private Integer orderStatus;
+    private String orderStatus;
 }

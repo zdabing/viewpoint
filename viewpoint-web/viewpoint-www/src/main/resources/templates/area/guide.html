@@ -3,7 +3,7 @@
 <head th:replace="common/head :: head('导览','/css/guide.css')"></head>
 
 <body>
-<div th:replace="common/footer :: footer"></div>
+<div th:replace="common/footer :: footer('','')"></div>
   <div class="mui-content">
     <div class="w">
       <div class="bg"></div>
@@ -15,7 +15,7 @@
     <div class="p-title" th:text="${area.areasName}">棂星门</div>
     <div class="dt uf">
       <div class="pic">
-        <img th:src="@{/img/guide/pic1.jpg}" src="../img/guide/pic1.jpg">
+        <img th:src="${area.areasLogo}" src="../img/guide/pic1.jpg">
       </div>
       <div class="tt uf-1">
         <p class="line6" th:text="${area.areasContent}">“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出。将棂星门置于文庙之前,表示棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出。将棂星门置于文庙之前,表示</p>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/activity")
@@ -41,10 +42,12 @@ public class ActivityController {
     @GetMapping("/item")
     public String item(Model model){
         List<Activity> activityList = activityService.findUpAll();
+        // 拼接数据
         List<ActivityVO> activityVOList = new ArrayList<>();
-        activityList.forEach(e ->{
+        activityList.stream().forEach(e ->{
             ActivityVO activityVO = new ActivityVO();
             BeanUtils.copyProperties(e,activityVO);
+            // 活动已参加人数
             activityVO.setOrderCount(activityOrderService.countByActivityId(e.getActivityId()));
             // 活动状态判断
             if (LocalDateTime.now().isBefore(activityVO.getStartTime())){
@@ -54,9 +57,16 @@ public class ActivityController {
             } else {
                 activityVO.setActivityStatus(StatusEnum.ACTIVITY_STATUS_NOW.getMessage());
             }
+            // orderStatus 订单状态判断 是否报名
+            if (activityOrderService.isRepeated("",e.getActivityId())) {
+                activityVO.setOrderStatus(StatusEnum.ACTIVITY_ORDER_STATUS.getMessage());
+            }
             activityVOList.add(activityVO);
         });
-        model.addAttribute("activityList",activityVOList);
+        List<ActivityVO> youngList = activityVOList.stream().filter(e -> e.getActivityTag().contains(StatusEnum.ACTIVITY_TAG.getMessage())).collect(Collectors.toList());
+        List<ActivityVO> activityVOList1 = activityVOList.stream().filter(e -> !e.getActivityTag().contains(StatusEnum.ACTIVITY_TAG.getMessage())).collect(Collectors.toList());
+        model.addAttribute("youngList",youngList);
+        model.addAttribute("activityList",activityVOList1);
         return "activity/item";
     }
 
