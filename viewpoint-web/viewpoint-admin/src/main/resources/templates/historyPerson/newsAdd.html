@@ -23,7 +23,7 @@
 					</div>
 					<label class="layui-form-label">人物姓名</label>
 					<div class="layui-input-block">
-						<input type="text" style="width:400px" lay-verify="required" class="layui-input" id="personName" name="personName" placeholder="请输入人物姓名" th:value="${historyPerson?.personName}" value="">
+						<input type="text" style="width:190px" lay-verify="required" class="layui-input" id="personName" name="personName" placeholder="请输入人物姓名" th:value="${historyPerson?.personName}" value="">
 					</div>
 				</div>
 			</div>
@@ -37,10 +37,10 @@
 			</div>
 		</div>
 
-		<div class="layui-form-item magb0">
-			<label class="layui-form-label">人物介绍</label>
-			<div class="layui-input-block" id="personDesc" >
-				<p th:utext="${historyPerson?.personDesc}" ></p>
+		<div class="layui-form-item">
+			<label class="layui-form-label">人物简介</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入人物简介" class="layui-textarea" id="personDesc" lay-verify="required" autocomplete="off" th:utext="${historyPerson?.personDesc}"></textarea>
 			</div>
 		</div>
 
@@ -113,7 +113,7 @@
 
 
         form.on("submit(add)",function(data){
-            var personDesc = editor.txt.html();
+            var personDesc = $("#personDesc").val();
             var personIcon = $("#personIcon").attr("src")
             $.ajax({
                 url : basePath + 'historyPerson/save',
@@ -156,9 +156,7 @@
             return false;
         })
     })
-    //创建一个编辑器
-    var E = window.wangEditor
-    var editor = new E('#personDesc')
+
     // 配置服务器端地址
     editor.customConfig.uploadImgServer = '/upload/wangEditor'
     editor.create()
