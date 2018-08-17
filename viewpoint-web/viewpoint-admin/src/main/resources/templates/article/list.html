@@ -65,7 +65,7 @@
 				<button class="layui-btn" onclick="WeAdminShow('添加文章','/article/add')"><i class="layui-icon">&#xe61f;</i>添加文章</button>
 				<!--<span class="fr" style="line-height:40px">共有数据：88 条</span>-->
 			</div>
-			<table class="layui-hide" id="articleList"></table>
+			<table class="layui-hide" id="articleList" lay-filter="article"></table>
 
 			<div class="layui-tab-item">
 				<div id="pageDemo"></div>
@@ -141,29 +141,33 @@
                 form.render();
             });
 
-            window.onDelete = function(articleId) {
-                var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
-                $.ajax({
-                    url : basePath + 'article/delete',
-                    data : {
-                        articleId : articleId,
-                    },
-                    type: "post",
-                    dataType: "json",
-                    success : function(data) {
+
+            table.on('tool(article)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                if(obj.event === 'del'){ //删除
+                    layer.confirm('真的删除么', function(index){
                         layer.close(index);
-                        if(data.code == 0){
-                            layer.msg(data.msg);
-                        }else {
-                            layer.msg(data.msg);
-                        }
-                        tableIns.reload();
-                    },
-                    error : function() {
-                        layer.msg("系统繁忙!请重试");
-                    }
-                });
-            };
+                        $.ajax({
+                            url : basePath + 'article/delete',
+                            data : {
+                                articleId : obj.data.articleId
+                            },
+                            type: "post",
+                            dataType: "json",
+                            success : function(data) {
+                                if(data.code == 0){
+                                    layer.msg(data.msg);
+                                }else {
+                                    layer.msg(data.msg);
+                                }
+                                tableIns.reload();
+                            },
+                            error : function() {
+                                layer.msg("系统繁忙!请重试");
+                            }
+                        });
+                    });
+                }
+            });
 
 
             //监听上下架操作
