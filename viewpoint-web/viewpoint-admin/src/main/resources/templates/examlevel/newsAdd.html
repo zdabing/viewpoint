@@ -24,8 +24,15 @@
 					</div>
 
 					<label class="layui-form-label">名次</label>
-					<div class="layui-input-block" style = "width:210px;">
+					<div class="layui-input-block" style = "width:226px;">
 						<input type="text" class="layui-input" lay-verify="required" id="levelName" placeholder="例 ：状元" th:value="${examLevel?.levelName}" value="">
+					</div>
+
+					<label class="layui-form-label" style="margin-top: 10px">名次Logo</label>
+					<div class="layui-col-md3 layui-col-xs5" style="margin-top: 20px">
+						<div class="layui-upload-list thumbBox mag0 magt3">
+							<img class="layui-upload-img thumbImg" id="levelIcon" th:src="${examLevel?.levelIcon}" src="">
+						</div>
 					</div>
 				</div>
 
@@ -34,11 +41,12 @@
 	</div>
 
 			<div class="layui-form-item" >
-				<div class="layui-form-item"  style = "width:322px;">
+				<div class="layui-form-item"  >
 					<label class="layui-form-label">排序</label>
-					<div class="layui-input-block">
-						<input type="text" lay-verify="required" class="layui-input" id="sort" placeholder="请输入序号！ 例:1" th:value="${examLevel?.sort}" value="">
+					<div class="layui-input-inline">
+						<input type="text" th:onblur="|javascript:sortRepeat()|" lay-verify="number" class="layui-input" id="sort" placeholder="请输入序号！ 例:1" th:value="${examLevel?.sort}" value="">
 					</div>
+					<div class="layui-form-mid " id="sortTips" style="color: red;font-weight: bold"></div>
 				</div>
 
 				<div class="layui-form-item magb0" style="margin-top: 25px">
@@ -83,14 +91,65 @@
             ,format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
         });
 
+        window.sortRepeat = function() {
+            var sort = $("#sort").val();
+            $.ajax({
+                url : basePath + 'examLevel/sortRepeat',
+                data : {
+                    sort : sort
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    if(data.code == 0){
+                        $('#sortTips').html('');
+                    }else {
+                        $('#sortTips').html('序号已使用，请填写一个不重复的序号!');
+                    }
+                },
+                error : function() {
+                    layer.msg("系统繁忙!请重试");
+                }
+            });
+        };
+
+        //上传缩略图
+        upload.render({
+            elem: '.thumbBox',
+            url: basePath + 'upload/image',
+            method : "post",
+            done: function(res, index, upload){
+                //var num = parseInt(4*Math.random());  //生成0-4的随机数，随机显示一个头像信息
+                $('.thumbImg').attr('src',res.data.src);
+                $('.thumbBox').css("background","#fff");
+            }
+        });
 
         form.on("submit(add)",function(data){
             var levelDesc = editor.txt.html();
+            var levelIcon = $("#levelIcon").attr("src");
+
+            if($('#sortTips').html() != ''){
+                layer.alert("请填写一个不重复的序号");
+                return false;
+            }
+
+            if(levelIcon == ''){
+                layer.alert("请上传名次Logo",{icon: 5});
+                return false;
+			}
+
+            if(levelDesc == '<p></p><p><br></p>'){
+                layer.alert("请填写名次介绍", {icon: 5});
+                return false;
+			}
+
             $.ajax({
                 url : basePath + 'examLevel/save',
                 data : {
                     levelId : $("#levelId").val(),
                     levelName : $("#levelName").val(),
+                    levelIcon : levelIcon,
 					sort : $("#sort").val(),
 					levelDesc : levelDesc
                 },
@@ -102,7 +161,7 @@
                         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
                         setTimeout(function(){
                             top.layer.close(index);
-                            top.layer.msg("文章节点添加或更改成功！");
+                            top.layer.msg("科举名次添加或更改成功！");
                             layer.closeAll("iframe");
                             //刷新父页面
                             parent.location.reload();

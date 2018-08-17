@@ -133,13 +133,15 @@ CREATE TABLE `history_footprints` (
 CREATE TABLE `exam_level` (
   `level_id` int(20) NOT NULL AUTO_INCREMENT,
   `level_name` varchar(20) NOT NULL,
+  `level_icon` varchar(255) NOT NULL,
   `sort` int(20) NOT NULL,
   `enabled` int(5) NOT NULL DEFAULT '0',
   `level_desc` longtext NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`level_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+
 
 CREATE TABLE `history_person` (
   `person_id` int(20) NOT NULL AUTO_INCREMENT,

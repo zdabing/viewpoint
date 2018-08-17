@@ -34,7 +34,7 @@
 					<div class="layui-form-item"  >
 						<label class="layui-form-label">排列序号</label>
 						<div class="layui-input-inline">
-							<input type="text" th:onblur="|javascript:sortRepeat()|" lay-verify="required" class="layui-input" id="sort" placeholder="请输入序号" th:value="${historyFootprints?.sort}" value="">
+							<input type="text" th:onblur="|javascript:sortRepeat()|" lay-verify="number" class="layui-input" id="sort" placeholder="请输入序号" th:value="${historyFootprints?.sort}" value="">
 						</div>
 						<div class="layui-form-mid " id="sortTips" style="color: red;font-weight: bold"></div>
 					</div>
@@ -91,20 +91,16 @@
                     type: "post",
                     dataType: "json",
                     success : function(data) {
-
                         if(data.code == 0){
                             $('#sortTips').html('');
                         }else {
                             $('#sortTips').html('序号已使用，请填写一个不重复的序号!');
                         }
-
                     },
                     error : function() {
                         layer.msg("系统繁忙!请重试");
                     }
                 });
-
-
         };
 
 

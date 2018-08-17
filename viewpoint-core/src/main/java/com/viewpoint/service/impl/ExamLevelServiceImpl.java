@@ -51,4 +51,14 @@ public class ExamLevelServiceImpl implements ExamLevelService {
         examLevelRepository.deleteById(levelId);
     }
 
+    @Override
+    public List<ExamLevel> findAllBySort() {
+        return examLevelRepository.findByLevelIdNotNullOrderBySortAsc();
+    }
+
+    @Override
+    public ExamLevel findBySort(Integer sort) {
+        return examLevelRepository.findBySort(sort);
+    }
+
 }

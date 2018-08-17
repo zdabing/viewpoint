@@ -30,6 +30,8 @@ public class ExamLevel implements Serializable {
 
     private String levelName;
 
+    private String levelIcon;
+
     private Integer sort;
 
     private Integer enabled;

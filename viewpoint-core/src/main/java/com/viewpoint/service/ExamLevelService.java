@@ -21,4 +21,8 @@ public interface ExamLevelService {
     ExamLevel save(ExamLevel examLevel);
 
     void delete(Integer levelId);
+
+    List<ExamLevel> findAllBySort();
+
+    ExamLevel findBySort(Integer sort);
 }
