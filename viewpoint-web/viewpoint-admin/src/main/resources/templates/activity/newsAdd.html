@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>活动</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10">
+	<div class="layui-col-md9 layui-col-xs12">
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md9 layui-col-xs7">
+				<div class="layui-form-item magt3">
+					<div class="layui-hide">
+						<input type="text" class="layui-input" id="activityId" th:value="${activity?.activityId}" value="">
+					</div>
+					<label class="layui-form-label">活动标题</label>
+					<div class="layui-input-block">
+						<input type="text" class="layui-input" id="activityName" placeholder="请输入活动标题" th:value="${activity?.activityName}" value="" lay-verify="required" autocomplete="off">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">活动摘要</label>
+					<div class="layui-input-block">
+						<textarea placeholder="请输入活动摘要" class="layui-textarea" id="activityDesc" lay-verify="required" autocomplete="off" th:text="${activity?.activityDesc}"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md3 layui-col-xs5">
+				<div class="layui-upload-list thumbBox mag0 magt3">
+					<img class="layui-upload-img thumbImg" id="activityLogo" th:src="${activity?.activityLogo}" src="">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item magb0">
+			<label class="layui-form-label">活动内容</label>
+			<div class="layui-input-block" id="activityContent">
+				<p th:utext="${activity?.activityContent}"></p>
+			</div>
+		</div>
+	</div>
+	<div class="layui-col-md3 layui-col-xs12">
+		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 活动类型</blockquote>
+		<div class="border category">
+			<div class="">
+				<p><input type="checkbox" name="activityTag" title="普通" lay-skin="primary" value="普通" th:checked="${#strings.contains(activity?.activityTag?:'','普通')}"   /></p>
+				<p><input type="checkbox" name="activityTag" title="青少年" lay-skin="primary" value="青少年" th:checked="${#strings.contains(activity?.activityTag?:'','青少年')}"  /></p>
+				<!--<p><input type="checkbox" name="activityTag" title="公告" lay-skin="primary" value="公告" th:checked="${#strings.contains(activity?.activityTag?:'','公告')}"  /></p>
+				<p><input type="checkbox" name="activityTag" title="图片" lay-skin="primary" value="图片" th:checked="${#strings.contains(activity?.activityTag?:'','图片')}"  /></p>-->
+			</div>
+		</div>
+		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
+		<div class="border">
+			<div class="layui-form-item">
+				<label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 开　始</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input" id="startTime" placeholder="请选择日期和时间" th:value="${#temporals.format(activity?.startTime, 'yyyy-MM-dd HH:mm:ss')}" value=""  readonly lay-verify="required" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 结　束</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input" id="endTime" placeholder="请选择日期和时间" th:value="${#temporals.format(activity?.endTime, 'yyyy-MM-dd HH:mm:ss')}" value="" readonly lay-verify="required"/>
+				</div>
+			</div>
+			<hr class="layui-bg-gray" />
+			<div class="layui-right">
+				<a class="layui-btn layui-btn-sm" lay-filter="add" lay-submit><i class="layui-icon">&#xe609;</i>发布</a>
+				<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/wangEditor.js}"></script>
+<script th:inline="javascript" >
+
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+
+    layui.use(['form','layer','layedit','laydate','upload'],function(){
+        var form = layui.form
+        layer = parent.layer === undefined ? layui.layer : top.layer,
+            laypage = layui.laypage,
+            upload = layui.upload,
+            layedit = layui.layedit,
+            laydate = layui.laydate,
+            $ = layui.jquery;
+
+        //上传缩略图
+        upload.render({
+            elem: '.thumbBox',
+            url: basePath + 'upload/image',
+            method : "post",
+            done: function(res, index, upload){
+                //var num = parseInt(4*Math.random());  //生成0-4的随机数，随机显示一个头像信息
+                $('.thumbImg').attr('src',res.data.src);
+                $('.thumbBox').css("background","#fff");
+            }
+        });
+
+        laydate.render({
+            elem: '#startTime' //指定元素
+            ,type: 'datetime'
+            ,format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
+        });
+        laydate.render({
+            elem: '#endTime' //指定元素
+            ,type: 'datetime'
+            ,format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
+        });
+
+        form.on("submit(add)",function(data){
+            var activityContent = editor.txt.html();
+/*            var activityName = $("#activityName").val();
+            var activityId = $("#activityId").val();*/
+            var activityTag = "";
+            $("input:checkbox[name='activityTag']:checked").each(function() {
+                activityTag += ',' + $(this).val();
+            });
+            var activityLogo = $("#activityLogo").attr("src")
+            var activityLogo = $("#activityLogo").val()
+            var activityDesc =$("#activityDesc").val()
+            var startTime = $("#startTime").val()
+            var endTime = $("#endTime").val()
+            $.ajax({
+                url : basePath +'activity/save',
+                data : {
+                    activityName : $("#activityName").val(),  //文章标题
+                    activityId : $("#activityId").val(),
+                    activityTag : activityTag,
+                    activityLogo : $("#activityLogo").attr("src"),
+                    activityDesc : $("#activityDesc").val(),
+                    activityContent : activityContent,
+                    startTime : $("#startTime").val(),
+                    endTime : $("#endTime").val()
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    if(data.code == 0){
+                        //弹出loading
+                        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+                        setTimeout(function(){
+                            top.layer.close(index);
+                            top.layer.msg("活动添加成功！");
+                            layer.closeAll("iframe");
+                            //刷新父页面
+                            parent.location.reload();
+                        },1000);
+                        return false;
+                    }else {
+                        layer.alert("添加失败!请重试");
+                        return false;
+                    }
+                },
+                error : function() {
+                    layer.alert("系统繁忙!请重试");
+                }
+            });
+            return false;
+        })
+
+        //预览
+        form.on("submit(look)",function(){
+            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
+            return false;
+        })
+    })
+    //创建一个编辑器
+    var E = window.wangEditor
+    var editor = new E('#activityContent')
+    // 配置服务器端地址
+    editor.customConfig.uploadImgServer = '/upload/wangEditor'
+    editor.create()
+</script>
+</body>
+</html>

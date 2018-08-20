@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>科举等级管理</title>
+		<meta name="Description" content="基于layUI数据表格操作"/>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" th:href="@{/css/font.css}">
+		<link rel="stylesheet" th:href="@{/css/weadmin.css}">
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+		<style type="text/css">
+			.layui-form-switch {
+				width: 55px;
+			}			
+			.layui-form-switch em {
+				width: 40px;
+			}			
+			.layui-form-onswitch i {
+				left: 45px;
+			}
+			body{overflow-y: scroll;}
+		</style>
+	</head>
+
+	<body>
+		<div class="weadmin-nav">
+			<span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">科举等级管理</a>
+        <a>
+          <cite>科举等级列表</cite></a>
+      </span>
+			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
+		</div>
+		<div class="weadmin-body">
+			<div class="layui-row">
+				<form class="layui-form layui-col-md12 we-search">
+					科举等级搜索：
+					<!--<div class="layui-input-inline">
+						<select name="cateid">
+							<option>请选择分类</option>
+							<option>文章</option>
+							<option>会员</option>
+							<option>权限</option>
+						</select>
+					</div>-->
+					<div class="layui-inline">
+						<input type="text" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
+					</div>
+					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+				</form>
+			</div>
+			<div class="weadmin-block demoTable">
+				<button class="layui-btn" onclick="WeAdminShow('添加等级','/examLevel/add')"><i class="layui-icon">&#xe61f;</i>添加等级</button>
+			</div>
+			<table class="layui-hide" id="examLevelList" lay-filter="examLevel"></table>
+
+			<script type="text/html" id="enabledTpl">
+			  <input type="checkbox" name="{{d.levelId}}" value="{{d.enabled}}" title="发布" lay-filter="up" {{ d.enabled == 1 ? 'checked' : '' }}>
+			</script>
+
+			<!--<script type="text/html" id="operateTpl">-->
+				<!--<a   title="编辑" onclick="WeAdminEdit('编辑','/examLevel/add?levelId={{d.levelId}}')" href="javascript:;">-->
+					<!--<i class="layui-icon">&#xe642;</i>-->
+				<!--</a>-->
+				<!--<a title="删除" id="delete" lay-event="del" onclick="onDelete('{{d.levelId}}');">-->
+					<!--<i class="layui-icon">&#xe640;</i>-->
+				<!--</a>-->
+			<!--</script>-->
+
+			<!--操作-->
+			<script type="text/html" id="doTpl">
+				<a class="layui-btn layui-btn-xs" lay-event="edit" onclick="WeAdminEdit('编辑','/examLevel/add?levelId={{d.levelId}}')">编辑</a>
+				<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+				<button  id="up" class="layui-btn layui-btn-xs" onclick="onUp('{{d.levelId}}')"><i class="layui-icon">&#xe619;</i>向上移</button>
+				<button  id="down" class="layui-btn layui-btn-xs" onclick="onDown('{{d.levelId}}')"><i class="layui-icon">&#xe61a;</i>向下移</button>
+			</script>
+
+			<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+		</div>
+	</body>
+	<script th:inline="javascript">
+
+        /*<![CDATA[*/
+        var basePath = /*[[@{/}]]*/;
+        /*]]>*/
+
+        layui.extend({
+            admin: '/js/admin'
+        });
+        layui.use(['table', 'jquery','form', 'admin'], function() {
+            var table = layui.table,
+                $ = layui.jquery,
+                form = layui.form,
+                admin = layui.admin;
+
+           var tableIns = table.render({
+                elem: '#examLevelList',
+                url: basePath + 'examLevel/list',
+                cellMinWidth: 50,
+                cols: [
+                    [{
+                        type: 'checkbox'
+                    },{
+                        field: 'levelIcon',title: '名次图片',width : '10%',align:"center",templet:function(d){
+                            return '<a href="'+d.levelIcon+'" target="_blank"><img src="'+d.levelIcon+'" height="26"/></a>';}
+                    },{
+                        field: 'levelName',width : '10%',title: '等级名称'
+                    }, {
+						field: 'levelDesc',title: '名次介绍',width : '32%',
+					}, {
+                        field: 'enable',title: '发布',width : '15%',templet: '#enabledTpl',align: 'center'
+                    }, {
+                        field: 'operate',title: '操作',width : '25%',toolbar: '#doTpl',align: 'center'
+                    }]
+                ]
+            });
+
+
+            $(function(){
+                form.render();
+            });
+
+            //删除操作
+            table.on('tool(examLevel)', function(obj){
+                if(obj.event === 'del'){ //删除
+                    layer.confirm('真的删除么', function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url : basePath + 'examLevel/delete',
+                            data : {
+                                levelId : obj.data.levelId
+                            },
+                            type: "post",
+                            dataType: "json",
+                            success : function(data) {
+                                if(data.code == 0){
+                                    layer.msg(data.msg);
+                                }else {
+                                    layer.msg(data.msg);
+                                }
+                                tableIns.reload();
+                            },
+                            error : function() {
+                                layer.msg("系统繁忙!请重试");
+                            }
+                        });
+                    });
+                }
+            });
+
+            //监听上下架操作
+            form.on('checkbox(up)', function(obj){
+                var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+                if(this.value == 1){
+                    var enable =0;
+                }else{
+                    var enable =1;
+                }
+                $.ajax({
+                    url : basePath + 'examLevel/updateSale',
+                    data : {
+                        levelId : this.name,
+                        enabled : enable
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success : function(data) {
+                        layer.close(index);
+                        if(data.code == 0){
+                            layer.msg(data.msg);
+                        }else {
+                            layer.msg(data.msg);
+                        }
+                        tableIns.reload();
+                    },
+                    error : function() {
+                        layer.msg("系统繁忙!请重试");
+                    }
+                });
+            });
+
+            //向下移动
+            window.onDown = function(levelId) {
+                var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true});
+                $.ajax({
+                    url : basePath + 'examLevel/onDown',
+                    data : {
+                        levelId : levelId
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success : function(data) {
+                        layer.close(index);
+                        if(data.code == 0){
+                            window.location.reload();
+                        }else {
+                            layer.msg(data.msg,{icon: 5,time : 1000,anim: 6});
+                        }
+                    },
+                    error : function() {
+                        layer.msg("系统繁忙!请重试");
+                    }
+                });
+            };
+
+            //向上移动
+            window.onUp = function(levelId) {
+                var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true});
+                $.ajax({
+                    url : basePath + 'examLevel/onUp',
+                    data : {
+                        levelId : levelId
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success : function(data) {
+                        layer.close(index);
+                        if(data.code == 0){
+                            window.location.reload();
+                        }else {
+                            layer.msg(data.msg,{icon: 5,time : 1000,anim: 6});
+                        }
+
+                    },
+                    error : function() {
+                        layer.msg("系统繁忙!请重试");
+                    }
+                });
+            };
+
+        });
+	</script>
+</html>
+
