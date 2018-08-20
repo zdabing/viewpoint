@@ -17,14 +17,14 @@
     <div class="tag_main">文物分类</div>
     <div class="w">
       <div class="mui-card mylist" th:each="goodsCategory : ${goodsCategoryList}">
-        <a data-ajax="false" th:href="@{'/view/wwjs/detail/'+ ${goodsCategory.goodsId}}">
+        <a data-ajax="false" th:href="@{'/view/wwjs/detail/'+ ${goodsCategory?.goodsId}}">
         <div class="box uf">
           <div class="pic">
-            <img th:src="${goodsCategory.goodsIcon}" src="../img/spot/wenwu/pic1.jpg">
+            <img th:src="${goodsCategory?.goodsIcon}" src="../img/spot/wenwu/pic1.jpg">
           </div>
           <div class="dt uf-1">
-            <h3 th:text="${goodsCategory.goodsName}">碑刻</h3>
-            <p th:text="${goodsCategory.goodsDesc}">碑刻，是言子故里——江南常熟的一个文化亮点。我国自古有刻石立碑之传统，碑刻是研究地方历史的珍贵史料，它铭之于石...</p>
+            <h3 th:text="${goodsCategory?.goodsName}">碑刻</h3>
+            <p th:text="${goodsCategory?.goodsDesc}">碑刻，是言子故里——江南常熟的一个文化亮点。我国自古有刻石立碑之传统，碑刻是研究地方历史的珍贵史料，它铭之于石...</p>
           </div>
         </div>
         </a>
