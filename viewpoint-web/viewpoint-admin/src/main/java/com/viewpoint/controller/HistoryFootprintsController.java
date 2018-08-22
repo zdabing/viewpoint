@@ -99,9 +99,17 @@ public class HistoryFootprintsController {
      */
     @RequestMapping("/sortRepeat")
     @ResponseBody
-    public ResultVO sortRepeat(@RequestParam(value = "sort")Integer sort){
+    public ResultVO sortRepeat(@RequestParam(value = "sort")Integer sort,@RequestParam(value = "historyId",required = false) Integer historyId){
         //取sort的集合
         List<Integer> sortList = this.getSortList();
+        if(!StringUtils.isEmpty(historyId)){
+            HistoryFootprints examLevel = historyFootprintsService.findById(historyId);
+            for(int i = 0;i < sortList.size();i++){
+                if(sortList.get(i) == examLevel.getSort()){
+                    sortList.remove(i);
+                }
+            }
+        }
         //查看有没有重复的序号sort
         if(sortList.contains(sort)){
             return ResultVOUtil.error(ResultEnum.ERROR.getCode(),"序号重复，请输入新的序号");

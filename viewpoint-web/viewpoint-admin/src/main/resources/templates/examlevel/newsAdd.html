@@ -96,6 +96,7 @@
             $.ajax({
                 url : basePath + 'examLevel/sortRepeat',
                 data : {
+                    levelId : $("#levelId").val(),
                     sort : sort
                 },
                 type: "post",

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>南方夫子</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10">
+	<div class="layui-col-md9 layui-col-xs12" >
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md9 layui-col-xs7">
+				<div class="layui-form-item magt3">
+				</div>
+			</div>
+
+		</div>
+
+		<!--视频上传-->
+		<div class="layui-form-item">
+			<label class="layui-form-label">上传视频</label>
+			<div class="layui-input-block">
+				<input type="radio" name="sex" value="0" lay-filter="videoFilter" title="本地导入" checked="">
+				<input type="radio" name="sex" value="1" lay-filter="videoFilter" title="URL导入" >
+			</div>
+		</div>
+
+		<div class="layui-form-item" style="margin-top:15px;">
+			<div class="layui-inline" >
+
+				<label class="layui-form-label" style="color: #009f95;font-weight: bold"></label>
+				<div class="layui-input-inline">
+					<!--<button type="button" class="layui-btn" id="areasVideo" style="display: block"><i class="layui-icon"></i>上传视频</button>-->
+
+					<div class="layui-row" style="width: 380px">
+						<div class="layui-col-xs3">
+							<button type="button" class="layui-btn layui-btn-normal" id="test8" style="display: block">选择文件</button>
+							<span id="viewName" style="color: red;font-weight: bold"></span>
+						</div>
+						<div class="layui-col-xs3">
+							<button type="button" class="layui-btn" id="test9" style="display: block">开始上传</button>
+						</div>
+						<div class="layui-col-xs3">
+							<button type="button" class="layui-btn" id="test10" style="display: block">删除</button>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="layui-input-inline" >
+					<input  style="width:380px; height:38px" type="text" class="layui-input" id="viewURL" placeholder="请输入URL" th:value="${view?.viewMp4}" value="" autocomplete="off">
+					<!--<button type="button" class="layui-btn layui-btn-primary layui-btn-sm" id="urlBotton" style="background: #39dbd4">确定</button>-->
+					<div class="layui-row" style="width: 230px">
+						<div class="layui-col-xs3">
+							<button type="button" class="layui-btn layui-btn-primary layui-btn-sm" id="urlBotton" style="background: #39dbd4">确定</button>
+						</div>
+						<div class="layui-col-xs3">
+							<button type="button" class="layui-btn layui-btn-primary layui-btn-sm" id="urlDelete" style="background: #39dbd4">删除</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="layui-form-item" style="margin-top:15px;">
+			<div class="layui-inline" id="videoDivParent">
+				<label class="layui-form-label" style="color: #009f95;font-weight: bold">预览</label>
+				<div class="layui-input-inline" id="videoDiv">
+					<video src="" th:src="${view?.viewMp4}" id="areasVideoShow" controls="controls" style="margin-top:10px;width: 206px" ></video>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">简介</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入文物简介" class="layui-textarea" id="viewDes" lay-verify="required" autocomplete="off" th:text="${view?.viewDes}"></textarea>
+			</div>
+		</div>
+
+		<div class="layui-form-item magb0">
+			<label class="layui-form-label">文章介绍</label>
+			<div class="layui-input-block" id="viewContent" >
+				<p th:utext="${view?.viewContent}" ></p>
+			</div>
+		</div>
+
+		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
+		<div class="border">
+			<hr class="layui-bg-gray" />
+			<div class="layui-right"  style="text-align:center">
+				<a class="layui-btn layui-btn-sm" lay-filter="add" lay-submit ><i class="layui-icon">&#xe609;</i>发布</a>
+				<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
+			</div>
+		</div>
+
+	</div>
+
+	</div>
+
+
+</form>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/wangEditor.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+
+    layui.use(['jquery','form','layer','layedit','upload'],function(){
+        var form = layui.form
+        layer = parent.layer === undefined ? layui.layer : top.layer,
+            laypage = layui.laypage,
+            upload = layui.upload,
+            layedit = layui.layedit,
+            laydate = layui.laydate,
+            $ = layui.jquery;
+
+
+        //设置视频上传按钮的隐藏与显示
+        $("#urlBotton").hide();
+        $("#viewURL").hide();
+        $("#urlDelete").hide();
+        form.on('radio(videoFilter)', function(data){
+            if(data.value == 0){
+                $("#urlDelete").hide();
+                $("#urlBotton").hide();
+                $("#viewURL").hide();
+                $("#test8").show();
+                $("#test9").show();
+                $("#test10").show();
+
+            }else if (data.value==1) {
+                $("#test8").hide();
+                $("#test9").hide();
+                $("#test10").hide();
+                $("#viewURL").show();
+                $("#urlBotton").show();
+                $("#urlDelete").show();
+            }
+        });
+
+        //通过url上传视频
+        $(document).on('click','#urlBotton',function(){
+            var areasVideoURL = $('#viewURL').val();
+            if(areasVideoURL.length == 0 ){
+                layer.msg('地址不能为空！');
+            }else{
+                $('#viewURL').attr('src',areasVideoURL);
+                var hasVideo = !!(document.createElement('video').canPlayType);
+            }
+        });
+        $(document).on('click','#urlDelete',function(){
+            var areasVideoShow1 = $("#areasVideoShow").attr("src");
+            $('#areasVideoShow').attr('src','');
+
+            $.ajax({
+                url : basePath +'wenmiao/delete',
+                data : {
+                    viewMp4 : areasVideoShow1
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    if(data.code == 0){
+                        layer.msg(data.msg);
+                    }else {
+                        layer.msg(data.msg);
+                    }
+
+                },
+                error : function() {
+                    layer.msg("系统繁忙!请重试");
+                }
+            });
+        });
+
+        //再次选择文件的时候取消提示信息
+        $(document).on('click','#test8',function(){
+            $('#areasVideoName').text('');
+        });
+
+        //选完视频文件后不自动上传
+        upload.render({
+            elem: '#test8'
+            ,url: basePath + 'upload/image'
+            ,accept: 'video' //视频
+            ,auto: false
+            //,multiple: true
+            ,bindAction: '#test9'
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true}); //上传loading
+            }
+            ,done: function(res){
+                layer.closeAll('loading'); //关闭loading
+                // var path = res.data.src;
+                // var index = path.lastIndexOf('/');
+                // var len = res.data.src.length;
+                $('#viewName').text('视频上传成功');
+                $('#areasVideoShow').attr('src',res.data.src);
+                layer.msg('视频上传成功');
+            }
+            ,error: function(index, upload){
+                layer.closeAll('loading'); //关闭loading
+                layer.msg('上传失败请重新上传！');
+            }
+        });
+
+        //删除视频文件
+        $(document).on('click','#test10',function(){
+            var areasVideoShow1 = $("#areasVideoShow").attr('src');
+            //  var index = layer.load(1,{shade: [0.7, '#393D49']}, {shadeClose: true}); //0代表加载的风格，支持0-2
+            $.ajax({
+                url : basePath + 'upload/del',
+                data : {
+                    fileUrl : areasVideoShow1
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    //   layer.close(index);
+                    if(data.code == 0){
+                        layer.msg('删除成功');
+                        $('#areasVideoShow').attr('src','');
+                        $('#viewName').text('');
+                    }else {
+                        layer.msg(data.msg);
+                        $('#areasVideoShow').attr('src',areasVideoShow1);
+                    }
+                },
+                error : function() {
+                    layer.msg("系统繁忙!请重试");
+                }
+            });
+
+        });
+
+        form.on("submit(add)",function(data){
+            var viewContent = editor.txt.html();
+            $.ajax({
+                url : basePath + 'wenmiao/save/NFFZ',
+                data : {
+                    viewDes : $("#viewDes").val(),
+                    viewContent : viewContent,
+                    viewMp4 : $("#areasVideoShow").attr("src")
+                },
+                type: "post",
+                dataType: "json",
+                success : function(data) {
+                    if(data.code == 0){
+                        //弹出loading
+                        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+                        setTimeout(function(){
+                            top.layer.close(index);
+                            top.layer.msg("添加成功！");
+                            //刷新父页面
+                            parent.location.reload();
+                        },1000);
+                        return false;
+                    }else {
+                        layer.alert("系统繁忙!请重试");
+                        return false;
+                    }
+                },
+                error : function() {
+                    layer.alert("系统繁忙!请重试");
+                }
+            });
+            return false;
+        })
+
+        //预览
+        form.on("submit(look)",function(){
+            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
+            return false;
+        })
+    })
+    //创建一个编辑器
+    var E = window.wangEditor
+    var editor = new E('#viewContent')
+    // 配置服务器端地址
+    editor.customConfig.uploadImgServer = '/upload/wangEditor'
+    editor.create()
+
+
+</script>
+</body>
+</html>

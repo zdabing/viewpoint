@@ -168,3 +168,11 @@ CREATE TABLE `goods_category` (
   PRIMARY KEY (`goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `view` (
+  `view_code` varchar(32) NOT NULL,
+  `view_des` varchar(512),
+  `view_icon` varchar(512),
+  `view_content` longtext,
+  `view_mp4` varchar(512) ,
+  PRIMARY KEY (`view_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

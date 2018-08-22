@@ -36,7 +36,7 @@
 						<div class="layui-input-inline">
 							<input type="text" th:onblur="|javascript:sortRepeat()|" lay-verify="number" class="layui-input" id="sort" placeholder="请输入序号" th:value="${historyFootprints?.sort}" value="">
 						</div>
-						<div class="layui-form-mid " id="sortTips" style="color: red;font-weight: bold"></div>
+						<div class="layui-form-mid " id="sortTips" style="margin-left:116px;color: red;font-weight: bold"></div>
 					</div>
 
 				</div>
@@ -86,6 +86,7 @@
                 $.ajax({
                     url : basePath + 'historyFootprints/sortRepeat',
                     data : {
+                        historyId : $("#historyId").val(),
                         sort : sort
                     },
                     type: "post",

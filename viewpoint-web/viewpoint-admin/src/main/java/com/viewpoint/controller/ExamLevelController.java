@@ -113,9 +113,17 @@ public class ExamLevelController {
      */
     @RequestMapping("/sortRepeat")
     @ResponseBody
-    public ResultVO sortRepeat(@RequestParam(value = "sort")Integer sort){
-        //取sort的集合
+    public ResultVO sortRepeat(@RequestParam(value = "sort")Integer sort,@RequestParam(value = "levelId",required = false) Integer levelId){
         List<Integer> sortList = this.getSortList();
+        if(!StringUtils.isEmpty(levelId)){
+            ExamLevel examLevel = examLevelService.findById(levelId);
+            for(int i = 0;i < sortList.size();i++){
+                if(sortList.get(i) == examLevel.getSort()){
+                    sortList.remove(i);
+                }
+            }
+        }
+
         //查看有没有重复的序号sort
         if(sortList.contains(sort)){
             return ResultVOUtil.error(ResultEnum.ERROR.getCode(),"序号重复，请输入新的序号");
