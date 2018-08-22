@@ -23,7 +23,7 @@
 					</div>
 					<label class="layui-form-label">文物名称</label>
 					<div class="layui-input-block">
-						<input type="text" style="width:400px" lay-verify="required" class="layui-input" id="goodsName" name="goodsName" placeholder="请输入文物名称" th:value="${goodsCategory?.goodsName}" value="">
+						<input type="text" style="width:187px" lay-verify="required" class="layui-input" id="goodsName" name="goodsName" placeholder="请输入文物名称" th:value="${goodsCategory?.goodsName}" value="">
 					</div>
 				</div>
 			</div>
@@ -40,33 +40,23 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">文物简介</label>
 			<div class="layui-input-block">
-				<textarea placeholder="请输入文物简介" class="layui-textarea" id="goodsDesc" lay-verify="required" autocomplete="off" th:text="${goodsCategory?.goodsDesc}"></textarea>
+				<textarea style="width: 750px" placeholder="请输入文物简介" class="layui-textarea" id="goodsDesc" lay-verify="required" autocomplete="off" th:text="${goodsCategory?.goodsDesc}"></textarea>
 			</div>
 		</div>
 
 		<div class="layui-form-item magb0">
 			<label class="layui-form-label">文物详情</label>
-			<div class="layui-input-block" id="goodsContent" >
+			<div class="layui-input-block" id="goodsContent" style="width: 750px">
 				<p th:utext="${goodsCategory?.goodsContent}" ></p>
 			</div>
 		</div>
 
-	</div>
-
-	<div class="layui-col-md3 layui-col-xs12">
-
-		<div style="height: 50px">
-
+		<div class="layui-right"  style="text-align:center;margin-top: 20px">
+			<a class="layui-btn layui-btn-sm" lay-filter="add" lay-submit ><i class="layui-icon">&#xe609;</i>发布</a>
+			<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
 		</div>
 
-		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
-		<div class="border">
-			<hr class="layui-bg-gray" />
-			<div class="layui-right"  style="text-align:center">
-				<a class="layui-btn layui-btn-sm" lay-filter="add" lay-submit ><i class="layui-icon">&#xe609;</i>发布</a>
-				<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
-			</div>
-		</div>
+
 	</div>
 
 	</div>
