@@ -44,7 +44,7 @@ public class ActivityOrderServiceImpl implements ActivityOrderService {
         // 已申请
         ActivityOrder order = activityOrderRepository.findByBuyerOpenidAndActivityId(activityOrder.getBuyerOpenid(),
                 activityOrder.getActivityId());
-        if (StringUtils.isEmpty(order)) {
+        if (!StringUtils.isEmpty(order)) {
             throw new ViewpointException(ResultEnum.ACTIVITY_ORDER_IS_EXIST);
         }
         activityOrderRepository.save(activityOrder);

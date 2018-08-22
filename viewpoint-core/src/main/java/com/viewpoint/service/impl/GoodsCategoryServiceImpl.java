@@ -1,6 +1,7 @@
 package com.viewpoint.service.impl;
 
 import com.viewpoint.dataobject.GoodsCategory;
+import com.viewpoint.enums.StatusEnum;
 import com.viewpoint.repository.GoodsCategoryRepository;
 import com.viewpoint.service.GoodsCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,5 +46,10 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public void delete(String goodsId) {
         goodsCategoryRepository.deleteById(goodsId);
+    }
+
+    @Override
+    public List<GoodsCategory> findUpAll() {
+        return goodsCategoryRepository.findByEnabled(StatusEnum.UP.getCode());
     }
 }

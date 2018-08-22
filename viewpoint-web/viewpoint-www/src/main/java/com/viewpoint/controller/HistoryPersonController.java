@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/view")
@@ -25,11 +26,15 @@ public class HistoryPersonController {
 
     @GetMapping("/kjwh")
     public String kjwh(Model model){
-
+        List<ExamLevel> examLevelList = examLevelService.findUpExamleveList();
+        List<ExamLevel> upList = examLevelList.stream().limit(4).collect(Collectors.toList());
+        model.addAttribute("upList",upList);
+        List<ExamLevel> downList = examLevelList.stream().skip(4).collect(Collectors.toList());
+        model.addAttribute("downList",downList);
         return "view/kjwh";
     }
 
-    @GetMapping("/kjwh/detail/{id}")
+    @GetMapping("/kjwh/detail/{levelId}")
     public String kjwhDetail(Model model, @PathVariable(value = "levelId") String levelId){
         ExamLevel examLevel = examLevelService.findById(Integer.valueOf(levelId));
         model.addAttribute("examLevel",examLevel);

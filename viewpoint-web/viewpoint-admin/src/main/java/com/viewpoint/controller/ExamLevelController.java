@@ -1,7 +1,6 @@
 package com.viewpoint.controller;
 
 
-import com.viewpoint.dataobject.Activity;
 import com.viewpoint.dataobject.ExamLevel;
 import com.viewpoint.enums.ResultEnum;
 import com.viewpoint.exception.ViewpointException;
@@ -9,8 +8,6 @@ import com.viewpoint.service.ExamLevelService;
 import com.viewpoint.utils.ResultVOUtil;
 import com.viewpoint.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
