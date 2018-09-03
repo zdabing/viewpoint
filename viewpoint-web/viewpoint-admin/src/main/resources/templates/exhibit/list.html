@@ -89,7 +89,8 @@
                     }, {
                         field: 'exhibitsDescription',title: '展品简介',align:"center"
                     }, {
-                        field: 'exhibitsIcon',title: '展品图',align:"center"
+                        field: 'exhibitsIcon',title: '展品图',align:"center",templet:function(d){
+                		return '<a href="'+d.exhibitsIcon+'" target="_blank"><img src="'+d.exhibitsIcon+'" height="26" /></a>';}
                     }, {
                         field: 'exhibitsLink',title: '二维码',align:"center",templet:'#downTpl'
                     }, {
@@ -105,6 +106,10 @@
             });
             $(function(){
                 form.render();
+            });
+
+            layer.photos({
+                photos: '#layer-photos-demo'
             });
 
             //监听上下架操作

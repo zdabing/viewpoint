@@ -49,3 +49,4 @@ imooc:
     browser:
       #loginType:  REDIRECT
       loginPage:  /login.html
+wwwUrl: http://47.104.168.137:8091/exhibit/detail/

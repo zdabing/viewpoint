@@ -51,9 +51,10 @@ ftp:
   userName: qcwang
   password: qcwang
   basePath:
-  fileUploadPath: http://47.104.168.137:8092/
+  fileUploadPath: http://img.cswm.net.cn/
 imooc:
   security:
     browser:
       #loginType:  REDIRECT
       loginPage:  /login.html
+wwwUrl: http://www.cswm.net.cn/exhibit/detail/
