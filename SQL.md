@@ -85,7 +85,7 @@ create table `history_log` (
     `log_id` int not null auto_increment,
     `openid` varchar(32) not null comment '微信openid',
     `master_id` varchar(32) not null,
-    `create_time` timestamp not null default current_timestamp comment '创建时间',
+    `create_time` timestamp not null default current_timestamp on update current_timestamp comment '创建时间',
     primary key (`log_id`),
     key `idx_open_id` (`openid`)
 );
@@ -93,7 +93,7 @@ create table `history_log` (
 create table `user` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `name` varchar(32) not null comment '',
-    `password` varchar(128) not null comment '密码',
+    `password` varchar(128) comment '密码',
     `openid` varchar(32) comment '微信openid',
     `alias` varchar(64) COMMENT '昵称',
     `icon` varchar(255) COMMENT '头像',
