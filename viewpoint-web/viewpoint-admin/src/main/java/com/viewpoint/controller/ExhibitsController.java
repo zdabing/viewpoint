@@ -7,13 +7,14 @@ import com.viewpoint.exception.ViewpointException;
 import com.viewpoint.form.ExhibitsForm;
 import com.viewpoint.service.AreasService;
 import com.viewpoint.service.ExhibitsService;
-import com.viewpoint.utils.ResultVOUtil;
-import com.viewpoint.vo.ResultVO;
 import com.viewpoint.util.FTPUtil;
 import com.viewpoint.util.KeyUtil;
 import com.viewpoint.util.QRCodeUtils;
+import com.viewpoint.utils.ResultVOUtil;
+import com.viewpoint.vo.ResultVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,9 @@ public class ExhibitsController {
 
     @Autowired
     private FTPUtil ftpUtil;
+
+    @Value("${wwwUrl}")
+    private String wwwUrl;
 
     @GetMapping("/index")
     public String index(){
@@ -103,7 +107,7 @@ public class ExhibitsController {
             exhibitsForm.setParentId(null);
             // 生成二维码返回BufferedImage 对象
             try {
-                BufferedImage bufferedImage = QRCodeUtils.toBufferedImage("https://www.jianshu.com/p/05e9ee773898");
+                BufferedImage bufferedImage = QRCodeUtils.toBufferedImage(wwwUrl + exhibitsId);
                 //转换成类型
                 //BufferedImage 转 InputStream
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
