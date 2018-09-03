@@ -1,5 +1,6 @@
 package com.viewpoint.controller;
 
+import com.viewpoint.constant.CookieConstant;
 import com.viewpoint.dataobject.Activity;
 import com.viewpoint.dataobject.ActivityOrder;
 import com.viewpoint.enums.ResultEnum;
@@ -7,6 +8,7 @@ import com.viewpoint.enums.StatusEnum;
 import com.viewpoint.exception.ViewpointException;
 import com.viewpoint.service.ActivityOrderService;
 import com.viewpoint.service.ActivityService;
+import com.viewpoint.util.CookieUtil;
 import com.viewpoint.util.KeyUtil;
 import com.viewpoint.utils.ResultVOUtil;
 import com.viewpoint.vo.ActivityVO;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,10 +94,12 @@ public class ActivityController {
     @ResponseBody
     public ResultVO order(@RequestParam(value = "buyerName") String buyerName,
                           @RequestParam(value = "buyerPhone") String buyerPhone,
-                          @RequestParam(value = "activityId") String activityId){
+                          @RequestParam(value = "activityId") String activityId,
+                          HttpServletRequest request){
+        Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
+        String openid = cookie.getValue();
         ActivityOrder activityOrder = new ActivityOrder();
-        // TODO 获取微信openId
-        activityOrder.setBuyerOpenid("123456789");
+        activityOrder.setBuyerOpenid(openid);
         activityOrder.setBuyerName(buyerName);
         activityOrder.setBuyerPhone(buyerPhone);
         activityOrder.setActivityOrderId(KeyUtil.genUniqueKey());

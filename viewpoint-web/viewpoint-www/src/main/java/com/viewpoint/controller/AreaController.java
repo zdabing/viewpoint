@@ -43,7 +43,7 @@ public class AreaController {
         model.addAttribute("area",area);
         List<ExhibitsInfo> exhibitsInfoList = exhibitsService.findByAreasId(String.valueOf(area.getAreasId()));
         model.addAttribute("exhibitsInfoList",exhibitsInfoList);
-        return "area/detail";
+        return "area/old-detail";
     }
 
 }
