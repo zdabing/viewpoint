@@ -18,4 +18,5 @@ public interface HistoryLogService {
      * @return
      */
     List<HistoryLog> findByOpenid(String openid);
+
 }

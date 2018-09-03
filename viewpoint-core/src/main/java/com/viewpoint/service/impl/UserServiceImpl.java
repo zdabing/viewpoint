@@ -31,7 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(User user) {
-        return userRepository.save(user);
+        User user1 = userRepository.findByOpenid(user.getOpenid());
+        if (user1 != null) {
+            return user1;
+        }
+         return userRepository.save(user);
     }
 
     @Override

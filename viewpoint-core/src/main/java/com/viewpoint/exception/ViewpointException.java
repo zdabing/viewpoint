@@ -3,10 +3,16 @@ package com.viewpoint.exception;
 import com.viewpoint.enums.ResultEnum;
 import lombok.Data;
 
-@Data
-public class ViewpointException extends RuntimeException{
+import java.io.Serializable;
 
-    private Integer code;
+@Data
+public class ViewpointException extends RuntimeException implements Serializable {
+
+    private static final long serialVersionUID = -168886997047969081L;
+
+    private Integer code = 500;
+
+    private String msg;
 
     public ViewpointException(ResultEnum resultEnum) {
         super(resultEnum.getMessage());

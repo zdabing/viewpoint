@@ -16,14 +16,18 @@ public class HistoryLogServiceImpl implements HistoryLogService {
 
     @Override
     public void save(String productId, String openid) {
-        HistoryLog historyLog = new HistoryLog();
-        historyLog.setMasterId(productId);
-        historyLog.setOpenid(openid);
+        HistoryLog historyLog = historyLogRepository.findByOpenidAndMasterId(openid, productId);
+        if (historyLog == null) {
+            historyLog = new HistoryLog();
+            historyLog.setMasterId(productId);
+            historyLog.setOpenid(openid);
+        }
         historyLogRepository.save(historyLog);
     }
 
     @Override
     public List<HistoryLog> findByOpenid(String openid) {
-        return historyLogRepository.findByOpenid(openid);
+        return historyLogRepository.findByOpenidOrderByCreateTimeAsc(openid);
     }
+
 }

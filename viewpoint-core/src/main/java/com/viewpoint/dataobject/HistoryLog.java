@@ -28,4 +28,5 @@ public class HistoryLog implements Serializable {
     private String masterId;
 
     private LocalDateTime createTime;
+
 }

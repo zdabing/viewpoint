@@ -3,7 +3,6 @@ package com.viewpoint.service.impl;
 import com.viewpoint.dataobject.View;
 import com.viewpoint.repository.WenMiaoRepository;
 import com.viewpoint.service.WenMiaoService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +24,5 @@ public class WenMiaoServiceImpl implements WenMiaoService {
     public View getById(String viewCode) {
         Optional<View> view =  wenMiaoRepository.findById(viewCode);
         return view.orElse(null);
-    }
-
-    @Override
-    public View getByViewCode(String viewCode) {
-        return wenMiaoRepository.getByViewCode(viewCode);
     }
 }

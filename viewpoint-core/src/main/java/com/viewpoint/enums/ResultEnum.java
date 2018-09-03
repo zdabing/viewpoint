@@ -24,6 +24,8 @@ public enum ResultEnum {
     EXHIBITS_NOT_EXIST(43,"展品不存在"),
 
     AREA_NOT_EXIST(53,"景点不存在"),
+
+    WX_MP_ERROR(90, "微信账号错误");
     ;
 
     private Integer code;
