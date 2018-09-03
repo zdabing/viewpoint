@@ -43,3 +43,8 @@ spring:
     static-locations: classpath:/static/
 server:
   port: 8091
+weixin:
+  mpAppId: wxdb4be0a5df7ee493
+  mpAppSecret: 2db1413f3c3674025e1dfb12a8ff8962
+project-url:
+  wechatMpAuthorize: http://www.cswm.net.cn

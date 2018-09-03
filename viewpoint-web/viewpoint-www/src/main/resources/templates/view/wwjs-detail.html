@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/head :: head('景点-文物介绍内页','/css/spot.css')"></head>
+<head th:replace="common/head :: head(${goodsCategory.goodsName},'/css/spot.css')"></head>
 
 <body>
 <div th:replace="common/footer :: footer('1','5')"></div>

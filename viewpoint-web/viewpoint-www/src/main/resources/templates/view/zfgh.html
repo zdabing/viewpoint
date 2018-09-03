@@ -6,14 +6,14 @@
 <div th:replace="common/footer :: footer('1','3')"></div>
   <div class="mui-content zhengfu">
     <div class="mainpic">
-      <img th:src="@{/img/spot/zhengfu/main.jpg}" src="../img/spot/zhengfu/main.jpg">
+      <img th:src="${view?.viewIcon}" src="../img/spot/zhengfu/main.jpg">
     </div>
     <div class="w">
       <div class="title">
         <img th:src="@{/img/spot/zhengfu/icon.png}" src="../img/spot/zhengfu/icon.png">
         <label>政府关怀</label>
       </div>
-      <div class="para">
+      <div class="para" th:utext="${view?.viewContent}">
         <p>常熟作为国务院公布的第二批国家历史文化名城，历史文化遗产非常丰富，目前常熟全市共有各级文物保护单位170处，其中全国重点文物保</p>
         <img src="../img/spot/zhengfu/pic1.jpg">
         <p>常熟作为国务院公布的第二批国家历史文化名城，历史文化遗产非常丰富，目前常熟全市共有各级文物保护单位170处，其中全国重点文物保</p>

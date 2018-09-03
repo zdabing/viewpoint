@@ -11,7 +11,7 @@
         <label>活动列表</label>
       </div>
       <div class="content">
-        <div class="mui-card" th:each="activity : ${activityList}">
+        <div class="mui-card" th:each="activity : ${activityList}" th:classappend="(${#strings.equals(activity.activityStatus,'已<br>结<br>束')})? 'over' : ''">
           <a th:href="@{'/activity/detail/'+${activity.activityId}}" href="javascript:" data-ajax="false">
             <div class="box">
               <img th:src="${activity.activityLogo}" src="../img/activity/main.jpg" class="bigmainpic">
@@ -22,7 +22,8 @@
                 </div>
                 <div class="num">
                   <span class="state" th:text="${activity.orderStatus}"></span>
-                  <span th:unless="${#strings.trim(activity.activityStatus).equalsIgnoreCase('已<br>结<br>束')}">名额紧张</span>
+                  <!--<span th:if="${activity.orderCount gt activity.buyLimit / 2 }">名额紧张</span>-->
+                  <span>名额紧张</span>
                   <span><em th:text="${activity.hot}">2316</em>阅读</span>
                   <span><em th:text="${activity.orderCount}">1000</em>报名</span>
                 </div>
@@ -37,7 +38,7 @@
     <div class="tag_main">青少年活动</div>
     <div class="w">
       <div class="content">
-        <div class="mui-card" th:each="activity : ${youngList}">
+        <div class="mui-card" th:each="activity : ${youngList}" th:classappend="(${#strings.equals(activity.activityStatus,'已<br>结<br>束')})? 'over' : ''">
           <a th:href="@{'/activity/detail/'+${activity.activityId}}" href="javascript:" data-ajax="false">
             <div class="box">
               <img th:src="${activity.activityLogo}" src="../img/activity/main.jpg" class="bigmainpic">

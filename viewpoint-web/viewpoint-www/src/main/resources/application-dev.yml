@@ -31,5 +31,14 @@ spring:
     suffix: .html
   resources:
     static-locations: classpath:/static/
+    #add-mappings: false
+  #mvc:
+    #throw-exception-if-no-handler-found: true
 server:
   port: 8090
+weixin:
+  mpAppId: wxdb4be0a5df7ee493
+  mpAppSecret: 2db1413f3c3674025e1dfb12a8ff8962
+projectUrl:
+  wechatMpAuthorize: http://www.cswm.net.cn
+

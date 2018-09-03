@@ -6,7 +6,7 @@
 <div th:replace="common/footer :: footer('1','0')"></div>
   <div class="mui-content introduce">
     <div class="video-box">
-    	<video th:src="@{/img/movie.mp4}" src="../img/movie.mp4" controls="controls">
+    	<video th:src="${view?.viewMp4}" src="../img/movie.mp4" controls="controls">
       your browser does not support the video tag
       </video>
     </div>
@@ -15,7 +15,7 @@
     	  <img th:src="@{/img/spot/introduce/icon.png}" src="../img/spot/introduce/icon.png">
     	  <label>文庙介绍</label>
     	</div>
-      <div class="para">
+      <div class="para" th:utext="${view?.viewContent}">
         <p>常熟文庙坐落于古城区东南学前街。这里是宋元明清四朝常熟教育文化中心，培育出了众多名相贤臣以及各个领域的专门人才，在常熟历史上占</p>
         <img th:src="@{/img/spot/introduce/pic1.jpg}" src="../img/spot/introduce/pic1.jpg">
       </div>

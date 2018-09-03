@@ -16,13 +16,13 @@
       <div data-role="collapsible" class="item">
         <h4><img th:src="@{/img/my/my_icon_1.png}" src="../img/my/my_icon_1.png">我的足迹<span class="arrow"></span></h4>
         <ul data-role="listview">
-          <a href="#" th:each="history : ${historyList}">
+          <a href="#" th:each="history : ${historyList}" th:href="@{'/exhibit/detail/'+${history.exhibit.exhibitsId}}" data-ajax="false">
             <img th:src="${history.exhibit.exhibitsIcon}" src="../img/my/foot-1.jpg">
           </a>
         </ul>
       </div>
       <div data-role="collapsible" class="item myactivity">
-        <h4><img th:src="@{/img/my/my_icon_2.png}" src="../img/my/my_icon_2.png">我的活动<span class="arrow"></span></h4>
+        <h4><a th:href="@{/member/activity}" data-ajax="false"><img th:src="@{/img/my/my_icon_2.png}" src="../img/my/my_icon_2.png">我的活动<span class="arrow"></span></a></h4>
       </div>
     </div>
   </div>

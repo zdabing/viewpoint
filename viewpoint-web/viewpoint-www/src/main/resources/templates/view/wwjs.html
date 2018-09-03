@@ -10,7 +10,7 @@
         <img th:src="@{/img/spot/wenwu/icon.png}" src="../img/spot/wenwu/icon.png">
         <label>文物介绍</label>
       </div>
-      <div class="para">
+      <div class="para" th:utext="${view?.viewContent}">
         <p>江苏常熟是国家历史文化名城，是春秋先贤言子的故里。言子是“孔门十哲”之一，他继承了孔子的儒学思想传统并加以传播和发展，“道启东</p>
       </div>
     </div>

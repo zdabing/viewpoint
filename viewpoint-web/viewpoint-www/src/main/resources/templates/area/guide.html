@@ -13,7 +13,7 @@
   <div data-role="popup" th:each="area : ${areaList}" th:id="${area.areasId}" id="" class="g-popup" data-overlay-theme="b">
     <a href="#" data-rel="back" class="close-btn">×</a>
     <div class="p-title" th:text="${area.areasName}">棂星门</div>
-    <div class="dt uf">
+    <!--<div class="dt uf">
       <div class="pic">
         <img th:src="${area.areasLogo}" src="../img/guide/pic1.jpg">
       </div>
@@ -29,7 +29,7 @@
         Your browser does not support the audio element.
         </audio>
       </div>
-    </div>
+    </div>-->
   </div>
   <script th:src="@{/js/guide.js}" src="../js/guide.js"></script>
   <script>
