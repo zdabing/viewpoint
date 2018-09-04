@@ -13,6 +13,15 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <!--微信第三方开发sdk https://github.com/Wechat-Group/weixin-java-tools-->
+    <dependencies>
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <finalName>www-viewpoint</finalName>
         <plugins>
