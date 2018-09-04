@@ -32,8 +32,10 @@
 
   <script th:inline="javascript">
       $(".g-popup .close-btn").click(function(){
-          var audio = $(this).siblings('.dt').find("audio")[0];
+          //var audio = $(this).siblings('.dt').find("audio")[0];
+          var audio = $(".mp3")[0];
           audio.pause();
+          $(".jieshuo").text('解说');
       });
       /*<![CDATA[*/
       var basePath = /*[[@{/}]]*/;
