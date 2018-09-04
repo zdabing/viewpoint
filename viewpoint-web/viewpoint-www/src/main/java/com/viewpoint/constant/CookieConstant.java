@@ -9,5 +9,5 @@ public interface CookieConstant {
 
     String TOKEN = "token";
 
-    Integer EXPIRE = 60;
+    Integer EXPIRE = 7200;
 }
