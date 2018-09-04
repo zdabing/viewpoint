@@ -24,15 +24,12 @@
           <a class="btn jieshuo"><em></em><span>解说</span></a>
           <a data-ajax="false" href="#" class="btn details"><em></em><span>详情</span></a>
         </div>
-        <audio hidden>
-          <source class="mp3" src="" type="audio/ogg">
-          <source class="mp3" src="" type="audio/mpeg">
-          Your browser does not support the audio element.
+        <audio hidden class="mp3">
         </audio>
       </div>
     </div>
   </div>
-  <script th:src="@{/js/guide.js}" src="../js/guide.js"></script>
+
   <script th:inline="javascript">
       $(".g-popup .close-btn").click(function(){
           var audio = $(this).siblings('.dt').find("audio")[0];
@@ -51,6 +48,7 @@
           });
       }
   </script>
+  <script th:src="@{/js/guide.js}" src="../js/guide.js"></script>
 </body>
 
 </html>

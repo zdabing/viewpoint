@@ -30,7 +30,8 @@ public class AreaController {
     @GetMapping("/guide")
     public String list(Model model){
         List<Areas> areaList = areasService.findAll();
-        areaList.stream().forEach(e -> e.setAreasContent(e.getAreasContent().replaceAll("<[^>]*>","")));
+        // 去除标签
+        //areaList.stream().forEach(e -> e.setAreasContent(e.getAreasContent().replaceAll("<[^>]*>","")));
         model.addAttribute("areaList",areaList);
         return "area/guide";
     }
@@ -54,6 +55,7 @@ public class AreaController {
         if (area == null) {
             throw new ViewpointException(ResultEnum.AREA_NOT_EXIST);
         }
+        area.setAreasContent(area.getAreasContent().replaceAll("<[^>]*>",""));
         return area;
     }
 }

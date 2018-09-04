@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletRequest;
  * Created by 廖师兄
  * 2017-07-30 17:31
  */
-@Slf4j
 @Aspect
 @Component
+@Slf4j
 public class ViewpointAuthorizeAspect {
 
     /*@Autowired

@@ -12,6 +12,6 @@ public class ProjectUrlConfig {
     /**
      * 微信公众平台授权url
      */
-    public String wechatMpAuthorize;
+    private String wechatMpAuthorize;
 
 }

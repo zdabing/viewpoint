@@ -2,7 +2,6 @@ package com.viewpoint.controller;
 
 import com.viewpoint.config.ProjectUrlConfig;
 import com.viewpoint.constant.CookieConstant;
-import com.viewpoint.constant.RedisConstant;
 import com.viewpoint.dataobject.User;
 import com.viewpoint.enums.ResultEnum;
 import com.viewpoint.exception.ViewpointException;
@@ -40,7 +39,7 @@ public class WeixinController {
 
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl) throws UnsupportedEncodingException {
-        String url = projectUrlConfig.wechatMpAuthorize + "/weixin/userInfo";
+        String url = projectUrlConfig.getWechatMpAuthorize() + "/weixin/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url,WxConsts.OAuth2Scope.SNSAPI_USERINFO,URLEncoder.encode(returnUrl,"UTF-8"));
         log.info("网页授权获取code,result={}",redirectUrl);
         return "redirect:" + redirectUrl;
@@ -65,7 +64,7 @@ public class WeixinController {
         }
         String openId = wxMpOAuth2AccessToken.getOpenId();
         //3. 设置token至cookie
-        CookieUtil.set(response, CookieConstant.TOKEN, openId, RedisConstant.EXPIRE);
+        CookieUtil.set(response, CookieConstant.TOKEN, openId, CookieConstant.EXPIRE);
         return "redirect:" + redirectUrl;
     }
 }

@@ -8,10 +8,10 @@ $(document).ready(function() {
 	  }
 	});
 	$(".jieshuo").on('tap',function(){
-	  var audio=$(this).parent().siblings('audio')[0];
+      var audio = $(".mp3")[0];
 	  var text=$(this).find('span').text();
 	  if (text=='解说') {
-	    audio.play();
+          audio.play();
 	    $(this).find('span').text('暂停');
 	  }else{
 	    audio.pause();
