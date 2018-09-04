@@ -12,14 +12,10 @@
       </div>
       <div class="mui-card">
         <ul>
-          <li th:each="activity : ${activityOrderList}">
-            <span th:text="${activity.buyerName}">2018年“文化和自然遗2018年“文化和自然遗</span>
-            <!--<em>已结束</em>-->
+          <li th:each="activityOrderVO : ${activityOrderVOList}">
+            <span th:text="${activityOrderVO.activityName}">2018年“文化和自然遗2018年“文化和自然遗</span>
+            <em th:text="${activityOrderVO.orderStatus}">已结束</em>
           </li>
-          <!--<li>
-            <span>2018年“文化和自然遗2018年“文化和自然遗</span>
-            <em>已参与</em>
-          </li>-->
         </ul>
       </div>
     </div>
