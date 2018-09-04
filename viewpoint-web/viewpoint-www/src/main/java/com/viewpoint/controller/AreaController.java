@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -46,4 +47,13 @@ public class AreaController {
         return "area/old-detail";
     }
 
+    @GetMapping("/json/{areasId}")
+    @ResponseBody
+    public Areas json(@PathVariable(value = "areasId") Integer areasId){
+        Areas area = areasService.findByAreasId(areasId);
+        if (area == null) {
+            throw new ViewpointException(ResultEnum.AREA_NOT_EXIST);
+        }
+        return area;
+    }
 }
