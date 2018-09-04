@@ -7,36 +7,49 @@
   <div class="mui-content">
     <div class="w">
       <div class="bg"></div>
-      <a th:each="area : ${areaList}" th:href="'#'+${area.areasId}" href="" data-rel="popup" class="hot hot1" th:style="'left: '+${area.areasLeft}+';top: '+${area.areasTop}" style="left: 50px; top: 50px" data-position-to="window"></a>
+      <a th:each="area : ${areaList}" href="#popup" data-rel="popup" class="hot hot1" th:style="'left: '+${area.areasLeft}+';top: '+${area.areasTop}" style="left: 50px; top: 50px" data-position-to="window" th:onclick="|javascript:show('${area.areasId}')|"></a>
     </div>
   </div>
-  <div data-role="popup" th:each="area : ${areaList}" th:id="${area.areasId}" id="" class="g-popup" data-overlay-theme="b">
+
+  <div data-role="popup" id="popup" class="g-popup" data-overlay-theme="b">
     <a href="#" data-rel="back" class="close-btn">×</a>
-    <div class="p-title" th:text="${area.areasName}">棂星门</div>
-    <!--<div class="dt uf">
+    <div class="p-title">棂星门</div>
+    <div class="dt uf">
       <div class="pic">
-        <img th:src="${area.areasLogo}" src="../img/guide/pic1.jpg">
+        <img class="areasLogo" src="../img/guide/pic1.jpg">
       </div>
       <div class="tt uf-1">
-        <p class="line6" th:text="${area.areasContent}">“棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出。将棂星门置于文庙之前,表示棂星”是天上的“文曲星”,棂星门比喻孔子是天上下凡星宿,在人间施行教化，象征着儒家学派人才济济,栋梁辈出。将棂星门置于文庙之前,表示</p>
+        <p class="line6"></p>
         <div class="btns uf uf-pc">
           <a class="btn jieshuo"><em></em><span>解说</span></a>
-          <a th:href="@{'/area/detail/'+${area.areasId}}" data-ajax="false" href="#" class="btn details"><em></em><span>详情</span></a>
+          <a data-ajax="false" href="#" class="btn details"><em></em><span>详情</span></a>
         </div>
         <audio hidden>
-          <source th:unless="${#strings.isEmpty(area.areasAudio)}" th:src="${area.areasAudio}" src="http://m7.music.126.net/20180726165514/67addb7b93897276cb560bf2d76542b2/ymusic/9ddc/b10e/919e/2ef50b0473f7f2cce3193ed620898cd7.mp3" type="audio/ogg">
-          <source th:unless="${#strings.isEmpty(area.areasAudio)}" th:src="${area.areasAudio}" src="http://m7.music.126.net/20180726165514/67addb7b93897276cb560bf2d76542b2/ymusic/9ddc/b10e/919e/2ef50b0473f7f2cce3193ed620898cd7.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
+          <source class="mp3" src="" type="audio/ogg">
+          <source class="mp3" src="" type="audio/mpeg">
+          Your browser does not support the audio element.
         </audio>
       </div>
-    </div>-->
+    </div>
   </div>
   <script th:src="@{/js/guide.js}" src="../js/guide.js"></script>
-  <script>
+  <script th:inline="javascript">
       $(".g-popup .close-btn").click(function(){
           var audio = $(this).siblings('.dt').find("audio")[0];
           audio.pause();
       });
+      /*<![CDATA[*/
+      var basePath = /*[[@{/}]]*/;
+      /*]]>*/
+      function show(areasId) {
+          $.get(basePath+'area/json/'+areasId, function(data){
+              $(".g-popup .p-title").html(data.areasName);
+              $(".g-popup .areasLogo").attr('src',data.areasLogo);
+              $(".g-popup .line6").html(data.areasContent);
+              $(".g-popup .mp3").attr('src',data.areasAudio);
+              $(".g-popup .details").attr('href',basePath+"area/detail/"+data.areasId);
+          });
+      }
   </script>
 </body>
 
