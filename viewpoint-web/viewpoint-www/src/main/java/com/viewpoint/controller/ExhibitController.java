@@ -36,17 +36,16 @@ public class ExhibitController {
     @GetMapping("/detail/{exhibitsId}")
     public String detail(@PathVariable(value = "exhibitsId") String exhibitsId,
                          HttpServletRequest request, Model model){
-        // 获取cookie
-        Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
-        String openid = cookie.getValue();
-
         ExhibitsInfo exhibitsMain = exhibitsService.findOne(exhibitsId);
         if (exhibitsMain == null || exhibitsMain.getExhibitsStatus() != StatusEnum.UP.getCode()) {
             throw new ViewpointException(ResultEnum.EXHIBITS_NOT_EXIST);
         }
         try {
+            // 获取cookie
+            Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
+            String openid = cookie.getValue();
             historyLogService.save(exhibitsId,openid);
-        }catch (ViewpointException e){
+        }catch (Exception e){
             log.error("历史记录新增失败");
         }
         model.addAttribute("exhibitsMain",exhibitsMain);

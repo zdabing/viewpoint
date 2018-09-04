@@ -21,8 +21,12 @@
           </a>
         </ul>
       </div>
-      <div data-role="collapsible" class="item myactivity">
-        <h4><a th:href="@{/member/activity}" data-ajax="false"><img th:src="@{/img/my/my_icon_2.png}" src="../img/my/my_icon_2.png">我的活动<span class="arrow"></span></a></h4>
+      <div class="item myactivity ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-themed-content ui-collapsible-collapsed">
+        <h4 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+          <a th:href="@{/member/activity}" data-ajax="false" class="ui-collapsible-heading-toggle ui-btn ui-icon-plus ui-btn-icon-left ui-btn-inherit">
+          <img th:src="@{/img/my/my_icon_2.png}" src="../img/my/my_icon_2.png">我的活动<span class="arrow"></span>
+        </a>
+        </h4>
       </div>
     </div>
   </div>

@@ -8,10 +8,7 @@
       <div class="w">
         <div class="myaudio">
           <div class="myaudio-center">
-            <audio id="aud">
-              <source th:src="${area.areasAudio}" src='../img/bg.mp3' type='audio/ogg' width='300px'>
-              <source th:src="${area.areasAudio}" src='../img/bg.mp3' type='audio/mpeg' width='300px'>
-              <source th:src="${area.areasAudio}" src='../img/bg.mp3' type='audio/wav' width='300px'> 浏览器不支持此格式
+            <audio id="aud" th:src="${area.areasAudio}">
             </audio>
             <div class="aud-btn">
               <img th:src="@{/img/spot/details/audio_play.png}" src="../img/spot/details/audio_play.png" id="play">
