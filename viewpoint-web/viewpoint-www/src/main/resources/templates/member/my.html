@@ -15,9 +15,9 @@
     <div class="mui-card">
       <div data-role="collapsible" class="item">
         <h4><img th:src="@{/img/my/my_icon_1.png}" src="../img/my/my_icon_1.png">我的足迹<span class="arrow"></span></h4>
-        <ul data-role="listview">
+        <ul data-role="listview" th:unless="${#lists.isEmpty(historyList)}">
           <a href="#" th:each="history : ${historyList}" th:href="@{'/exhibit/detail/'+${history?.exhibit?.exhibitsId}}" data-ajax="false">
-            <img th:src="${history.exhibit.exhibitsIcon}" src="../img/my/foot-1.jpg">
+            <img th:src="${history?.exhibit?.exhibitsIcon}" src="../img/my/foot-1.jpg">
           </a>
         </ul>
       </div>
